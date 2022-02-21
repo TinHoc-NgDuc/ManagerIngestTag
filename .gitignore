@@ -2,5 +2,5 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/ManagerIngestTag/ManagerIngestTag/bin/Debug/net5.0
-/ManagerIngestTag/ManagerIngestTag/obj/Debug/net5.0
+/ManagerIngestTag/ManagerIngestTag/bin
+/ManagerIngestTag/ManagerIngestTag/obj
