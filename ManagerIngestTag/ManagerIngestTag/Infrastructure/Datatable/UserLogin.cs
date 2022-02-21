@@ -12,5 +12,6 @@ namespace ManagerIngest.Infrastructure.Datatable
         public Guid UserLoginId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        public Role Role { get; set; }
     }
 }

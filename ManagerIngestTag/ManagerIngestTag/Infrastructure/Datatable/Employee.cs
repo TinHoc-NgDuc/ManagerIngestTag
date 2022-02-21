@@ -9,7 +9,7 @@ namespace ManagerIngest.Infrastructure.Datatable
     {
         public Guid EmployeeId { get; set; }
         public string Name { get; set; }
-        public Guid ProductUnitId { get; set; }
-        public Guid PositionId { get; set; }
+        public ProductionUnit ProductionUnit { get; set; }
+        public Position Position { get; set; }
     }
 }

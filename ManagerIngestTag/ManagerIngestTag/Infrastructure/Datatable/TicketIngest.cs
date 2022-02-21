@@ -15,11 +15,11 @@ namespace ManagerIngest.Infrastructure.Datatable
         public string CameramanName { get; set; }
         public string ProductionName { get; set; }
         public string ReporterName { get; set; }
-        public DateTime SaveDocumentDay { get; set; }
+        public DateTime SaveDocument { get; set; }
         public bool IsReporting { get; set; }
         public bool IsNew { get; set; }
         public bool IsCategory { get; set; }
         public bool IsOtherProgram { get; set; }
-        public Guid StatusIngestId { get; set; }
+        public StatusIngest StatusIngest { get; set; }
     }
 }

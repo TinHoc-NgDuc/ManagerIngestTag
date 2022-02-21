@@ -8,9 +8,9 @@ namespace ManagerIngest.Infrastructure.Datatable
     public class HistoryIngest
     {
         public Guid HistoryIngestId { get; set; }
-        public Guid IngestId { get; set; }
         public string Action { get; set; }
         public string NameAction { get; set; }
         public DateTime TimeAction { get; set; }
+        public IngestTag IngestTag { get; set; }
     }
 }

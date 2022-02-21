@@ -13,6 +13,6 @@ namespace ManagerIngest.Infrastructure.Datatable
         public string Name { get; set; }
         public string Note { get; set; }
         public bool Status { get; set; }
-        //public string Na { get; set; }
+
     }
 }
