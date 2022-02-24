@@ -4,12 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ManagerIngest.Infrastructure.Datatable
+namespace ManagerIngest.Models
 {
-    public class Program
+    public class PositionModel
     {
-        [Key]
-        public Guid PropgramId { get; set; }
+        public Guid PositionId { get; set; }
         public string Name { get; set; }
     }
 }

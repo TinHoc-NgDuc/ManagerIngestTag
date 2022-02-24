@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ManagerIngestTag.Migrations
 {
-    public partial class v1 : Migration
+    public partial class v2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,15 +58,15 @@ namespace ManagerIngestTag.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Programs",
+                name: "ProgramShows",
                 columns: table => new
                 {
-                    PropgramId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PropgramShowId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Programs", x => x.PropgramId);
+                    table.PrimaryKey("PK_ProgramShows", x => x.PropgramShowId);
                 });
 
             migrationBuilder.CreateTable(
@@ -298,7 +298,7 @@ namespace ManagerIngestTag.Migrations
                 name: "IngestDetails");
 
             migrationBuilder.DropTable(
-                name: "Programs");
+                name: "ProgramShows");
 
             migrationBuilder.DropTable(
                 name: "Topics");

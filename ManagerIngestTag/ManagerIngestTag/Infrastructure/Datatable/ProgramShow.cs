@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ManagerIngest.Infrastructure.Datatable
 {
-    public class CategoryModel
+    public class ProgramShow
     {
         [Key]
-        public Guid CategoryId { get; set; }
+        public Guid PropgramShowId { get; set; }
         public string Name { get; set; }
     }
 }

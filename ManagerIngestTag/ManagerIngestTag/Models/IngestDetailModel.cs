@@ -4,17 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ManagerIngest.Infrastructure.Datatable
+namespace ManagerIngest.Models
 {
-    public class IngestDetail
+    public class IngestDetailModel
     {
-        [Key]
         public Guid IngestDeltailId { get; set; }
         public DateTime DateSent { get; set; }
         public Guid EmployeeId { get; set; }
-        public TicketIngest TicketIngest { get; set; }
-        public IngestTag IngestTag { get; set; }
-        public CategoryModel Category { get; set; }
+        public Guid TicketIngestId { get; set; }
+        public Guid IngestTagId { get; set; }
+        public Guid CategoryId { get; set; }
         
     }
 }

@@ -162,18 +162,18 @@ namespace ManagerIngestTag.Migrations
                     b.ToTable("ProductionUnits");
                 });
 
-            modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.Program", b =>
+            modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.ProgramShow", b =>
                 {
-                    b.Property<Guid>("PropgramId")
+                    b.Property<Guid>("PropgramShowId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PropgramId");
+                    b.HasKey("PropgramShowId");
 
-                    b.ToTable("Programs");
+                    b.ToTable("ProgramShows");
                 });
 
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.Role", b =>

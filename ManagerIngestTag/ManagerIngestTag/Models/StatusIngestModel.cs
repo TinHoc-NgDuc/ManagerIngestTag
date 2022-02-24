@@ -4,12 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ManagerIngest.Infrastructure.Datatable
+namespace ManagerIngest.Models
 {
-    public class CategoryModel
+    public class StatusIngestModel
     {
-        [Key]
-        public Guid CategoryId { get; set; }
+        public Guid StatusIngestId { get; set; }
         public string Name { get; set; }
     }
 }
