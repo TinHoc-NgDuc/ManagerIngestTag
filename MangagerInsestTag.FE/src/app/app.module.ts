@@ -4,13 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ManagerIngestComponent } from './components/manager-ingest/manager-ingest.component';
-import { IngestDeltalComponent } from './components/ingest-deltal/ingest-deltal.component';
+import { IngestDetailComponent } from './components/ingest-detail/ingest-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ManagerIngestComponent,
-    IngestDeltalComponent
+    IngestDetailComponent
   ],
   imports: [
     BrowserModule,

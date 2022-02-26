@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IngestDeltalComponent } from './ingest-deltal.component';
+import { IngestDetailComponent } from './ingest-detail.component';
 
-describe('IngestDeltalComponent', () => {
-  let component: IngestDeltalComponent;
-  let fixture: ComponentFixture<IngestDeltalComponent>;
+describe('IngestDetailComponent', () => {
+  let component: IngestDetailComponent;
+  let fixture: ComponentFixture<IngestDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IngestDeltalComponent ]
+      declarations: [ IngestDetailComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IngestDeltalComponent);
+    fixture = TestBed.createComponent(IngestDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
