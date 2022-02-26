@@ -8,9 +8,9 @@ describe('ManagerIngestComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ManagerIngestComponent ]
+      declarations: [ManagerIngestComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IngestDetailComponent } from './ingest-detail.component';
+import { SummaryTableIngestComponent } from './summary-table-ingest.component';
 
-describe('IngestDetailComponent', () => {
-  let component: IngestDetailComponent;
-  let fixture: ComponentFixture<IngestDetailComponent>;
+describe('SummaryTableIngestComponent', () => {
+  let component: SummaryTableIngestComponent;
+  let fixture: ComponentFixture<SummaryTableIngestComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [IngestDetailComponent]
+      declarations: [SummaryTableIngestComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IngestDetailComponent);
+    fixture = TestBed.createComponent(SummaryTableIngestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ManagerIngestComponent } from './components/manager-ingest/manager-ingest.component';
 import { IngestDetailComponent } from './components/ingest-detail/ingest-detail.component';
+import { SummaryTableIngestComponent } from './components/summary-table-ingest/summary-table-ingest.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ManagerIngestComponent,
-    IngestDetailComponent
+    IngestDetailComponent,
+    SummaryTableIngestComponent
   ],
   imports: [
     BrowserModule,
