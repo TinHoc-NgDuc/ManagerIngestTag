@@ -1,0 +1,74 @@
+.hearder {
+    height: 150px;
+}
+
+.hearder span {
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 25px;
+}
+
+.action-filter {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.action-filter .item {
+    width: 25%;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.action-filter .item .item-1 {
+    margin-bottom: 25px;
+}
+
+.action-filter .item span {
+    display: block;
+    font-size: 18px;
+}
+
+.action-filter .item .btn {
+    padding-right: 10px;
+    margin-left: 15px;
+}
+
+.action-filter .item .item-input {
+    width: 200px;
+    height: 30px;
+    font-size: 16px;
+}
+
+table {
+    width: 98%; 
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+table th {
+    text-align: center;
+    width: auto;
+    background-color: #a4c2f4fe;
+}
+
+table tbody tr {
+    padding: 10px 10px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+
+}
+
+table tbody tr:hover {
+    cursor: pointer;
+    background-color: rgb(134, 255, 175);
+    box-shadow: 10px 10px 50px gray;
+}
+table tbody tr td::first-letter{
+    text-transform: uppercase;
+}
+
+table td, th {
+    border: 1px solid #333;
+}

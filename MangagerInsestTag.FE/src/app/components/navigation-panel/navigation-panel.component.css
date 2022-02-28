@@ -1,0 +1,58 @@
+.nav-panel {
+    height: 70px;
+    width: 100%;
+    background-color: #102c46fe;
+    color: #fff;
+}
+a{
+    color: #fff;
+    text-decoration: none;
+}
+.hearder {
+    text-align: center; 
+    vertical-align: middle;
+    font-size: 20px;
+    width: 100px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;    
+    float: left;
+    box-sizing: border-box;
+    height: 50px;
+    line-height: 50px;
+    margin: 10px;
+    border-radius: 5px;
+    border: solid 1px #f7e3e3b9;
+    
+}
+
+.hearder:hover {
+    background-color: #a1d2fffe;
+    color: #333;
+    cursor: pointer;
+}
+
+.nav {
+    display: inline-block; 
+}
+
+.nav-item {
+    border-radius: 5px;
+    margin: 10px 10px;
+    height: 50px;
+    line-height: 50px;
+    padding: 2.5px 20px ;
+    vertical-align: middle;
+    cursor: pointer;
+     float: left;
+     border: solid 1px #f7e3e3b9;
+}
+
+.nav-item:hover {
+    background-color: #a1d2fffe;
+    color: #333;
+    cursor: pointer;
+}
+
+.nav-item i {
+    padding-right: 10px;
+    color: cadetblue;
+}

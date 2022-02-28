@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManagerIngestComponent } from './manager-ingest.component';
+import { IngestDetailComponent } from './ingest-detail.component';
 
-describe('ManagerIngestComponent', () => {
-  let component: ManagerIngestComponent;
-  let fixture: ComponentFixture<ManagerIngestComponent>;
+describe('IngestDetailComponent', () => {
+  let component: IngestDetailComponent;
+  let fixture: ComponentFixture<IngestDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ManagerIngestComponent]
+      declarations: [IngestDetailComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManagerIngestComponent);
+    fixture = TestBed.createComponent(IngestDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

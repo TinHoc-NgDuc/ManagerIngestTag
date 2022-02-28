@@ -1,0 +1,90 @@
+.ingestDetail .content {
+    border: 1px solid black;
+    width: 600px;
+    position: absolute;
+    top: calc(50% - 300px);
+    left: calc(50% - 300px);
+    padding: 30px;
+    background-color: #fff;
+}
+
+.ingestDetail .bgContent {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgb(255, 28, 28), rgb(0, 76, 255));
+    opacity: 40%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.ingestDetail .Header {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15%;
+    padding: 0;
+    margin-top: -28px;
+    margin-left: -25px;
+    margin-right: -29px;
+}
+
+.ingestDetail .close {
+    font-size: 20px;
+    width: 60px;
+    text-align: right;
+    padding: 5px;
+    color: red;
+    opacity: 100%;
+    border: 1px solid #333;
+}
+
+.ingestDetail .close i:hover {
+    cursor: pointer;
+}
+
+.ingestDetail .form-input {
+    text-align: center;
+    font-family: serif;
+    font-size: 16px;
+}
+
+.ingestDetail select, .input-text {
+    height: 30px;
+}
+
+.ingestDetail .input-checkbox {
+    height: 15px;
+}
+.ingestDetail .input-checkbox:hover {
+    cursor: pointer;
+}
+
+.ingestDetail .form-input .input-box .title {
+    display: inline-block;
+    width: 150px;
+    padding-right: 20px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.ingestDetail .form-input .input-box .input-value {
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+.ingestDetail .action {
+    padding-top: 55px;
+    text-align: right;
+}
+
+.ingestDetail .action i {
+    margin-right: 10px;
+    width: 75px;
+    border: 0.5px solid #333;
+}
+
+.ingestDetail .required {
+    color: red;
+}
