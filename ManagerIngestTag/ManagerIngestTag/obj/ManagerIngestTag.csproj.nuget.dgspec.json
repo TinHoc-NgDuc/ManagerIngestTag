@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag.csproj": {}
+    "E:\\AMYWORK\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag.csproj": {}
   },
   "projects": {
-    "D:\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag.csproj": {
+    "E:\\AMYWORK\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag.csproj",
+        "projectUniqueName": "E:\\AMYWORK\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag.csproj",
         "projectName": "ManagerIngestTag",
-        "projectPath": "D:\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag.csproj",
-        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "D:\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag\\obj\\",
+        "projectPath": "E:\\AMYWORK\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag.csproj",
+        "packagesPath": "C:\\Users\\ducvn\\.nuget\\packages\\",
+        "outputPath": "E:\\AMYWORK\\ManagerIngestTag\\ManagerIngestTag\\ManagerIngestTag\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ducvn\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -73,12 +73,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[5.0.13, 5.0.13]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -87,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
