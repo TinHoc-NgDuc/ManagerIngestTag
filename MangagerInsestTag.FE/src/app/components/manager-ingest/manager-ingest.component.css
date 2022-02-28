@@ -1,0 +1,147 @@
+:root {
+    --color-primary: #007bff;
+    --color-secondary: #6c757d;
+    --color-success: #28a745;
+    --color-danger: #ff0f07;
+    --color-warning: #17a2b8;
+    --color-info: #007bff;
+}
+
+select, i:hover {
+    cursor: pointer;
+}
+
+.MagangerIngest {
+    /* position: absolute;
+    top: 100px;
+    left: 200px; */
+    border: black 1.5px solid;
+    padding: 30px;
+    width: 100%;
+}
+
+.hearder span {
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.control {
+    text-align: right;
+    right: 0;
+    padding-bottom: 10px;
+    padding-right: 10px;
+}
+
+.control div {
+    display: inline-block;
+}
+
+.control div i {
+    margin-right: 10px;
+}
+
+.control div input {
+    height: auto;
+}
+
+.gListIngest .enable {
+    border-radius: 10px;
+    background-color: #17a2b8;
+    padding: 5px;
+    font-weight: bold;
+    color: white;
+}
+
+.gListIngest .disable {
+    border-radius: 10px;
+    background-color: #fd645e;
+    padding: 5px;
+    font-weight: bold;
+    color: white;
+}
+
+.gListIngest table, th, td {
+    padding: px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.gListIngest .action i {
+    border-radius: 50%;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.gListIngest {
+    padding: 30px;
+}
+
+.gListIngest .action .edit {
+    color: white;
+    background-color: #007bff;
+}
+
+.gListIngest .action .edit:hover {
+    background-color: #0026ff;
+}
+
+.gListIngest .action .delete {
+    color: white;
+    background-color: #fa5e59;
+}
+
+.gListIngest .action .delete:hover {
+    background-color: #ff0000;
+}
+
+.padding {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.padding div {
+    padding-left: 60px;
+    display: inline;
+    line-height: 30px;
+}
+
+.padding title {
+    text-align: left;
+    font-size: 11px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.padding .paddingAction {
+    position: absolute;
+    top: 0;
+    right: 60px;
+    text-align: right;
+}
+
+.padding .paddingAction .paddingAction,
+.padding .paddingAction .btn-round,
+.padding .paddingAction span,
+.padding .paddingAction select,
+.padding .paddingAction input {
+    margin-right: 5px;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.padding .paddingAction .sizePage {
+    width: 65px;
+}
+
+.padding .paddingAction input {
+    width: 30px;
+    padding: 0;
+    text-align: center;
+}
+
+.btn-round {
+    padding: 0;
+    width: 30px;
+    border: #38c7ff 1px solid;
+    color: #38c7ff;
+}

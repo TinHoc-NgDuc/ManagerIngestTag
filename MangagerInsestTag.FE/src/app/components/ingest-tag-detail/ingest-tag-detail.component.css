@@ -1,0 +1,152 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.content{
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    border: 1px solid;
+    width: 1000px;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.bg {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgb(255, 28, 28), rgb(0, 76, 255));
+    opacity: 40%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.content .header {
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    display: inline-block;
+    text-align: left;
+    height: 100px;
+}
+.input-text .item .title{
+    display: inline-block;
+    width: 150px;
+    vertical-align: middle;
+    height: 50px;
+}
+.input-text .item input{
+    width: 100;
+}
+
+.content .input-checkbox {
+    padding-top: 30px;
+    display: block;
+}
+
+.content .input-checkbox .item {
+    display: inline-block;
+    width: calc(25%);
+}
+
+.content .input-checkbox label {
+    display: inline-block;
+    width: 50%;
+}
+
+.content .input-checkbox input {
+    height: 15px;
+    width: 50%;
+    display: inline-block;
+}
+
+.content .input-select {
+    display: block;
+    margin-top: 20px;
+}
+
+.input-select .item {
+    display: inline-block;
+    width: 33.33%;
+    height: 60px;
+}
+
+.input-select label {
+    width: 120px;
+    height: 50px;
+    vertical-align: middle;
+}
+
+.input-select .input-value {
+    width: 130px;
+    height: 30px;
+}
+
+.gTable table {
+    width: 96%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}
+
+.gTable table {
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.gTable table th {
+    text-align: center;
+    width: auto;
+    background-color: #a4c2f4fe;
+}
+
+.gTable table tbody tr {
+    padding: 10px 10px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+
+}
+
+.gTable table tbody tr:hover {
+    cursor: pointer;
+    background-color: rgb(134, 255, 175);
+    box-shadow: 10px 10px 50px gray;
+}
+
+.gTable table tbody tr td::first-letter {
+    text-transform: uppercase;
+}
+
+.gTable table td, th {
+    border: 1px solid #333;
+}
+
+.histroy {
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.histroy span{
+    font-weight: bold;
+}
+
+.histroy textarea{
+    width: 100%;
+}
+
+.action{
+    margin-top: 30px;
+    width: 100;
+    text-align: right;
+    right: 20px;
+    padding-bottom: 10px;
+}
+
+.action a i{
+    width: 150px;
+    margin-left: 15px;
+}

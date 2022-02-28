@@ -1,0 +1,78 @@
+:root {
+    --color-primary: #007bff;
+    --color-secondary: #6c757d;
+    --color-success: #28a745;
+    --color-danger: #ff0f07;
+    --color-warning: #17a2b8;
+    --color-info: #007bff;
+}
+.bg{
+    background: linear-gradient(rgb(255, 28, 28), rgb(0, 76, 255));
+    width: 100%; 
+    opacity: 30%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0; 
+}
+.content {
+    font-family: 'Times New Roman', Times, serif;
+    border: #333 1px solid;
+    text-align: center;
+    width: 500px;
+    height: 270px;
+    position: absolute; 
+    top: 25%;
+    left: calc(30% + 135px);
+    background-color: #fff;
+}
+
+.hearder {
+    text-transform: uppercase;
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    height: 60px;
+}
+.close i{ 
+    color: rgb(255, 0, 0);
+    position: inherit;
+    right: 0;
+    padding: 3px 10px;
+    cursor: pointer;
+}
+.required {
+    color: red;
+}
+
+.title {
+    font-weight: bold;
+    display: inline-block;
+    width: 120px;
+    text-align: left;
+}
+
+.input-value {
+    width: 200px;
+}
+
+.remeberPassword input{
+    width: 120px;
+    height: 15px;
+    cursor: pointer;
+}
+.remeberPassword span{
+    width: 200px;
+    font-size: 13px;
+}
+
+.action{
+    padding: 25px 0;
+
+}
+.action .submit{
+    width: 200px;
+    padding: 1px;
+    font-size: 14px;
+}
