@@ -4,7 +4,10 @@
     background-color: #102c46fe;
     color: #fff;
 }
-
+a{
+    color: #fff;
+    text-decoration: none;
+}
 .hearder {
     text-align: center; 
     vertical-align: middle;

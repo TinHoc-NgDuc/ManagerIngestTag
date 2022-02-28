@@ -1,110 +1,149 @@
-<div>
-    <div class="header">
-        <span>Tạo phiếu Ingest</span>
-    </div>
-    <div class="detail">
-        <div class="input-text">
-            <div class="item-contain">
-                <div class="item">
-                    <span class="title">Tên file(Tên đề tài): </span>
-                    <input class="input-value" type="text">
+<div class="ingestTagDetail" *ngIf="IsShow">
+    <div class="bg"></div>
+    <div class="content">
+        <div class="header">
+            <span>Tạo phiếu Ingest</span>
+        </div>
+        <div class="detail">
+            <div class="input-text row">
+                <div class="col-md-6">
+                    <div class="item">
+                        <span class="title">Tên file(Tên đề tài): </span>
+                        <input class="input-value" type="text">
+                    </div>
+                    <div class="item">
+                        <span class="title">Phóng viên: </span>
+                        <input class="input-value" type="text">
+                    </div>
+                    <div class="item">
+                        <span class="title">Người đăng ký: </span>
+                        <input class="input-value" type="text">
+                    </div>
                 </div>
-                <div class="item">
-                    <span class="title">Phóng viên: </span>
-                    <input class="input-value" type="text">
-                </div>
-                <div class="item">
-                    <span class="title">Người đăng ký: </span>
-                    <input class="input-value" type="text">
+                <div class="col-md-6">
+                    <div class="item">
+                        <span class="title">Đơn vị sản xuất: </span>
+                        <input class="input-value" type="text">
+                    </div>
+                    <div class="item">
+                        <span class="title">Quay phim: </span>
+                        <input class="input-value" type="text">
+                    </div>
+                    <div class="item">
+                        <span class="title">Chương trình phát sóng: </span>
+                        <input class="input-value" type="text">
+                    </div>
                 </div>
             </div>
-            <div class="item-contain">
+            
+            <div class="input-checkbox">
                 <div class="item">
-                    <span class="title">Đơn vị sản xuất: </span>
-                    <input class="input-value" type="text">
+                    <label>Bản tin: </label>
+                    <input class="input-value" type="checkbox" name="" id="">
                 </div>
                 <div class="item">
-                    <span class="title">Quay phim: </span>
-                    <input class="input-value" type="text">
+                    <label>Chuyên mục: </label>
+                    <input class="input-value" type="checkbox" name="" id="">
                 </div>
                 <div class="item">
-                    <span class="title">Chương trình phát sóng: </span>
-                    <input class="input-value" type="text">
+                    <label>Phóng sự: </label>
+                    <input class="input-value" type="checkbox" name="" id="">
+                </div>
+                <div class="item">
+                    <label>Chương trình khác: </label>
+                    <input class="input-value" type="checkbox" name="" id="">
+                </div>
+            </div>
+            <div class="input-select">
+                <div class="item">
+                    <label>Mã thẻ: </label>
+                    <select class="input-value" name="" id="">
+                        <option value="1">1</option>
+                    </select>
+                </div>
+                <div class="item">
+                    <label>Thẻ loại ingest: </label>
+                    <select class="input-value" name="" id="">
+                        <option value="1">1</option>
+                    </select>
+                </div>
+                <div class="item">
+                    <label>Lưu tư liệu: </label>
+                    <input class="input-value" type="datetime" placeholder="Nhập text">
                 </div>
             </div>
         </div>
-        <div class="input-checkbox">
-            <div class="item">
-                <label >Bản tin: </label>
-                <input class="input-value" type="checkbox" name="" id="">
-            </div>
-            <div class="item">
-                <label >Chuyên mục: </label>
-                <input class="input-value" type="checkbox" name="" id="">
-            </div>
-            <div class="item">
-                <label >Phóng sự: </label>
-                <input class="input-value" type="checkbox" name="" id="">
-            </div>
-            <div class="item">
-                <label >Chương trình khác: </label>
-                <input class="input-value" type="checkbox" name="" id="">
+        <div class="gTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã thẻ</th>
+                        <th>Tên thẻ</th>
+                        <th>Thể loại ingest</th>
+                        <th>Ngày gửi thẻ</th>
+                        <th>Người nhận thẻ<span>(Ngày trả thẻ)</span></th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>MT0001</td>
+                        <td>T/Xuân</td>
+                        <td>ổ cứng</td>
+                        <td>04/04/2021</td>
+                        <td><select name="" id="">
+                                <option value="1">Thanh Hà</option>
+                            </select></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>MT0001</td>
+                        <td>T/Xuân</td>
+                        <td>ổ cứng</td>
+                        <td>04/04/2021</td>
+                        <td><select name="" id="">
+                                <option value="1">Thanh Hà</option>
+                            </select></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>MT0001</td>
+                        <td>T/Xuân</td>
+                        <td>ổ cứng</td>
+                        <td>04/04/2021</td>
+                        <td><select name="" id="">
+                                <option value="1">Thanh Hà</option>
+                            </select></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>MT0001</td>
+                        <td>T/Xuân</td>
+                        <td>ổ cứng</td>
+                        <td>04/04/2021</td>
+                        <td><select name="" id="">
+                                <option value="1">Thanh Hà</option>
+                            </select></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="histroy">
+            <span>*Lịch sử xử lý</span>
+            <div class="text">
+                <textarea name="" id="" rows="5" placeholder="Chưa có"></textarea>
             </div>
         </div>
-        <div class="input-select">
-            <div class="item">
-                <label >Mã thẻ: </label>
-                <select class="input-value" name="" id="">
-                    <option value="1">1</option>
-                </select>
-            </div>
-            <div class="item">
-                <label >Thẻ loại ingest: </label>
-                <select class="input-value" name="" id="">
-                    <option value="1">1</option>
-                </select>
-            </div>
-            <div class="item">
-                <label >Lưu tư liệu: </label>
-                <input class="input-value" type="text" placeholder="Nhập text">
-            </div>
+        <div class="action">
+            <a href="#"><i class="btn btn-primary">Lưu và đóng</i></a>
+            <a href="#"><i class="btn btn-primary">Trình duyệt</i></a>
+            <a href="#"><i class="btn btn-warning">Đóng</i></a>
         </div>
-    </div>
-    <div class="gTable">
-        <table>
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Mã thẻ</th>
-                    <th>Tên thẻ</th>
-                    <th>Thể loại ingest</th>
-                    <th>Ngày gửi thẻ</th>
-                    <th>Người nhận thẻ<span>(Ngày trả thẻ)</span></th>
-                    <th>Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>MT0001</td>
-                    <td>T/Xuân</td>
-                    <td>ổ cứng</td>
-                    <td>04/04/2021</td>
-                    <td><select name="" id="">
-                            <option value="1">Thanh Hà</option>
-                        </select></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="histroy">
-        <span>*Lịch sử xử lý</span>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-    </div>
-    <div class="action">
-        <a href="#"><i class="btn btn-primary">Lưu và đóng</i></a>
-        <a href="#"><i class="btn btn-primary">Trình duyệt</i></a>
-        <a href="#"><i class="btn btn-warning">Đóng</i></a>
     </div>
 </div>

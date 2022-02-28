@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class IngestTagDetailComponent implements OnInit {
 
   constructor() { }
-
+  IsShow = false;
   ngOnInit(): void {
   }
 

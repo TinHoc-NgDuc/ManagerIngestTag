@@ -9,6 +9,7 @@ export class SubmitReturnTagComponent implements OnInit {
 
   constructor() { }
 
+  IsShow = false;
   ngOnInit(): void {
   }
 
