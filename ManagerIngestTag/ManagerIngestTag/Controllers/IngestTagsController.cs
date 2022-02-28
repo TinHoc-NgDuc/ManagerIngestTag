@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ManagerIngest.Infrastructure;
 using ManagerIngest.Infrastructure.Datatable;
+using ManagerIngest.Models;
 
 namespace ManagerIngestTag.Controllers
 {
@@ -30,7 +31,7 @@ namespace ManagerIngestTag.Controllers
 
         // GET: api/IngestTags/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<IngestTag>> GetIngestTag(Guid id)
+        public async Task<ActionResult<IngestTagModel>> GetIngestTag(Guid id)
         {
             var ingestTag = await _context.IngestTags.FindAsync(id);
 
@@ -39,20 +40,35 @@ namespace ManagerIngestTag.Controllers
                 return NotFound();
             }
 
-            return ingestTag;
+            return new IngestTagModel
+            {
+                IngestTagId = ingestTag.IngestTagId,
+                Name = ingestTag.Name,
+                Note = ingestTag.Note,
+                Status = ingestTag.Status,
+                cardholderCode = ingestTag.Employee.EmployeeId
+            };
         }
 
         // PUT: api/IngestTags/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutIngestTag(Guid id, IngestTag ingestTag)
+        public async Task<IActionResult> PutIngestTag(Guid id, IngestTagModel ingestTag)
         {
             if (id != ingestTag.IngestTagId)
             {
                 return BadRequest();
             }
-
-            _context.Entry(ingestTag).State = EntityState.Modified;
+            IngestTag ingest = new IngestTag
+            {
+                IngestTagId = ingestTag.IngestTagId,
+                Name = ingestTag.Name,
+                Note = ingestTag.Note,
+                Status = ingestTag.Status,
+                cardholderCode = ingestTag.cardholderCode,
+                Employee = _context.Employees.Find(ingestTag.cardholderCode)
+            };
+            _context.Entry(ingest).State = EntityState.Modified;
 
             try
             {
@@ -76,9 +92,18 @@ namespace ManagerIngestTag.Controllers
         // POST: api/IngestTags
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<IngestTag>> PostIngestTag(IngestTag ingestTag)
+        public async Task<ActionResult<IngestTagModel>> PostIngestTag(IngestTagModel ingestTag)
         {
-            _context.IngestTags.Add(ingestTag);
+            IngestTag itag = new IngestTag
+            {
+                IngestTagId = ingestTag.IngestTagId,
+                Name = ingestTag.Name,
+                Note = ingestTag.Note,
+                Status = ingestTag.Status,
+                cardholderCode = ingestTag.cardholderCode,
+                Employee = _context.Employees.Find(ingestTag.cardholderCode)
+            };
+            _context.IngestTags.Add(itag);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetIngestTag", new { id = ingestTag.IngestTagId }, ingestTag);

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ManagerIngest.Infrastructure;
 using ManagerIngest.Infrastructure.Datatable;
+using ManagerIngest.Models;
 
 namespace ManagerIngestTag.Controllers
 {
@@ -23,15 +24,25 @@ namespace ManagerIngestTag.Controllers
 
         // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployees()
         {
-            return await _context.Employees.ToListAsync();
+            var list = await _context.Employees.ToListAsync();
+            var query = from e in _context.Employees
+                        select new EmployeeModel
+                        {
+                            EmployeeId = e.EmployeeId,
+                            Name = e.Name,
+                            PositionId = e.Position.PositionId,
+                            ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                        };
+            return await query.ToListAsync();
         }
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(Guid id)
+        public async Task<ActionResult<EmployeeModel>> GetEmployee(Guid id)
         {
+
             var employee = await _context.Employees.FindAsync(id);
 
             if (employee == null)
@@ -39,20 +50,33 @@ namespace ManagerIngestTag.Controllers
                 return NotFound();
             }
 
-            return employee;
+            return new EmployeeModel
+            {
+                EmployeeId = employee.EmployeeId,
+                Name = employee.Name,
+                PositionId = employee.Position.PositionId,
+                ProductionUnitId = employee.ProductionUnit.ProductionUnitId
+            };
         }
 
         // PUT: api/Employees/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(Guid id, Employee employee)
+        public async Task<IActionResult> PutEmployee(Guid id, EmployeeModel eple)
         {
-            if (id != employee.EmployeeId)
+            var employees = new Employee
+            {
+                EmployeeId = eple.EmployeeId,
+                Name = eple.Name,
+                Position = _context.Positions.Find(eple.PositionId),
+                ProductionUnit = _context.ProductionUnits.Find(eple.ProductionUnitId)
+            };
+            if (id != employees.EmployeeId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(employee).State = EntityState.Modified;
+            _context.Entry(employees).State = EntityState.Modified;
 
             try
             {
@@ -76,18 +100,26 @@ namespace ManagerIngestTag.Controllers
         // POST: api/Employees
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<ActionResult<EmployeeModel>> PostEmployee(EmployeeModel eple)
         {
-            _context.Employees.Add(employee);
+            var employees = new Employee
+            {
+                EmployeeId = eple.EmployeeId,
+                Name = eple.Name,
+                Position = _context.Positions.Find(eple.PositionId),
+                ProductionUnit = _context.ProductionUnits.Find(eple.ProductionUnitId)
+            };
+            _context.Employees.Add(employees);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
+            return CreatedAtAction("GetEmployee", new { id = employees.EmployeeId }, employees);
         }
 
         // DELETE: api/Employees/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(Guid id)
         {
+
             var employee = await _context.Employees.FindAsync(id);
             if (employee == null)
             {

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ManagerIngestTag.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220222093011_v2")]
-    partial class v2
+    [Migration("20220228100745_v4")]
+    partial class v4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace ManagerIngestTag.Migrations
                 .HasAnnotation("ProductVersion", "5.0.14")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.Category", b =>
+            modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.CategoryModel", b =>
                 {
                     b.Property<Guid>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -131,7 +131,12 @@ namespace ManagerIngestTag.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("cardholderCode")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("IngestTagId");
+
+                    b.HasIndex("cardholderCode");
 
                     b.ToTable("IngestTags");
                 });
@@ -347,7 +352,7 @@ namespace ManagerIngestTag.Migrations
 
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.IngestDetail", b =>
                 {
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.Category", "Category")
+                    b.HasOne("ManagerIngest.Infrastructure.Datatable.CategoryModel", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
 
@@ -364,6 +369,17 @@ namespace ManagerIngestTag.Migrations
                     b.Navigation("IngestTag");
 
                     b.Navigation("TicketIngest");
+                });
+
+            modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.IngestTag", b =>
+                {
+                    b.HasOne("ManagerIngest.Infrastructure.Datatable.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("cardholderCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.TicketIngest", b =>

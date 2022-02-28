@@ -35,8 +35,8 @@ namespace ManagerIngestTag
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ManagerIngestTag", Version = "v1" });
             });
             services.AddDbContext<DataContext>(options =>
-               //options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
-               options.UseSqlServer(Configuration.GetConnectionString("DevHomeConnection")));
+               options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+               //options.UseSqlServer(Configuration.GetConnectionString("DevHomeConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
