@@ -7,6 +7,8 @@ import { ManagerIngestComponent } from './components/manager-ingest/manager-inge
 import { IngestDetailComponent } from './components/ingest-detail/ingest-detail.component';
 import { SummaryTableIngestComponent } from './components/summary-table-ingest/summary-table-ingest.component';
 import { IngestTagDetailComponent } from './components/ingest-tag-detail/ingest-tag-detail.component';
+import { SubmitReturnTagComponent } from './components/submit-return-tag/submit-return-tag.component';
+import { NavigationPanelComponent } from './components/navigation-panel/navigation-panel.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { IngestTagDetailComponent } from './components/ingest-tag-detail/ingest-
     ManagerIngestComponent,
     IngestDetailComponent,
     SummaryTableIngestComponent,
-    IngestTagDetailComponent
+    IngestTagDetailComponent,
+    SubmitReturnTagComponent,
+    NavigationPanelComponent
   ],
   imports: [
     BrowserModule,

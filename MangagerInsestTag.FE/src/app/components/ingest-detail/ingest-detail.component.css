@@ -13,6 +13,11 @@
     height: 100vh;
     background: linear-gradient(rgb(255, 28, 28), rgb(0, 76, 255));
     opacity: 40%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .ingestDetail .Header {

@@ -12,12 +12,12 @@ select, i:hover {
 }
 
 .MagangerIngest {
-    position: absolute;
+    /* position: absolute;
     top: 100px;
-    left: 200px;
+    left: 200px; */
     border: black 1.5px solid;
     padding: 30px;
-    width: 80%;
+    width: 100%;
 }
 
 .hearder span {
