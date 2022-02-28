@@ -1,7 +1,14 @@
 ﻿################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.cache
 
 /ManagerIngestTag/ManagerIngestTag/bin
 /ManagerIngestTag/ManagerIngestTag/obj
+/ManagerIngestTag/ManagerIngestTag/obj/Debug
 /ManagerIngestTag/ManagerIngestTag/obj/Debug/net5.0
