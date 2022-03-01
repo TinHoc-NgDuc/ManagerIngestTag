@@ -1,11 +1,11 @@
-<div class="ingestDetail" *ngIf="Ishow">
+<div class="ingestDetail" *ngIf=isShow>
     <div class="bgContent">
     </div>
     <div class="content">
         <div class="Header">
             <span>Thêm mới thẻ ingest</span>
-            <div class="close">
-                <a href="#"><i class="fas fa-times"></i></a>
+            <div class="close" (click)="close()">
+                <i class="fas fa-times"></i>
             </div>
         </div>
         <div class="form-input">
@@ -32,8 +32,8 @@
                 <input class="input-value input-checkbox" type="checkbox">
             </div>
             <div class="action">
-                <a href="#"><i class="btn btn-primary btn-action">Lưu</i></a>
-                <a href="#"><i class="btn btn-warning btn-action">Đóng</i></a>
+               <i class="btn btn-primary btn-action">Lưu</i>
+               <i class="btn btn-warning btn-action" (click)="close()">Đóng</i>
             </div>
         </div>
     </div>

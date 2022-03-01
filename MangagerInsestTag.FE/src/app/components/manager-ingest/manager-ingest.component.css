@@ -60,9 +60,10 @@ select, i:hover {
     font-weight: bold;
     color: white;
 }
-
+.gListIngest table{
+    width: 100%;
+}
 .gListIngest table, th, td {
-    padding: px;
     text-align: center;
     border: 1px solid black;
 }
@@ -134,7 +135,7 @@ select, i:hover {
 }
 
 .padding .paddingAction input {
-    width: 30px;
+    width: 50px;
     padding: 0;
     text-align: center;
 }

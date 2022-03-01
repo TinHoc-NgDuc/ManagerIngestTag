@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-ingest-detail',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ingest-detail.component.css']
 })
 export class IngestDetailComponent implements OnInit {
-
+  @Input() isShow: boolean = false;
+  @Output() change = new EventEmitter();
   constructor() { }
-  Ishow = false;
   ngOnInit(): void {
+
   }
 
+  close() {
+    //this.change.emit("");
+  }
 }

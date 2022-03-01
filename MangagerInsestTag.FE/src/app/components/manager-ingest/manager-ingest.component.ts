@@ -9,7 +9,11 @@ export class ManagerIngestComponent implements OnInit {
 
   constructor() { }
 
+  isShowAdd: boolean = false;
   ngOnInit(): void {
   }
 
+  changeShowAdd(){
+    this.isShowAdd = !this.isShowAdd;
+  }
 }
