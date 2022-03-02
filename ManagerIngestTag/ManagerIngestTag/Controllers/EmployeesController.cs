@@ -26,7 +26,6 @@ namespace ManagerIngestTag.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployees()
         {
-            var list = await _context.Employees.ToListAsync();
             var query = from e in _context.Employees
                         select new EmployeeModel
                         {
@@ -43,20 +42,21 @@ namespace ManagerIngestTag.Controllers
         public async Task<ActionResult<EmployeeModel>> GetEmployee(Guid id)
         {
 
-            var employee = await _context.Employees.FindAsync(id);
-
-            if (employee == null)
+            var employee = from e in _context.Employees
+                           select new EmployeeModel
+                           {
+                               EmployeeId = e.EmployeeId,
+                               Name = e.Name,
+                               PositionId = e.Position.PositionId,
+                               ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                           };
+            var result = await employee.Where(e=>e.EmployeeId == id).FirstOrDefaultAsync();
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return new EmployeeModel
-            {
-                EmployeeId = employee.EmployeeId,
-                Name = employee.Name,
-                PositionId = employee.Position.PositionId,
-                ProductionUnitId = employee.ProductionUnit.ProductionUnitId
-            };
+            return result;
         }
 
         // PUT: api/Employees/5

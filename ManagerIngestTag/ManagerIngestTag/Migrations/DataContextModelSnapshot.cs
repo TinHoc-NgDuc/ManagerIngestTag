@@ -129,12 +129,10 @@ namespace ManagerIngestTag.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("cardholderCode")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("cardholderName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IngestTagId");
-
-                    b.HasIndex("cardholderCode");
 
                     b.ToTable("IngestTags");
                 });
@@ -367,17 +365,6 @@ namespace ManagerIngestTag.Migrations
                     b.Navigation("IngestTag");
 
                     b.Navigation("TicketIngest");
-                });
-
-            modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.IngestTag", b =>
-                {
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("cardholderCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.TicketIngest", b =>

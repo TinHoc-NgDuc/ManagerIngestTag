@@ -73,7 +73,9 @@
     width: 250px;
     margin-bottom: 20px;
 }
-
+.ingestDetail .form-input .input-box select{
+    cursor: pointer;
+}
 .ingestDetail .action {
     padding-top: 55px;
     text-align: right;

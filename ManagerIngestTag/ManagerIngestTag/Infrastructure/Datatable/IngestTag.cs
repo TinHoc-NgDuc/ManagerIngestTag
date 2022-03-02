@@ -14,9 +14,7 @@ namespace ManagerIngest.Infrastructure.Datatable
         public string Name { get; set; }
         public string Note { get; set; }
         public bool Status { get; set; }
-        [ForeignKey("Employee")]
-        public Guid cardholderCode { get; set; }
-        public Employee Employee { get; set; }
+        public string cardholderName { get; set; }
 
     }
 }

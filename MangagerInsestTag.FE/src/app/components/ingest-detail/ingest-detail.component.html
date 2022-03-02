@@ -10,26 +10,26 @@
         </div>
         <div class="form-input">
             <div class="input-box">
-                <span class="title">Tên thẻ(<span class="required">*</span>)</span>
-                <input type="text" class="input-value input-text" placeholder="">
+                <label for="nameTag" class="title">Tên thẻ(<span class="required">*</span>)</label>
+                <input type="text" name="nameTag" class="input-value input-text" placeholder="Nhập tên thẻ">
             </div>
             <div class="input-box">
-                <span class="title">Tên chủ thẻ(<span class="required">*</span>)</span>
-                <select class="input-value">
-                    <option>Chọn chủ thẻ</option>
+                <label class="title">Tên chủ thẻ(<span class="required">*</span>)</label>
+                <select class="input-value" title="Tên chủ thẻ">
+                    <option *ngFor="let empoyee of Empoyee">{{empoyee.name}}</option>
                 </select>
             </div>
             <div class="input-box">
-                <span class="title">Thể loại ingest(<span class="required">*</span>)</span>
-                <input type="text" class="input-value input-text" placeholder="">
+                <label class="title">Thể loại ingest(<span class="required">*</span>)</label>
+                <input type="text" class="input-value input-text" placeholder="Thể loại thẻ ingest">
             </div>
             <div class="input-box">
-                <span class="title">Ghi chú</span>
-                <input class="input-value input-text" type="text" placeholder="">
+                <label class="title">Ghi chú</label>
+                <input class="input-value input-text" type="text" placeholder="Nhập ghi chú">
             </div>
             <div class="input-box">
-                <span class="title">Hoạt động</span>
-                <input class="input-value input-checkbox" type="checkbox">
+                <label class="title">Hoạt động</label>
+                <input class="input-value input-checkbox" type="checkbox" title="Hoạt động">
             </div>
             <div class="action">
                <i class="btn btn-primary btn-action">Lưu</i>

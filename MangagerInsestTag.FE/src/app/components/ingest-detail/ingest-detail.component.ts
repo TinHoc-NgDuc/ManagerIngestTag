@@ -16,4 +16,11 @@ export class IngestDetailComponent implements OnInit {
   close() {
     //this.change.emit("");
   }
+
+  public Empoyee = [
+    { id: "1", name: "nhan viên 1" },
+    { id: "2", name: "nhan viên 2" },
+    { id: "3", name: "nhan viên 3" },
+    { id: "4", name: "nhan viên 4" },
+  ]
 }

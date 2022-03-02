@@ -10,6 +10,7 @@ import { SubmitReturnTagComponent } from './components/submit-return-tag/submit-
 import { NavigationPanelComponent } from './components/navigation-panel/navigation-panel.component';
 import { CategoryService } from './shared/category/category.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
