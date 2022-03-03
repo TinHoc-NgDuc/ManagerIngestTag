@@ -18,13 +18,14 @@
                 <th>Trạng thái</th>
                 <th>Thao tác</th>
             </tr>
-            <tr>
-                <td>MT0010</td>
-                <td>Thu Sang</td>
-                <td>Thẻ nhớ</td>
-                <td>Nguyễn thị Sang</td>
-                <td>Trần Thị Hạnh</td>
-                <td><span class="disable">Đang hoạt động</span></td>
+            <tr *ngFor="let item of ingestSrc">
+                <td>{{item.IngestTagId}}</td>
+                <td>{{item.Name}}</td>
+                <td>{{item.PositionId}}</td>
+                <td>{{item.IngestTagId}}</td>
+                <td>{{item.IngestTagId}}</td>
+                <td *ngIf="item.Status"><span class="disable">Đang hoạt động</span></td>
+                <td *ngIf="!item.Status"><span class="enable">Không hoạt đông</span></td>
                 <td>
                     <div class="action">
                         <i class="edit fas fa-edit"></i>
@@ -32,62 +33,7 @@
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td>MT0010</td>
-                <td>Thu Sang</td>
-                <td>Thẻ nhớ</td>
-                <td>Nguyễn thị Sang</td>
-                <td>Trần Thị Hạnh</td>
-                <td><span class="disable">Đang hoạt động</span></td>
-                <td>
-                    <div class="action">
-                        <i class="edit fas fa-edit"></i>
-                        <i class="delete far fa-trash-alt"></i>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>MT0010</td>
-                <td>Thu Sang</td>
-                <td>Thẻ nhớ</td>
-                <td>Nguyễn thị Sang</td>
-                <td>Trần Thị Hạnh</td>
-                <td><span class="disable">Đang hoạt động</span></td>
-                <td>
-                    <div class="action">
-                        <i class="edit fas fa-edit"></i>
-                        <i class="delete far fa-trash-alt"></i>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>MT0010</td>
-                <td>Thu Sang</td>
-                <td>Thẻ nhớ</td>
-                <td>Nguyễn thị Sang</td>
-                <td>Trần Thị Hạnh</td>
-                <td><span class="enable">Đang hoạt động</span></td>
-                <td>
-                    <div class="action">
-                        <i class="edit fas fa-edit"></i>
-                        <i class="delete far fa-trash-alt"></i>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>MT0010</td>
-                <td>Thu Sang</td>
-                <td>Thẻ nhớ</td>
-                <td>Nguyễn thị Sang</td>
-                <td>Trần Thị Hạnh</td>
-                <td><span class="disable">Đang hoạt động</span></td>
-                <td>
-                    <div class="action">
-                        <i class="edit fas fa-edit"></i>
-                        <i class="delete far fa-trash-alt"></i>
-                    </div>
-                </td>
-            </tr>
+            
         </table>
     </div>
 
@@ -96,7 +42,7 @@
             <span>Hiển thị 1-10 trên 89 kết quả</span>
         </div>
         <div class="paddingAction">
-            <select class="sizePage" name="sizePage">
+            <select class="sizePage" name="sizePage" title="chọn số dòng">
                 <option>10</option>
                 <option>20</option>
                 <option>30</option>
@@ -110,5 +56,8 @@
             <i class="btn btn-round">&gt;&gt;</i>
         </div>
     </div>
+    <p>{{ingestSrc}}</p>
 </div>
-<app-ingest-detail [isShow]=isShowAdd (change)="changeShowAdd()"></app-ingest-detail>
+
+
+<app-ingest-detail [isShow]=isShowAdd (changeShow)="changeShowAdd()"></app-ingest-detail>

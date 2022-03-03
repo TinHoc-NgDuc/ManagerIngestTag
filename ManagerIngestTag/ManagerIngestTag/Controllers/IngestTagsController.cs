@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ManagerIngest.Infrastructure;
 using ManagerIngest.Infrastructure.Datatable;
+using ManagerIngest.Models;
 
 namespace ManagerIngestTag.Controllers
 {
@@ -76,8 +77,18 @@ namespace ManagerIngestTag.Controllers
         // POST: api/IngestTags
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<IngestTag>> PostIngestTag(IngestTag ingestTag)
+        public async Task<ActionResult<IngestTagModel>> PostIngestTag(IngestTagModel ingestTagModel)
         {
+            ingestTagModel.IngestTagId = Guid.NewGuid();
+            var ingestTag = new IngestTag()
+            {
+                IngestTagId = ingestTagModel.IngestTagId,
+                cardholderName = ingestTagModel.cardholderName,
+                Name = ingestTagModel.Name,
+                Note = ingestTagModel.Note,
+                Status = ingestTagModel.Status,
+                Position = _context.Positions.Find(ingestTagModel.PositionId)
+            };
             _context.IngestTags.Add(ingestTag);
             await _context.SaveChangesAsync();
 

@@ -57,6 +57,7 @@
 .ingestDetail .input-checkbox {
     height: 15px;
 }
+
 .ingestDetail .input-checkbox:hover {
     cursor: pointer;
 }
@@ -73,9 +74,14 @@
     width: 250px;
     margin-bottom: 20px;
 }
-.ingestDetail .form-input .input-box select{
+
+.ingestDetail .form-input .input-box mat-select {
+    height: 30px;
+    line-height: 30px;
     cursor: pointer;
+    border: #333 solid 1px;
 }
+
 .ingestDetail .action {
     padding-top: 55px;
     text-align: right;

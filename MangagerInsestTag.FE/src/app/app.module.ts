@@ -1,5 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http'
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ManagerIngestComponent } from './components/manager-ingest/manager-ingest.component';
@@ -9,6 +15,10 @@ import { IngestTagDetailComponent } from './components/ingest-tag-detail/ingest-
 import { SubmitReturnTagComponent } from './components/submit-return-tag/submit-return-tag.component';
 import { NavigationPanelComponent } from './components/navigation-panel/navigation-panel.component';
 import { CategoryService } from './shared/category/category.service';
+import { EmployeeService } from './shared/employee/employee.service';
+import { PositionService } from './shared/position/position.service';
+import { IngestService } from './shared/ingest/ingest.service';
+
 
 
 @NgModule({
@@ -23,9 +33,15 @@ import { CategoryService } from './shared/category/category.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatCheckboxModule,
+    MatSelectModule
+
   ],
-  providers: [CategoryService],
+  providers: [CategoryService, EmployeeService, PositionService, IngestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

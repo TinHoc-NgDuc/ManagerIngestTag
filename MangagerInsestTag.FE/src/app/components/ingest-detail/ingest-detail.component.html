@@ -4,37 +4,49 @@
     <div class="content">
         <div class="Header">
             <span>Thêm mới thẻ ingest</span>
-            <div class="close" (click)="close()">
+            <div class="close" (click)="Close()">
                 <i class="fas fa-times"></i>
             </div>
         </div>
         <div class="form-input">
-            <div class="input-box">
-                <label for="nameTag" class="title">Tên thẻ(<span class="required">*</span>)</label>
-                <input type="text" name="nameTag" class="input-value input-text" placeholder="Nhập tên thẻ">
-            </div>
-            <div class="input-box">
-                <label class="title">Tên chủ thẻ(<span class="required">*</span>)</label>
-                <select class="input-value" title="Tên chủ thẻ">
-                    <option *ngFor="let empoyee of Empoyee">{{empoyee.name}}</option>
-                </select>
-            </div>
-            <div class="input-box">
-                <label class="title">Thể loại ingest(<span class="required">*</span>)</label>
-                <input type="text" class="input-value input-text" placeholder="Thể loại thẻ ingest">
-            </div>
-            <div class="input-box">
-                <label class="title">Ghi chú</label>
-                <input class="input-value input-text" type="text" placeholder="Nhập ghi chú">
-            </div>
-            <div class="input-box">
-                <label class="title">Hoạt động</label>
-                <input class="input-value input-checkbox" type="checkbox" title="Hoạt động">
-            </div>
-            <div class="action">
-               <i class="btn btn-primary btn-action">Lưu</i>
-               <i class="btn btn-warning btn-action" (click)="close()">Đóng</i>
-            </div>
+            <form #form="ngForm">
+                <div class="input-box">
+                    <label for="Name" class="title">Tên thẻ(<span class="required">*</span>)</label>
+                    <input type="text" name="Name" class="input-value input-text" placeholder="Nhập tên thẻ"
+                        [(ngModel)]="IngestCreate.Name">
+                </div>
+                <div class="input-box">
+                    <label class="title" for="CardholderName">Tên chủ thẻ(<span class="required">*</span>)</label>
+                    <mat-select class="input-value" title="Tên chủ thẻ" [(ngModel)]="employeeSelect.EmployeeId"
+                        name="CardholderName" placeholder="Tên chủ thẻ">
+                        <mat-option *ngFor="let empoyee of employeeSrc" [value]="empoyee.EmployeeId">
+                            {{empoyee.Name}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div class="input-box">
+                    <label class="title" for="Position">Thể loại ingest(<span class="required">*</span>)</label>
+                    <mat-select class="input-value" title="Thể loại ingest" [(ngModel)]="employeeSelect.PositionId"
+                        name="Position" placeholder="Thể loại ingest">
+                        <mat-option *ngFor="let position of positionSrc" [value]="position.PositionId">{{position.Name}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div class="input-box">
+                    <label class="title" for="Note">Ghi chú</label>
+                    <input class="input-value input-text" type="text" placeholder="Nhập ghi chú" name="Note"
+                        [(ngModel)]="IngestCreate.Note">
+                </div>
+                <div class="input-box">
+                    <label class="title" for="Status">Hoạt động</label>
+                    <mat-checkbox class="input-value input-checkbox" type="checkbox" title="Hoạt động" name="Status"
+                        [(ngModel)]="IngestCreate.Status"></mat-checkbox>
+                </div>
+                <div class="action">
+                    <i class="btn btn-primary btn-action" (click)="Save()">Lưu</i>
+                    <i class="btn btn-warning btn-action" (click)="Close()">Đóng</i>
+                </div>
+            </form>
         </div>
     </div>
 </div>

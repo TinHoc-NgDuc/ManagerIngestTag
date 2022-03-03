@@ -13,5 +13,6 @@ namespace ManagerIngest.Models
         public string Note { get; set; }
         public bool Status { get; set; }
         public string cardholderName { get; set; }
+        public Guid PositionId { get; set; }
     }
 }

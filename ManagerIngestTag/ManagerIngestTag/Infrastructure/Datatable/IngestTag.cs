@@ -15,6 +15,6 @@ namespace ManagerIngest.Infrastructure.Datatable
         public string Note { get; set; }
         public bool Status { get; set; }
         public string cardholderName { get; set; }
-
+        public Position Position { get; set; }
     }
 }

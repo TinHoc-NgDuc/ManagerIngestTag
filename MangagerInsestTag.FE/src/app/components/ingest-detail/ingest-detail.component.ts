@@ -1,4 +1,10 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
+import { Employee } from 'src/app/shared/employee/employee.model';
+import { EmployeeService } from 'src/app/shared/employee/employee.service';
+import { Ingest } from 'src/app/shared/ingest/ingest.model';
+import { IngestService } from 'src/app/shared/ingest/ingest.service';
+import { Position } from 'src/app/shared/position/position.model';
+import { PositionService } from 'src/app/shared/position/position.service';
 
 @Component({
   selector: 'app-ingest-detail',
@@ -7,20 +13,42 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 })
 export class IngestDetailComponent implements OnInit {
   @Input() isShow: boolean = false;
-  @Output() change = new EventEmitter();
-  constructor() { }
-  ngOnInit(): void {
+  @Output() changeShow = new EventEmitter();
 
+  constructor(private employeeService: EmployeeService, private positionService: PositionService, private ingestService: IngestService) { }
+  employeeSrc: Employee[] = [];
+  positionSrc: Position[] = [];
+  employeeSelect: Employee = new Employee();
+  IngestCreate: Ingest = new Ingest();
+
+  public ngOnInit(): void {
+    this.employeeService.GetAllEmployee().subscribe(s => {
+      s.forEach((element: any) => {
+        this.employeeSrc.push({
+          EmployeeId: element.employeeId,
+          Name: element.name,
+          PositionId: element.positionId,
+          ProductionUnitId: element.productionUnitId,
+        });
+      });
+    });
+    this.positionService.GetAllPositions().subscribe(s => {
+      s.forEach((element: any) => {
+        this.positionSrc.push({
+          PositionId: element.positionId,
+          Name: element.name
+        });
+      });
+    });
   }
 
-  close() {
-    //this.change.emit("");
+  Close() {
+    this.changeShow.emit();
   }
-
-  public Empoyee = [
-    { id: "1", name: "nhan viên 1" },
-    { id: "2", name: "nhan viên 2" },
-    { id: "3", name: "nhan viên 3" },
-    { id: "4", name: "nhan viên 4" },
-  ]
+  Save() {
+    this.IngestCreate.PositionId = this.employeeSelect.PositionId;
+    this.IngestCreate.CardholderName = this.employeeSrc.find(element => element.EmployeeId == this.employeeSelect.EmployeeId)?.Name;
+    this.ingestService.PostIngest(this.IngestCreate).subscribe(s => console.log(s));
+    this.Close();
+  }
 }

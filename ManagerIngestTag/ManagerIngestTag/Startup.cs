@@ -36,7 +36,7 @@ namespace ManagerIngestTag
             });
             services.AddDbContext<DataContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
-               //options.UseSqlServer(Configuration.GetConnectionString("DevHomeConnection")));
+            //options.UseSqlServer(Configuration.GetConnectionString("DevHomeConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +49,11 @@ namespace ManagerIngestTag
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ManagerIngestTag v1"));
             }
 
+            app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -59,6 +64,7 @@ namespace ManagerIngestTag
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
