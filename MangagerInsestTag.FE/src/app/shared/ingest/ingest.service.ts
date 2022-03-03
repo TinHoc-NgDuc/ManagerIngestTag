@@ -26,4 +26,8 @@ export class IngestService {
   public PostIngest(ingest: any): Observable<any> {
     return this.httpCilent.post<any>(this.url, ingest, this.httpOptions);
   }
+
+  public DeleteIngest(ingestId: any): Observable<any> {
+    return this.httpCilent.delete<any>(this.url + "/" + ingestId, this.httpOptions);
+  }
 }

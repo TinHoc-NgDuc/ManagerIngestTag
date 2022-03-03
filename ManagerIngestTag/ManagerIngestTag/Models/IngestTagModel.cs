@@ -15,4 +15,8 @@ namespace ManagerIngest.Models
         public string cardholderName { get; set; }
         public Guid PositionId { get; set; }
     }
+    public class IngestTagReturnModel: IngestTagModel
+    {
+        public string PositionName { get; set; }
+    }
 }

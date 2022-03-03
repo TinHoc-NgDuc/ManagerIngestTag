@@ -43,7 +43,8 @@
                         [(ngModel)]="IngestCreate.Status"></mat-checkbox>
                 </div>
                 <div class="action">
-                    <i class="btn btn-primary btn-action" (click)="Save()">Lưu</i>
+                    <i class="btn btn-primary btn-action" (click)="Save()" *ngIf=isAdd>Lưu</i>
+                    <i class="btn btn-primary btn-action" (click)="Edit()" *ngIf=isEdit>Sửa</i>
                     <i class="btn btn-warning btn-action" (click)="Close()">Đóng</i>
                 </div>
             </form>

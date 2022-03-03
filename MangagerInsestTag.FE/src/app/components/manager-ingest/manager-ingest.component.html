@@ -21,19 +21,19 @@
             <tr *ngFor="let item of ingestSrc">
                 <td>{{item.IngestTagId}}</td>
                 <td>{{item.Name}}</td>
-                <td>{{item.PositionId}}</td>
-                <td>{{item.IngestTagId}}</td>
-                <td>{{item.IngestTagId}}</td>
-                <td *ngIf="item.Status"><span class="disable">Đang hoạt động</span></td>
-                <td *ngIf="!item.Status"><span class="enable">Không hoạt đông</span></td>
+                <td>{{item.PositionName}}</td>
+                <td>{{item.CardholderName}}</td>
+                <td>{{item.Note}}</td>
+                <td *ngIf="item.Status"><span class="enable">Đang hoạt động</span></td>
+                <td *ngIf="!item.Status"><span class="disable">Không hoạt đông</span></td>
                 <td>
                     <div class="action">
-                        <i class="edit fas fa-edit"></i>
-                        <i class="delete far fa-trash-alt"></i>
+                        <i class="edit fas fa-edit" (click)="Edit(item)"></i>
+                        <i class="delete far fa-trash-alt" (click)="Delete(item)"></i>
                     </div>
                 </td>
             </tr>
-            
+
         </table>
     </div>
 
@@ -50,7 +50,7 @@
             <i class="btn btn-round">&lt;&lt;</i>
             <i class="btn btn-round">&lt;</i>
             <span>Trang</span>
-            <input type="number" value="1" placeholder="input value"/>
+            <input type="number" value="1" placeholder="input value" />
             <span> trên 9</span>
             <i class="btn btn-round">&gt;</i>
             <i class="btn btn-round">&gt;&gt;</i>
@@ -60,4 +60,4 @@
 </div>
 
 
-<app-ingest-detail [isShow]=isShowAdd (changeShow)="changeShowAdd()"></app-ingest-detail>
+<app-ingest-detail [isShow]=isShowAdd [isAdd]=isAdd [isEdit]=isEdit (changeShow)="changeShowAdd()"></app-ingest-detail>

@@ -4,5 +4,6 @@ export class Ingest {
     Note: string = '';
     Status: boolean = false;
     PositionId: string = '';
+    PositionName: string = '';
     CardholderName?: string = '';
 }

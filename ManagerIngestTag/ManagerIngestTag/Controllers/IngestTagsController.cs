@@ -24,9 +24,20 @@ namespace ManagerIngestTag.Controllers
 
         // GET: api/IngestTags
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IngestTag>>> GetIngestTags()
+        public async Task<ActionResult<IEnumerable<IngestTagReturnModel>>> GetIngestTags()
         {
-            return await _context.IngestTags.ToListAsync();
+            var result = from i in _context.IngestTags
+                         select new IngestTagReturnModel
+                         {
+                             IngestTagId = i.IngestTagId,
+                             cardholderName = i.cardholderName,
+                             Name = i.Name,
+                             Note = i.Note,
+                             PositionId = i.Position.PositionId,
+                             PositionName = i.Position.Name,
+                             Status = i.Status
+                         };
+            return await result.ToListAsync();
         }
 
         // GET: api/IngestTags/5

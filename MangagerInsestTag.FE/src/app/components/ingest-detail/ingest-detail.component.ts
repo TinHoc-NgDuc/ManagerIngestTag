@@ -13,6 +13,8 @@ import { PositionService } from 'src/app/shared/position/position.service';
 })
 export class IngestDetailComponent implements OnInit {
   @Input() isShow: boolean = false;
+  @Input() isAdd: boolean = false;
+  @Input() isEdit: boolean = false;
   @Output() changeShow = new EventEmitter();
 
   constructor(private employeeService: EmployeeService, private positionService: PositionService, private ingestService: IngestService) { }
@@ -48,7 +50,16 @@ export class IngestDetailComponent implements OnInit {
   Save() {
     this.IngestCreate.PositionId = this.employeeSelect.PositionId;
     this.IngestCreate.CardholderName = this.employeeSrc.find(element => element.EmployeeId == this.employeeSelect.EmployeeId)?.Name;
-    this.ingestService.PostIngest(this.IngestCreate).subscribe(s => console.log(s));
-    this.Close();
+    this.ingestService.PostIngest(this.IngestCreate).subscribe(s => {
+      this.ClearData();
+      this.Close();
+    });
+  }
+  ClearData() {
+    this.employeeSelect = new Employee();
+    this.IngestCreate = new Ingest();
+  }
+  Edit(){
+    
   }
 }
