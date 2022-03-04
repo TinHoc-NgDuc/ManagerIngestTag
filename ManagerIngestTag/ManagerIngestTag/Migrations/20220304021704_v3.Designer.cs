@@ -4,14 +4,16 @@ using ManagerIngest.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ManagerIngestTag.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220304021704_v3")]
+    partial class v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,14 +137,12 @@ namespace ManagerIngestTag.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("cardholderId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("cardholderName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IngestTagId");
 
                     b.HasIndex("PositionId");
-
-                    b.HasIndex("cardholderId");
 
                     b.ToTable("IngestTags");
                 });
@@ -382,14 +382,6 @@ namespace ManagerIngestTag.Migrations
                     b.HasOne("ManagerIngest.Infrastructure.Datatable.Position", "Position")
                         .WithMany()
                         .HasForeignKey("PositionId");
-
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("cardholderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
 
                     b.Navigation("Position");
                 });

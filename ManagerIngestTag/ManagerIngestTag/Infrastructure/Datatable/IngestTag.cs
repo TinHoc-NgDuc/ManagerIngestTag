@@ -11,10 +11,15 @@ namespace ManagerIngest.Infrastructure.Datatable
     {
         [Key]
         public Guid IngestTagId { get; set; }
+        public string IngestCode { get; set; }
         public string Name { get; set; }
         public string Note { get; set; }
         public bool Status { get; set; }
-        public string cardholderName { get; set; }
         public Position Position { get; set; }
+
+        [ForeignKey("Employee")]
+        public Guid cardholderId { get; set; }
+        public Employee Employee { get; set; }
+
     }
 }

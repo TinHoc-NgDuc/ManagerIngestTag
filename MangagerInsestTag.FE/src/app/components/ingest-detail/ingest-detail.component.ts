@@ -15,13 +15,20 @@ export class IngestDetailComponent implements OnInit {
   @Input() isShow: boolean = false;
   @Input() isAdd: boolean = false;
   @Input() isEdit: boolean = false;
+  @Input() ingestData: Ingest = new Ingest();
+  @Input() employeeSelect: Employee = new Employee();
   @Output() changeShow = new EventEmitter();
 
-  constructor(private employeeService: EmployeeService, private positionService: PositionService, private ingestService: IngestService) { }
   employeeSrc: Employee[] = [];
   positionSrc: Position[] = [];
-  employeeSelect: Employee = new Employee();
-  IngestCreate: Ingest = new Ingest();
+
+
+  constructor
+    (
+      private employeeService: EmployeeService,
+      private positionService: PositionService,
+      private ingestService: IngestService
+    ) { }
 
   public ngOnInit(): void {
     this.employeeService.GetAllEmployee().subscribe(s => {
@@ -45,21 +52,40 @@ export class IngestDetailComponent implements OnInit {
   }
 
   Close() {
+    this.ClearData();
     this.changeShow.emit();
   }
   Save() {
-    this.IngestCreate.PositionId = this.employeeSelect.PositionId;
-    this.IngestCreate.CardholderName = this.employeeSrc.find(element => element.EmployeeId == this.employeeSelect.EmployeeId)?.Name;
-    this.ingestService.PostIngest(this.IngestCreate).subscribe(s => {
+    this.ingestData.PositionId = this.employeeSelect.PositionId;
+    this.ingestData.CardholderName = this.employeeSrc.find(element => element.EmployeeId == this.employeeSelect.EmployeeId)?.Name;
+    this.ingestData.EmployeeId = this.employeeSelect.EmployeeId;
+    this.ingestData.cardholderId = this.employeeSelect.EmployeeId;
+    // debugger
+    console.log(this.ingestData);
+    this.ingestService.PostIngest(this.ingestData).subscribe(s => {
       this.ClearData();
       this.Close();
     });
   }
   ClearData() {
-    this.employeeSelect = new Employee();
-    this.IngestCreate = new Ingest();
+    this.employeeSelect.Name = "";
+    this.employeeSelect.PositionId = "";
+    this.employeeSelect.EmployeeId = "";
+    this.employeeSelect.ProductionUnitId = "";
+    //this.employeeSelect = new Employee();
+    this.ingestData = new Ingest();
   }
-  Edit(){
-    
+  Edit() {
+    this.ingestData.PositionId = this.employeeSelect.PositionId;
+    this.ingestData.CardholderName = this.employeeSrc.find(element => element.EmployeeId == this.employeeSelect.EmployeeId)?.Name;
+    this.ingestData.EmployeeId = this.employeeSelect.EmployeeId;
+    this.ingestData.cardholderId = this.employeeSelect.EmployeeId;
+    // debugger
+    console.log(this.ingestData);
+    this.ingestService.PutIngest(this.ingestData).subscribe(s => {
+      this.ClearData();
+      this.Close();
+    });
   }
+
 }

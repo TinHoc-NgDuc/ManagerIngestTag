@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ManagerIngest.Infrastructure;
 using ManagerIngest.Infrastructure.Datatable;
 using ManagerIngest.Models;
+using ManagerIngestTag.Models;
 
 namespace ManagerIngestTag.Controllers
 {
@@ -30,14 +31,73 @@ namespace ManagerIngestTag.Controllers
                          select new IngestTagReturnModel
                          {
                              IngestTagId = i.IngestTagId,
-                             cardholderName = i.cardholderName,
+                             IngestCode = i.IngestCode,
                              Name = i.Name,
                              Note = i.Note,
                              PositionId = i.Position.PositionId,
                              PositionName = i.Position.Name,
-                             Status = i.Status
+                             Status = i.Status,
+                             cardholderId = i.cardholderId,
+                             CardholderName = i.Employee.Name,
+                             EmployeeId = i.Employee.EmployeeId
+
                          };
             return await result.ToListAsync();
+        }
+
+        [HttpPost("getfilter")]
+        public async Task<ActionResult<IEnumerable<IngestTagReturnModel>>> GetFilter(Filter filter)
+        {
+            if(filter == null)
+            {
+                var result = from i in _context.IngestTags
+                             select new IngestTagReturnModel
+                             {
+                                 IngestTagId = i.IngestTagId,
+                                 IngestCode = i.IngestCode,
+                                 Name = i.Name,
+                                 Note = i.Note,
+                                 PositionId = i.Position.PositionId,
+                                 PositionName = i.Position.Name,
+                                 Status = i.Status,
+                                 cardholderId = i.cardholderId,
+                                 CardholderName = i.Employee.Name,
+                                 EmployeeId = i.Employee.EmployeeId
+
+                             };
+                result = result.Take(filter.PageSize).Skip(filter.PageSize * (filter.NumberPage - 1));
+                return await result.ToListAsync();
+            }
+            else
+            {
+                var result = from i in _context.IngestTags
+                             where (i.Name.Contains(filter.Query) || i.IngestCode.Contains(filter.Query) || i.Employee.Name.Contains(filter.Query))
+                             select new IngestTagReturnModel
+                             {
+                                 IngestTagId = i.IngestTagId,
+                                 IngestCode = i.IngestCode,
+                                 Name = i.Name,
+                                 Note = i.Note,
+                                 PositionId = i.Position.PositionId,
+                                 PositionName = i.Position.Name,
+                                 Status = i.Status,
+                                 cardholderId = i.cardholderId,
+                                 CardholderName = i.Employee.Name,
+                                 EmployeeId = i.Employee.EmployeeId
+
+                             };
+                result = result.Take(filter.PageSize).Skip(filter.PageSize*(filter.NumberPage - 1));
+                return await result.ToListAsync();
+            }
+        }
+        [HttpPost("getNumberPage")]
+        public async Task<ActionResult<int>> GetNumberPage(Filter filter)
+        {
+            var query = from i in _context.IngestTags
+                         select i;
+            var list = await query.ToListAsync();
+            int resutl = list.Count() / filter.PageSize;
+            return resutl;
         }
 
         // GET: api/IngestTags/5
@@ -57,14 +117,26 @@ namespace ManagerIngestTag.Controllers
         // PUT: api/IngestTags/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutIngestTag(Guid id, IngestTag ingestTag)
+        public async Task<IActionResult> PutIngestTag(Guid id, IngestTagModel ingestTag)
         {
             if (id != ingestTag.IngestTagId)
             {
                 return BadRequest();
             }
-
-            _context.Entry(ingestTag).State = EntityState.Modified;
+            var itemDelte = _context.IngestTags.Find(ingestTag.IngestTagId);
+            _context.Remove(itemDelte);
+            var ingest = new IngestTag()
+            {
+                IngestTagId = ingestTag.IngestTagId,
+                Name = ingestTag.Name,
+                Note = ingestTag.Note,
+                Status = ingestTag.Status,
+                Position = _context.Positions.Find(ingestTag.PositionId),
+                IngestCode = ingestTag.IngestCode,
+                cardholderId = ingestTag.cardholderId,
+                Employee = _context.Employees.Find(ingestTag.EmployeeId)
+            };
+            _context.Add(ingest);
 
             try
             {
@@ -85,20 +157,44 @@ namespace ManagerIngestTag.Controllers
             return NoContent();
         }
 
-        // POST: api/IngestTags
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //POST: api/IngestTags
+        //To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<IngestTagModel>> PostIngestTag(IngestTagModel ingestTagModel)
         {
+            var query = (from i in _context.IngestTags
+                         orderby i.IngestCode descending
+                         select i
+                          ).Take(1).ToList();
+            int count;
+            string ingestCode = "MT";
+            if (query.Count == 0)
+            {
+                ingestCode = "MT00000";
+            }
+            else
+            {
+                var idCode = query[0].IngestCode;
+                count = int.Parse(idCode.Substring(2, idCode.Length - 2));
+                count++;
+                int index = count / 10;
+                for (var i = index; i < 5; i++)
+                {
+                    ingestCode += "0";
+                }
+                ingestCode += count.ToString();
+            }
             ingestTagModel.IngestTagId = Guid.NewGuid();
             var ingestTag = new IngestTag()
             {
                 IngestTagId = ingestTagModel.IngestTagId,
-                cardholderName = ingestTagModel.cardholderName,
                 Name = ingestTagModel.Name,
                 Note = ingestTagModel.Note,
                 Status = ingestTagModel.Status,
-                Position = _context.Positions.Find(ingestTagModel.PositionId)
+                Position = _context.Positions.Find(ingestTagModel.PositionId),
+                IngestCode = ingestCode,
+                cardholderId = ingestTagModel.cardholderId,
+                Employee = _context.Employees.Find(ingestTagModel.EmployeeId)
             };
             _context.IngestTags.Add(ingestTag);
             await _context.SaveChangesAsync();

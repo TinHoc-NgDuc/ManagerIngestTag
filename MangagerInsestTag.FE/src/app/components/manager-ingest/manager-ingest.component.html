@@ -3,9 +3,9 @@
     <div class="control">
         <div class="action-button">
             <i class="btn btn-success">Tải lại</i>
-            <i class="btn btn-primary" (click)="changeShowAdd()">Thêm mới</i>
+            <i class="btn btn-primary" (click)="Add()">Thêm mới</i>
         </div>
-        <div class="search"><input class="form-control" placeholder="Tìm kiếm..." title="Tìm kiếm..."></div>
+        <div class="search"><input class="form-control" placeholder="Tìm kiếm..." title="Tìm kiếm..." (keyup)="Search($event)"></div>
     </div>
     <div class="gListIngest">
         <table>
@@ -19,7 +19,7 @@
                 <th>Thao tác</th>
             </tr>
             <tr *ngFor="let item of ingestSrc">
-                <td>{{item.IngestTagId}}</td>
+                <td>{{item.IngestCode}}</td>
                 <td>{{item.Name}}</td>
                 <td>{{item.PositionName}}</td>
                 <td>{{item.CardholderName}}</td>
@@ -42,22 +42,19 @@
             <span>Hiển thị 1-10 trên 89 kết quả</span>
         </div>
         <div class="paddingAction">
-            <select class="sizePage" name="sizePage" title="chọn số dòng">
-                <option>10</option>
-                <option>20</option>
-                <option>30</option>
+            <select class="sizePage" name="sizePage" title="chọn số dòng" [(ngModel)]="sizeChoose">
+                <option *ngFor="let item of pageSize">{{item}}</option>
             </select>
             <i class="btn btn-round">&lt;&lt;</i>
             <i class="btn btn-round">&lt;</i>
             <span>Trang</span>
             <input type="number" value="1" placeholder="input value" />
-            <span> trên 9</span>
+            <span> trên {{numberPage}}</span>
             <i class="btn btn-round">&gt;</i>
             <i class="btn btn-round">&gt;&gt;</i>
         </div>
     </div>
-    <p>{{ingestSrc}}</p>
 </div>
-
-
-<app-ingest-detail [isShow]=isShowAdd [isAdd]=isAdd [isEdit]=isEdit (changeShow)="changeShowAdd()"></app-ingest-detail>
+<app-ingest-detail [isShow]=isShowAdd [isAdd]=isAdd [isEdit]=isEdit (changeShow)="changeShowAdd()" [ingestData]=ingestEdit
+[employeeSelect]=employeeSelect
+></app-ingest-detail>

@@ -13,7 +13,7 @@
                 <div class="input-box">
                     <label for="Name" class="title">Tên thẻ(<span class="required">*</span>)</label>
                     <input type="text" name="Name" class="input-value input-text" placeholder="Nhập tên thẻ"
-                        [(ngModel)]="IngestCreate.Name">
+                        [(ngModel)]="ingestData.Name">
                 </div>
                 <div class="input-box">
                     <label class="title" for="CardholderName">Tên chủ thẻ(<span class="required">*</span>)</label>
@@ -23,6 +23,7 @@
                             {{empoyee.Name}}
                         </mat-option>
                     </mat-select>
+                    <p>{{employeeSelect.EmployeeId}}</p>
                 </div>
                 <div class="input-box">
                     <label class="title" for="Position">Thể loại ingest(<span class="required">*</span>)</label>
@@ -35,12 +36,12 @@
                 <div class="input-box">
                     <label class="title" for="Note">Ghi chú</label>
                     <input class="input-value input-text" type="text" placeholder="Nhập ghi chú" name="Note"
-                        [(ngModel)]="IngestCreate.Note">
+                        [(ngModel)]="ingestData.Note">
                 </div>
                 <div class="input-box">
                     <label class="title" for="Status">Hoạt động</label>
                     <mat-checkbox class="input-value input-checkbox" type="checkbox" title="Hoạt động" name="Status"
-                        [(ngModel)]="IngestCreate.Status"></mat-checkbox>
+                        [(ngModel)]="ingestData.Status"></mat-checkbox>
                 </div>
                 <div class="action">
                     <i class="btn btn-primary btn-action" (click)="Save()" *ngIf=isAdd>Lưu</i>

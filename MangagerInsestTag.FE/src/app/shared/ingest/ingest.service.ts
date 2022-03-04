@@ -27,6 +27,15 @@ export class IngestService {
     return this.httpCilent.post<any>(this.url, ingest, this.httpOptions);
   }
 
+  public PutIngest(ingest: any): Observable<any> {
+    return this.httpCilent.put<any>(this.url + "/" + ingest.IngestTagId, ingest, this.httpOptions);
+  }
+  public GetFilter(filter: any): Observable<any> {
+    return this.httpCilent.post<any>(this.url + "/getfilter", filter, this.httpOptions);
+  }
+  public GetNumberPage(filter: any){
+    return this.httpCilent.post<any>(this.url + "/getNumberPage", filter, this.httpOptions);
+  }
   public DeleteIngest(ingestId: any): Observable<any> {
     return this.httpCilent.delete<any>(this.url + "/" + ingestId, this.httpOptions);
   }
