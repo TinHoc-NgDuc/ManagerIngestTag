@@ -33,7 +33,7 @@ namespace ManagerIngestTag.Controllers
                              StatusCode = st.StatusCode,
                              StatusIngestId = st.StatusIngestId
                          };
-            return await resutl.ToListAsync(); ;
+            return await resutl.ToListAsync();
         }
         #region not using
         //// GET: api/StatusIngests/5

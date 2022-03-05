@@ -8,7 +8,6 @@ import { Ingest } from './ingest.model';
 })
 export class IngestService {
 
-
   constructor(private httpCilent: HttpClient) { }
   //init
   private REST_API_SERVER = 'https://localhost:5001';

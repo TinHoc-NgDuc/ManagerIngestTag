@@ -18,6 +18,8 @@ import { CategoryService } from './shared/category/category.service';
 import { EmployeeService } from './shared/employee/employee.service';
 import { PositionService } from './shared/position/position.service';
 import { IngestService } from './shared/ingest/ingest.service';
+import { StatusIngestService } from './shared/StatusInges/status-ingest.service';
+import { ProductionUnit } from './shared/ProductionUnit/production-unit.model';
 
 
 
@@ -41,7 +43,7 @@ import { IngestService } from './shared/ingest/ingest.service';
     MatSelectModule
 
   ],
-  providers: [CategoryService, EmployeeService, PositionService, IngestService],
+  providers: [CategoryService, EmployeeService, PositionService, IngestService,StatusIngestService,ProductionUnit],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
