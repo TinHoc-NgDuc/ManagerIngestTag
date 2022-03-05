@@ -10,6 +10,7 @@ namespace ManagerIngest.Infrastructure.Datatable
     {
         [Key]
         public Guid StatusIngestId { get; set; }
+        public string StatusCode { get; set; }
         public string Name { get; set; }
     }
 }

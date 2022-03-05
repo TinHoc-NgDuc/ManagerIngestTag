@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ManagerIngest.Infrastructure;
 using ManagerIngest.Infrastructure.Datatable;
+using ManagerIngest.Models;
 
 namespace ManagerIngestTag.Controllers
 {
@@ -23,67 +24,78 @@ namespace ManagerIngestTag.Controllers
 
         // GET: api/StatusIngests
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StatusIngest>>> GetStatusIngests()
+        public async Task<ActionResult<IEnumerable<StatusIngestModel>>> GetStatusIngests()
         {
-            return await _context.StatusIngests.ToListAsync();
+            var resutl = from st in _context.StatusIngests
+                         select new StatusIngestModel()
+                         {
+                             Name = st.Name,
+                             StatusCode = st.StatusCode,
+                             StatusIngestId = st.StatusIngestId
+                         };
+            return await resutl.ToListAsync(); ;
         }
+        #region not using
+        //// GET: api/StatusIngests/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<StatusIngest>> GetStatusIngest(Guid id)
+        //{
+        //    var statusIngest = await _context.StatusIngests.FindAsync(id);
 
-        // GET: api/StatusIngests/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<StatusIngest>> GetStatusIngest(Guid id)
-        {
-            var statusIngest = await _context.StatusIngests.FindAsync(id);
+        //    if (statusIngest == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (statusIngest == null)
-            {
-                return NotFound();
-            }
+        //    return statusIngest;
+        //}
 
-            return statusIngest;
-        }
+        //// PUT: api/StatusIngests/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutStatusIngest(Guid id, StatusIngest statusIngest)
+        //{
+        //    if (id != statusIngest.StatusIngestId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-        // PUT: api/StatusIngests/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutStatusIngest(Guid id, StatusIngest statusIngest)
-        {
-            if (id != statusIngest.StatusIngestId)
-            {
-                return BadRequest();
-            }
+        //    _context.Entry(statusIngest).State = EntityState.Modified;
 
-            _context.Entry(statusIngest).State = EntityState.Modified;
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!StatusIngestExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StatusIngestExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    return NoContent();
+        //}
 
-            return NoContent();
-        }
+        //// POST: api/StatusIngests
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<StatusIngest>> PostStatusIngest(StatusIngest statusIngest)
+        //{
+        //    _context.StatusIngests.Add(statusIngest);
+        //    await _context.SaveChangesAsync();
 
-        // POST: api/StatusIngests
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<StatusIngest>> PostStatusIngest(StatusIngest statusIngest)
-        {
-            _context.StatusIngests.Add(statusIngest);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetStatusIngest", new { id = statusIngest.StatusIngestId }, statusIngest);
-        }
-
+        //    return CreatedAtAction("GetStatusIngest", new { id = statusIngest.StatusIngestId }, statusIngest);
+        //}
+        //private bool StatusIngestExists(Guid id)
+        //{
+        //    return _context.StatusIngests.Any(e => e.StatusIngestId == id);
+        //}
+        #endregion
         // DELETE: api/StatusIngests/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStatusIngest(Guid id)
@@ -98,11 +110,6 @@ namespace ManagerIngestTag.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool StatusIngestExists(Guid id)
-        {
-            return _context.StatusIngests.Any(e => e.StatusIngestId == id);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace ManagerIngest.Models
     public class StatusIngestModel
     {
         public Guid StatusIngestId { get; set; }
+        public string StatusCode { get; set; }
         public string Name { get; set; }
     }
 }

@@ -212,6 +212,9 @@ namespace ManagerIngestTag.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("StatusCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("StatusIngestId");
 
                     b.ToTable("StatusIngests");
