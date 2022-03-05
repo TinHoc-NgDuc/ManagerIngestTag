@@ -48,7 +48,7 @@ namespace ManagerIngestTag.Controllers
         [HttpPost("getfilter")]
         public async Task<ActionResult<IEnumerable<IngestTagReturnModel>>> GetFilter(Filter filter)
         {
-            if(filter == null)
+            if (filter == null)
             {
                 var result = from i in _context.IngestTags
                              select new IngestTagReturnModel
@@ -86,7 +86,7 @@ namespace ManagerIngestTag.Controllers
                                  EmployeeId = i.Employee.EmployeeId
 
                              };
-                result = result.Take(filter.PageSize).Skip(filter.PageSize*(filter.NumberPage - 1));
+                result = result.Take(filter.PageSize).Skip(filter.PageSize * (filter.NumberPage - 1));
                 return await result.ToListAsync();
             }
         }
@@ -94,24 +94,52 @@ namespace ManagerIngestTag.Controllers
         public async Task<ActionResult<int>> GetNumberPage(Filter filter)
         {
             var query = from i in _context.IngestTags
-                         select i;
+                        select i;
             var list = await query.ToListAsync();
             int resutl = list.Count() / filter.PageSize;
+            if (resutl <= 0)
+            {
+                resutl = 1;
+            }
             return resutl;
         }
-
+        [HttpGet("getSumRecord")]
+        public async Task<ActionResult<int>> GetSumRecord() {
+            var query = from i in _context.IngestTags
+                        select i;
+            var list = await query.ToListAsync();
+            return list.Count();
+        }
         // GET: api/IngestTags/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<IngestTag>> GetIngestTag(Guid id)
+        public async Task<ActionResult<IngestTagReturnModel>> GetIngestTag(Guid id)
         {
             var ingestTag = await _context.IngestTags.FindAsync(id);
+
+
+            var result = from i in _context.IngestTags
+                         where (i.IngestTagId == id)
+                         select new IngestTagReturnModel
+                         {
+                             IngestTagId = i.IngestTagId,
+                             IngestCode = i.IngestCode,
+                             Name = i.Name,
+                             Note = i.Note,
+                             PositionId = i.Position.PositionId,
+                             PositionName = i.Position.Name,
+                             Status = i.Status,
+                             cardholderId = i.cardholderId,
+                             CardholderName = i.Employee.Name,
+                             EmployeeId = i.Employee.EmployeeId
+
+                         };
 
             if (ingestTag == null)
             {
                 return NotFound();
             }
 
-            return ingestTag;
+            return await result.FirstOrDefaultAsync();
         }
 
         // PUT: api/IngestTags/5

@@ -28,6 +28,7 @@ export class ManagerIngestComponent implements OnInit {
   sizeChoose: number = 10;
   numberPage: number = 0;
   numberPageChoose: number = 1;
+  SumRecord: number = 0;
   filter: Filter = new Filter();
   ngOnInit(): void {
     this.filter.Query = "";
@@ -57,8 +58,10 @@ export class ManagerIngestComponent implements OnInit {
       });
     });
     this.ingestService.GetNumberPage(this.filter).subscribe(s => {
-      console.log(s);
       this.numberPage = s;
+    });
+    this.ingestService.GetSumRecord().subscribe(s => {
+      this.SumRecord = s;
     });
   }
   changeShowAdd() {
@@ -96,7 +99,7 @@ export class ManagerIngestComponent implements OnInit {
     this.filter.Query = event.target.value;
     this.filter.NumberPage = this.numberPageChoose;
     this.filter.PageSize = this.sizeChoose;
-    this.ingestService.GetFilter(event.target.value).subscribe(s => {
+    this.ingestService.GetFilter(this.filter).subscribe(s => {
       s.forEach((element: any) => {
         this.ingestSrc.push({
           IngestTagId: element.ingestTagId,
@@ -113,4 +116,57 @@ export class ManagerIngestComponent implements OnInit {
       });
     });
   }
+
+  UpdateData() {
+    this.ingestSrc = [];
+    this.filter.Query = "";
+    this.filter.NumberPage = this.numberPageChoose;
+    this.filter.PageSize = this.sizeChoose;
+    this.Filter();
+  }
+  Filter() {
+    this.ingestService.GetFilter(this.filter).subscribe(s => {
+      s.forEach((element: any) => {
+        this.ingestSrc.push({
+          IngestTagId: element.ingestTagId,
+          IngestCode: element.ingestCode,
+          Name: element.name,
+          Note: element.note,
+          PositionId: element.positionId,
+          PositionName: element.positionName,
+          Status: element.status,
+          EmployeeId: element.employeeId,
+          cardholderId: element.cardholderId,
+          CardholderName: element.cardholderName
+        });
+      });
+    });
+  }
+  Backward() {
+    if (this.numberPageChoose - 10 >= 1) {
+      this.numberPageChoose -= 10;
+      this.Filter();
+    }
+
+  }
+
+  Back() {
+    if (this.numberPageChoose - 1 >= 1) {
+      this.numberPageChoose--;
+      this.Filter();
+    }
+  }
+  Next() {
+    if (this.numberPageChoose + 1 <= this.numberPage) {
+      this.numberPageChoose++;
+      this.Filter();
+    }
+  }
+  ForwardNext() {
+    if (this.numberPageChoose + 1 <= this.numberPage) {
+      this.numberPageChoose += 10;
+      this.Filter();
+    }
+  }
+
 }

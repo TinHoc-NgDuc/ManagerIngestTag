@@ -36,6 +36,9 @@ export class IngestService {
   public GetNumberPage(filter: any){
     return this.httpCilent.post<any>(this.url + "/getNumberPage", filter, this.httpOptions);
   }
+  public GetSumRecord(){
+    return this.httpCilent.get<any>(this.url + "/getSumRecord", this.httpOptions);
+  }
   public DeleteIngest(ingestId: any): Observable<any> {
     return this.httpCilent.delete<any>(this.url + "/" + ingestId, this.httpOptions);
   }

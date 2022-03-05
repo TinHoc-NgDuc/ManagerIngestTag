@@ -39,19 +39,19 @@
 
     <div class="padding col-12">
         <div class="title">
-            <span>Hiển thị 1-10 trên 89 kết quả</span>
+            <span>Hiển thị {{numberPage*(sizeChoose-1)}}-{{numberPage*sizeChoose}} trên {{SumRecord}} kết quả</span>
         </div>
         <div class="paddingAction">
-            <select class="sizePage" name="sizePage" title="chọn số dòng" [(ngModel)]="sizeChoose">
+            <select class="sizePage" name="sizePage" title="chọn số dòng" [(ngModel)]="sizeChoose" (change)="UpdateData()">
                 <option *ngFor="let item of pageSize">{{item}}</option>
             </select>
-            <i class="btn btn-round">&lt;&lt;</i>
-            <i class="btn btn-round">&lt;</i>
+            <i class="btn btn-round" (click)="Backward()">&lt;&lt;</i>
+            <i class="btn btn-round" (click)="Back()">&lt;</i>
             <span>Trang</span>
-            <input type="number" value="1" placeholder="input value" />
+            <input type="number" value="{{numberPageChoose}}" placeholder="input value" />
             <span> trên {{numberPage}}</span>
-            <i class="btn btn-round">&gt;</i>
-            <i class="btn btn-round">&gt;&gt;</i>
+            <i class="btn btn-round" (click)="Next()">&gt;</i>
+            <i class="btn btn-round" (click)="ForwardNext()" >&gt;&gt;</i>
         </div>
     </div>
 </div>

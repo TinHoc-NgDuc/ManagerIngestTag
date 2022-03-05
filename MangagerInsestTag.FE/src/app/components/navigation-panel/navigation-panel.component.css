@@ -51,7 +51,10 @@ a{
     color: #333;
     cursor: pointer;
 }
-
+.nav-item a{
+    display: inline-block;
+    line-height: 50px;
+}
 .nav-item i {
     padding-right: 10px;
     color: cadetblue;
