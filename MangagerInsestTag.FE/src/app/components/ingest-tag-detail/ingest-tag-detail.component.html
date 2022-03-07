@@ -1,4 +1,4 @@
-<div class="ingestTagDetail" *ngIf="IsShow">
+<div class="ingestTagDetail" *ngIf="isShow">
     <div class="bg"></div>
     <div class="content">
         <div class="header">
@@ -8,34 +8,77 @@
             <div class="input-text row">
                 <div class="col-md-6">
                     <div class="item">
-                        <span class="title">Tên file(Tên đề tài): </span>
-                        <input class="input-value" type="text">
+                        <div class="left">
+                            <span class="title">Tên file(Tên đề tài): </span>
+                        </div>
+                        <div class="right">
+                            <input class="input-value" type="text">
+                            <div *ngFor="let item of topicSrc" [hidden]="!item.IsShow" class="filter">
+                                <span>{{item.Name}}</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="item">
-                        <span class="title">Phóng viên: </span>
-                        <input class="input-value" type="text">
+                        <div class="left">
+                            <label for="employee" class="title">Phóng viên: </label>
+                        </div>
+                        <div class="right">
+                            <input class="input-value" name="employee" type="text" (keyup)="eplChangePvValue($event)">
+                            <div *ngFor="let item of employeeReportSrc" [hidden]="!item.IsShow" class="filter">
+                                <span>{{item.Name}}</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="item">
-                        <span class="title">Người đăng ký: </span>
-                        <input class="input-value" type="text">
+                        <div class="left">
+                            <span class="title">Người đăng ký: </span>
+                        </div>
+                        <div class="right">
+                            <input class="input-value" type="text">
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="item">
-                        <span class="title">Đơn vị sản xuất: </span>
-                        <input class="input-value" type="text">
+                        <div class="left">
+                            <label for="productionUnit" class="title">Đơn vị sản xuất: </label>
+                        </div>
+                        <div class="right">
+                            <input class="input-value" name="productionUnit" type="text"
+                                (keyup)="proUnitChangenValue($event)">
+                            <div *ngFor="let item of productionUnitSrc" [hidden]="!item.IsShow" class="filter">
+                                <span>{{item.Name}}</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="item">
-                        <span class="title">Quay phim: </span>
-                        <input class="input-value" type="text">
+                        <div class="item">
+                            <div class="left">
+                                <label for="cameraman" class="title">Quay phim: </label>
+                            </div>
+                            <div class="right">
+                                <input class="input-value" name="cameraman" type="text"
+                                    (keyup)="eplChangeQPValue($event)">
+                                <div *ngFor="let item of employeeCameramanSrc" [hidden]="!item.IsShow" class="filter">
+                                    <span>{{item.Name}}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="item">
-                        <span class="title">Chương trình phát sóng: </span>
-                        <input class="input-value" type="text">
+                        <div class="left">
+                            <span class="title">Chương trình phát sóng: </span>
+                        </div>
+                        <div class="right">
+                            <input class="input-value" type="text">
+                            <div *ngFor="let item of programShowSrc"  class="filter">
+                                <span>{{item.Name}}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="input-checkbox">
                 <div class="item">
                     <label>Bản tin: </label>
@@ -141,9 +184,9 @@
             </div>
         </div>
         <div class="action">
-            <a href="#"><i class="btn btn-primary">Lưu và đóng</i></a>
-            <a href="#"><i class="btn btn-primary">Trình duyệt</i></a>
-            <a href="#"><i class="btn btn-warning">Đóng</i></a>
+            <i class="btn btn-primary" (click)="Save()">Lưu và đóng</i>
+            <i class="btn btn-primary">Trình duyệt</i>
+            <i class="btn btn-warning" (click)="Close()">Đóng</i>
         </div>
     </div>
 </div>

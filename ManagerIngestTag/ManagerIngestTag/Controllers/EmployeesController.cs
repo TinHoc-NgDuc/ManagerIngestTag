@@ -37,6 +37,38 @@ namespace ManagerIngestTag.Controllers
             return await query.ToListAsync();
         }
 
+        // GET: api/Employees
+        [HttpGet("reporter")]
+        public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployeesReporter()
+        {
+            var query = from e in _context.Employees
+                        where (e.Position.PositionId == Guid.Parse("350B3DC0-3DCF-45BC-A41C-943621E511EC"))
+                        select new EmployeeModel
+                        {
+                            EmployeeId = e.EmployeeId,
+                            Name = e.Name,
+                            PositionId = e.Position.PositionId,
+                            ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                        };
+            return await query.ToListAsync();
+        }
+
+        // GET: api/Employees
+        [HttpGet("cameraman")]
+        public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployeesCameraman()
+        {
+            var query = from e in _context.Employees
+                        where (e.Position.PositionId == Guid.Parse("04B29736-6E76-42DE-AE4A-9967BD1A1CFB"))
+                        select new EmployeeModel
+                        {
+                            EmployeeId = e.EmployeeId,
+                            Name = e.Name,
+                            PositionId = e.Position.PositionId,
+                            ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                        };
+            return await query.ToListAsync();
+        }
+
         // GET: api/Employees/5
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeModel>> GetEmployee(Guid id)

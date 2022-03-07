@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +20,8 @@ import { PositionService } from './shared/position/position.service';
 import { IngestService } from './shared/ingest/ingest.service';
 import { StatusIngestService } from './shared/StatusInges/status-ingest.service';
 import { ProductionUnit } from './shared/ProductionUnit/production-unit.model';
+import { ProgramShowService } from './shared/ProgramShow/program-show.service';
+import { TopicService } from './shared/Topics/topic.service';
 
 
 
@@ -43,7 +45,7 @@ import { ProductionUnit } from './shared/ProductionUnit/production-unit.model';
     MatSelectModule
 
   ],
-  providers: [CategoryService, EmployeeService, PositionService, IngestService,StatusIngestService,ProductionUnit],
+  providers: [CategoryService, EmployeeService, PositionService, IngestService, StatusIngestService, ProductionUnit, ProgramShowService, TopicService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

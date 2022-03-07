@@ -4,3 +4,6 @@ export class Employee {
     ProductionUnitId: string = '';
     PositionId: string = '';
 }
+export class EmployeeFilte extends Employee{
+    IsShow : boolean = false;
+}

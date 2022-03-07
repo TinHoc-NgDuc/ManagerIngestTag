@@ -3,3 +3,7 @@ export class StatusIngest {
     StatusCode: string = '';
     Name: string = '';
 }
+
+export class StatusFilter extends StatusIngest {
+    isShow : boolean = false;
+}

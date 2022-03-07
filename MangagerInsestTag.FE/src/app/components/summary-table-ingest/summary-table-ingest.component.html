@@ -11,27 +11,33 @@
                 </div>
                 <div>
                     <span>Tên phóng viên</span>
-                    <select class="item-input" name="" id="" title="Tên phóng viên"></select>
+                    <select class="item-input" name="" id="" title="Tên phóng viên">
+                        <option *ngFor="let item of employeeReportSrc" value="item.EmployeeId">{{item.Name}}</option>
+                    </select>
                 </div>
             </div>
             <div class="item">
                 <div class="item-1">
                     <span>Đơn vị sản xuất</span>
                     <select class="item-input" name="" id="" title="Đơn vị sản xuất">
-                        <option value="1">Phòng Chính Trị</option>
-                        <option value="2">Phòng Chính Trị</option>
-                        <option value="3">Phòng Chính Trị</option>
+                        <option *ngFor="let item of productionUnitSrc" value="item.ProductionUnitId">{{item.Name}}</option>
                     </select>
                 </div>
                 <div>
                     <span>Tên Quay phim</span>
-                    <select class="item-input" name="" id="" title="Tên Quay Phim"></select>
+                    <select class="item-input" name="" id="" title="Tên Quay Phim">
+                        <option *ngFor="let item of employeeCameramanSrc" value="item.EmployeeId">{{item.Name}}</option>
+                    </select>
                 </div>
             </div>
             <div class="item">
                 <div class="item-1">
                     <span>Trang thái</span>
-                    <select class="item-input" name="" id="" title="Trạng thái"></select>
+                    <input class="item-input" type="text">
+                    <select class="item-input" name="" id="" title="Trạng thái" hidden>
+                        <option *ngFor="let item of statusIngests" value="item.StatusIngestId">{{item.Name}}</option>
+                    </select>
+                    
                 </div>
                 <div>
                     <span>Tìm kiếm</span>
@@ -39,11 +45,10 @@
                 </div>
             </div>
             <div class="item">
-                <a href="#"><i class="btn btn-success">Xuất Execl</i></a>
-                <a href="#"><i class="btn btn-primary">Thêm mới</i></a>
+                <i class="btn btn-success">Xuất Execl</i>
+                <i class="btn btn-primary" (click)="Add()">Thêm mới</i>
             </div>
-        </div>
-        <div class="action item"></div>
+        </div> 
     </div>
     <div class="gTable">
         <table>
@@ -166,5 +171,5 @@
         </table>
     </div>
 </div>
-<app-ingest-tag-detail></app-ingest-tag-detail>
+<app-ingest-tag-detail [isShow]=isShow (changeStatusShow)="changeStatusShow()"></app-ingest-tag-detail>
 <app-submit-return-tag></app-submit-return-tag>

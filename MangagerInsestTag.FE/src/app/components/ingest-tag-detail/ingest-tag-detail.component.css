@@ -1,13 +1,13 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-.content{
+
+.content {
     position: absolute;
     top: 10%;
     left: 25%;
-    border: 1px solid;
     width: 1000px;
     background-color: #fff;
     padding: 10px;
@@ -33,14 +33,51 @@
     text-align: left;
     height: 100px;
 }
-.input-text .item .title{
+
+.filter {
+    width: 100px;
+    background-color: rgb(248, 247, 231);
+}
+
+.input-text .item .left {
+    width: 150px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.input-text .item .right {
+    width: 150px;
+    display: inline-block;
+}
+
+.input-text .item .title {
     display: inline-block;
     width: 150px;
     vertical-align: middle;
     height: 50px;
 }
-.input-text .item input{
-    width: 100;
+
+.item input, .filter {
+    width: 200px;
+}
+
+.filter {
+    cursor: pointer;
+}
+.filter:hover {
+    background-color: #ccc;
+    display: inline-block;
+}
+.filter span{
+    width: 100%;
+    display: inline-block;
+    font-size: 13px;
+    line-height: 15px;
+    margin: 8px;
+    padding-left: 10px;
+}
+.filter span:hover{
+    font-size: 14px;
 }
 
 .content .input-checkbox {
@@ -130,23 +167,25 @@
     padding-left: 20px;
     padding-right: 20px;
 }
-.histroy span{
+
+.histroy span {
     font-weight: bold;
 }
 
-.histroy textarea{
+.histroy textarea {
     width: 100%;
 }
 
-.action{
+.action {
     margin-top: 30px;
     width: 100;
     text-align: right;
     right: 20px;
     padding-bottom: 10px;
+    height: 25px;
 }
 
-.action a i{
+.action i {
     width: 150px;
     margin-left: 15px;
 }

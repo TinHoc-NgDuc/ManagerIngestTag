@@ -14,7 +14,7 @@ export class ProductionUnitService {
       'Content-Type': 'application/json'
     }),
   }
-  private url = this.REST_API_SERVER + 'api/ProductionUnits';
+  private url = this.REST_API_SERVER + '/api/ProductionUnits';
 
   public GetAllProductionUnits(): Observable<any> {
     return this.httpCilent.get<any>(this.url, this.httpOptions);

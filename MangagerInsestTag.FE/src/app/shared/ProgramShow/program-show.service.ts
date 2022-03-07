@@ -5,8 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class StatusIngestService {
-
+export class ProgramShowService {
   constructor(private httpCilent: HttpClient) { }
   //init
   private REST_API_SERVER = 'https://localhost:5001';
@@ -15,9 +14,9 @@ export class StatusIngestService {
       'Content-Type': 'application/json'
     }),
   }
-  private url = this.REST_API_SERVER + '/api/StatusIngests';
+  private url = this.REST_API_SERVER + '/api/ProgramShows';
 
-  public GetAllStatus(): Observable<any> {
+  public GetAllProgramShow(): Observable<any> {
     return this.httpCilent.get<any>(this.url, this.httpOptions);
   }
 }
