@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ManagerIngestTag.Infrastructure.Datatable;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ManagerIngest.Infrastructure.Datatable
 {
@@ -14,7 +12,7 @@ namespace ManagerIngest.Infrastructure.Datatable
         public Guid EmployeeId { get; set; }
         public TicketIngest TicketIngest { get; set; }
         public IngestTag IngestTag { get; set; }
-        public CategoryModel Category { get; set; }
+        public Category Category { get; set; }
         
     }
 }

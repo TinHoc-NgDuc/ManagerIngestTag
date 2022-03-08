@@ -1,11 +1,9 @@
-import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { Component, OnInit } from '@angular/core';
 import { Employee } from 'src/app/shared/employee/employee.model';
 import { EmployeeService } from 'src/app/shared/employee/employee.service';
 import { Filter } from 'src/app/shared/filter/filter.model';
 import { Ingest } from 'src/app/shared/ingest/ingest.model';
 import { IngestService } from 'src/app/shared/ingest/ingest.service';
-import { Position } from 'src/app/shared/position/position.model';
 import { PositionService } from 'src/app/shared/position/position.service';
 
 @Component({
@@ -48,12 +46,12 @@ export class ManagerIngestComponent implements OnInit {
           IngestCode: element.ingestCode,
           Name: element.name,
           Note: element.note,
-          PositionId: element.positionId,
-          PositionName: element.positionName,
+          CardholderId: element.cardholderId,
           Status: element.status,
           EmployeeId: element.employeeId,
-          cardholderId: element.cardholderId,
-          CardholderName: element.cardholderName
+          CardholderName: element.cardholderName,
+          CategoryId : element.categoryId,
+          CategoryName : element.categoryName
         });
       });
     });
@@ -106,12 +104,12 @@ export class ManagerIngestComponent implements OnInit {
           IngestCode: element.ingestCode,
           Name: element.name,
           Note: element.note,
-          PositionId: element.positionId,
-          PositionName: element.positionName,
+          CardholderId: element.cardholderId,
+          CategoryName: element.categoryName,
           Status: element.status,
           EmployeeId: element.employeeId,
-          cardholderId: element.cardholderId,
-          CardholderName: element.cardholderName
+          CardholderName: element.cardholderName,
+          CategoryId :element.categoryId
         });
       });
     });
@@ -132,12 +130,12 @@ export class ManagerIngestComponent implements OnInit {
           IngestCode: element.ingestCode,
           Name: element.name,
           Note: element.note,
-          PositionId: element.positionId,
-          PositionName: element.positionName,
+          CardholderId: element.cardholderId,
+          CategoryName: element.categoryName,
           Status: element.status,
           EmployeeId: element.employeeId,
-          cardholderId: element.cardholderId,
-          CardholderName: element.cardholderName
+          CardholderName: element.cardholderName,
+          CategoryId : element.categoryId
         });
       });
     });

@@ -20,6 +20,6 @@ namespace ManagerIngest.Models
         public bool IsNew { get; set; }
         public bool IsCategory { get; set; }
         public bool IsOtherProgram { get; set; }
-        public Guid StatusIngestId { get; set; }
+        public string StatusIngest { get; set; }
     }
 }

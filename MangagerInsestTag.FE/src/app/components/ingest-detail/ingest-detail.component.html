@@ -23,13 +23,12 @@
                             {{empoyee.Name}}
                         </mat-option>
                     </mat-select>
-                    <p>{{employeeSelect.EmployeeId}}</p>
                 </div>
                 <div class="input-box">
-                    <label class="title" for="Position">Thể loại ingest(<span class="required">*</span>)</label>
-                    <mat-select class="input-value" title="Thể loại ingest" [(ngModel)]="employeeSelect.PositionId"
-                        name="Position" placeholder="Thể loại ingest">
-                        <mat-option *ngFor="let position of positionSrc" [value]="position.PositionId">{{position.Name}}
+                    <label class="title" for="category">Thể loại ingest(<span class="required">*</span>)</label>
+                    <mat-select class="input-value" title="Thể loại ingest" [(ngModel)]="ingestData.CategoryId"
+                        name="category" placeholder="Thể loại ingest">
+                        <mat-option *ngFor="let item of categorySrc" [value]="item.CategoryId">{{item.Name}}
                         </mat-option>
                     </mat-select>
                 </div>

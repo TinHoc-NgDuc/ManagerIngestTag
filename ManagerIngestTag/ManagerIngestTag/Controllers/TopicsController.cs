@@ -61,6 +61,65 @@ namespace ManagerIngestTag.Controllers
             return NoContent();
         }
 
+        // PUT: api/Topics/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutTopic(Guid id, Topic topic)
+        {
+            if (id != topic.TopicId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(topic).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TopicExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/Topics
+        [HttpPost]
+        public async Task<ActionResult<Topic>> PostTopic(TopicModel topicCreate)
+        {
+            var topic = new Topic
+            {
+                CameramanName = topicCreate.CameramanName,
+                CreateName = topicCreate.CreateName,
+                IsCategory = topicCreate.IsCategory,
+                IsNew = topicCreate.IsNew,
+                IsOtherProgram = topicCreate.IsOtherProgram,
+                IsReporting = topicCreate.IsReporting,
+                Name = topicCreate.Name,
+                ProductionName = topicCreate.ProductionName,
+                ProgramName = topicCreate.ProgramName,
+                ReporterName = topicCreate.ReporterName,
+                TopicId = Guid.NewGuid()
+            };
+            _context.Topics.Add(topic);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetTopic", new { id = topic.TopicId }, topic);
+        }
+
+        private bool TopicExists(Guid id)
+        {
+            return _context.Topics.Any(e => e.TopicId == id);
+        }
+
         #region not use
         //// GET: api/Topics/5
         //[HttpGet("{id}")]
@@ -74,53 +133,6 @@ namespace ManagerIngestTag.Controllers
         //    }
 
         //    return topic;
-        //}
-
-        //// PUT: api/Topics/5
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutTopic(Guid id, Topic topic)
-        //{
-        //    if (id != topic.TopicId)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(topic).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!TopicExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        //// POST: api/Topics
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<Topic>> PostTopic(Topic topic)
-        //{
-        //    _context.Topics.Add(topic);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetTopic", new { id = topic.TopicId }, topic);
-        //}
-
-        //private bool TopicExists(Guid id)
-        //{
-        //    return _context.Topics.Any(e => e.TopicId == id);
         //}
         #endregion
     }

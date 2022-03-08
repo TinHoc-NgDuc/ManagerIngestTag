@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ManagerIngestTag.Infrastructure.Datatable;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,7 +16,7 @@ namespace ManagerIngest.Infrastructure.Datatable
         public string Name { get; set; }
         public string Note { get; set; }
         public bool Status { get; set; }
-        public Position Position { get; set; }
+        public Category category { get; set; }
 
         [ForeignKey("Employee")]
         public Guid cardholderId { get; set; }

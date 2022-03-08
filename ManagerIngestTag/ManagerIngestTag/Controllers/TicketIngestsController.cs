@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ManagerIngest.Infrastructure;
 using ManagerIngest.Infrastructure.Datatable;
+using ManagerIngest.Models;
 
 namespace ManagerIngestTag.Controllers
 {
@@ -23,9 +24,27 @@ namespace ManagerIngestTag.Controllers
 
         // GET: api/TicketIngests
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TicketIngest>>> GetTicketIngests()
+        public async Task<ActionResult<IEnumerable<TicketIngestModel>>> GetTicketIngests()
         {
-            return await _context.TicketIngests.ToListAsync();
+            var result = from t in _context.TicketIngests
+                         select new TicketIngestModel
+                         {
+                             TicketIngestId = Guid.NewGuid(),
+                             Name = t.Name,
+                             CreateName = t.CreateName,
+                             TopicName = t.TopicName,
+                             ProgramName = t.ProductionName,
+                             CameramanName = t.CameramanName,
+                             ProductionName = t.ProductionName,
+                             ReporterName = t.ReporterName,
+                             SaveDocument = t.SaveDocument,
+                             IsReporting = t.IsReporting,
+                             IsNew = t.IsNew,
+                             IsCategory = t.IsCategory,
+                             IsOtherProgram = t.IsOtherProgram,
+                             StatusIngest = t.StatusIngest
+                         };
+            return await result.ToListAsync();
         }
 
         // GET: api/TicketIngests/5
@@ -76,9 +95,26 @@ namespace ManagerIngestTag.Controllers
         // POST: api/TicketIngests
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TicketIngest>> PostTicketIngest(TicketIngest ticketIngest)
+        public async Task<ActionResult<TicketIngest>> PostTicketIngest(TicketIngestModel ticketIngest)
         {
-            _context.TicketIngests.Add(ticketIngest);
+            var tickketIngest = new TicketIngest()
+            {
+                TicketIngestId = Guid.NewGuid(),
+                Name = ticketIngest.Name,
+                CreateName = ticketIngest.CreateName,
+                TopicName = ticketIngest.TopicName,
+                ProgramName = ticketIngest.ProductionName,
+                CameramanName = ticketIngest.CameramanName,
+                ProductionName = ticketIngest.ProductionName,
+                ReporterName = ticketIngest.ReporterName,
+                SaveDocument = ticketIngest.SaveDocument,
+                IsReporting = ticketIngest.IsReporting,
+                IsNew = ticketIngest.IsNew,
+                IsCategory = ticketIngest.IsCategory,
+                IsOtherProgram = ticketIngest.IsOtherProgram,
+                StatusIngest = ticketIngest.StatusIngest
+            };
+            _context.TicketIngests.Add(tickketIngest);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTicketIngest", new { id = ticketIngest.TicketIngestId }, ticketIngest);

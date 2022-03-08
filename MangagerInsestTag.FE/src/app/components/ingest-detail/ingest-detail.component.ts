@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
+import { Category } from 'src/app/shared/Category/category.model';
+import { CategoryService } from 'src/app/shared/Category/category.service';
 import { Employee } from 'src/app/shared/employee/employee.model';
 import { EmployeeService } from 'src/app/shared/employee/employee.service';
 import { Ingest } from 'src/app/shared/ingest/ingest.model';
 import { IngestService } from 'src/app/shared/ingest/ingest.service';
-import { Position } from 'src/app/shared/position/position.model';
-import { PositionService } from 'src/app/shared/position/position.service';
 
 @Component({
   selector: 'app-ingest-detail',
@@ -20,13 +20,12 @@ export class IngestDetailComponent implements OnInit {
   @Output() changeShow = new EventEmitter();
 
   employeeSrc: Employee[] = [];
-  positionSrc: Position[] = [];
-
+  categorySrc: Category[] = [];
 
   constructor
     (
       private employeeService: EmployeeService,
-      private positionService: PositionService,
+      private categoryService: CategoryService,
       private ingestService: IngestService
     ) { }
 
@@ -41,11 +40,11 @@ export class IngestDetailComponent implements OnInit {
         });
       });
     });
-    this.positionService.GetAllPositions().subscribe(s => {
+    this.categoryService.GetAllCategories().subscribe(s => {
       s.forEach((element: any) => {
-        this.positionSrc.push({
-          PositionId: element.positionId,
-          Name: element.name
+        this.categorySrc.push({
+          CategoryId : element.categoryId,
+          Name : element.name
         });
       });
     });
@@ -56,12 +55,10 @@ export class IngestDetailComponent implements OnInit {
     this.changeShow.emit();
   }
   Save() {
-    this.ingestData.PositionId = this.employeeSelect.PositionId;
     this.ingestData.CardholderName = this.employeeSrc.find(element => element.EmployeeId == this.employeeSelect.EmployeeId)?.Name;
     this.ingestData.EmployeeId = this.employeeSelect.EmployeeId;
-    this.ingestData.cardholderId = this.employeeSelect.EmployeeId;
-    // debugger
-    console.log(this.ingestData);
+    this.ingestData.CardholderId = this.employeeSelect.EmployeeId;
+    
     this.ingestService.PostIngest(this.ingestData).subscribe(s => {
       this.ClearData();
       this.Close();
@@ -76,10 +73,9 @@ export class IngestDetailComponent implements OnInit {
     this.ingestData = new Ingest();
   }
   Edit() {
-    this.ingestData.PositionId = this.employeeSelect.PositionId;
     this.ingestData.CardholderName = this.employeeSrc.find(element => element.EmployeeId == this.employeeSelect.EmployeeId)?.Name;
     this.ingestData.EmployeeId = this.employeeSelect.EmployeeId;
-    this.ingestData.cardholderId = this.employeeSelect.EmployeeId;
+    this.ingestData.CardholderId = this.employeeSelect.EmployeeId;
     // debugger
     console.log(this.ingestData);
     this.ingestService.PutIngest(this.ingestData).subscribe(s => {

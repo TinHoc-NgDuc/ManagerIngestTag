@@ -13,13 +13,13 @@ namespace ManagerIngest.Models
         public string Name { get; set; }
         public string Note { get; set; }
         public bool Status { get; set; }
-        public Guid PositionId { get; set; }
+        public Guid CategoryId { get; set; }
         public Guid cardholderId { get; set; }
         public Guid EmployeeId { get; set; }
     }
     public class IngestTagReturnModel : IngestTagModel
     {
-        public string PositionName { get; set; }
+        public string CategoryName { get; set; }
         public string CardholderName { get; set; }
 
     }

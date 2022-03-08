@@ -6,8 +6,6 @@ import { Position } from 'src/app/shared/position/position.model';
 import { PositionService } from 'src/app/shared/position/position.service';
 import { ProductionUnit } from 'src/app/shared/ProductionUnit/production-unit.model';
 import { ProductionUnitService } from 'src/app/shared/ProductionUnit/production-unit.service';
-import { ProgramShow } from 'src/app/shared/ProgramShow/program-show.module';
-import { ProgramShowService } from 'src/app/shared/ProgramShow/program-show.service';
 import { StatusIngest } from 'src/app/shared/StatusInges/status-ingest.model';
 import { StatusIngestService } from 'src/app/shared/StatusInges/status-ingest.service';
 
@@ -36,7 +34,6 @@ export class SummaryTableIngestComponent implements OnInit {
     private positionService: PositionService,
     private ingestService: IngestService,
     private productionUnitService: ProductionUnitService
-   
   ) { }
 
   ngOnInit(): void {

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
+export class TicketIngestService {
   constructor(private httpCilent: HttpClient) { }
   //init
   private REST_API_SERVER = 'https://localhost:5001';
@@ -14,9 +14,13 @@ export class CategoryService {
       'Content-Type': 'application/json'
     }),
   }
-  private url = this.REST_API_SERVER + '/api/Categories';
+  private url = this.REST_API_SERVER + '/api/TicketIngests';
 
-  public GetAllCategories(): Observable<any> {
-    return this.httpCilent.get<any>(this.url, this.httpOptions);
+  // public GetAllProgramShow(): Observable<any> {
+  //   return this.httpCilent.get<any>(this.url, this.httpOptions);
+  // }
+
+  public PostIngest(ticketIngest: any): Observable<any> {
+    return this.httpCilent.post<any>(this.url, ticketIngest, this.httpOptions);
   }
 }

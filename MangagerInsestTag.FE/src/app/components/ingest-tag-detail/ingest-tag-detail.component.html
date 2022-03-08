@@ -12,8 +12,10 @@
                             <span class="title">Tên file(Tên đề tài): </span>
                         </div>
                         <div class="right">
-                            <input class="input-value" type="text">
-                            <div *ngFor="let item of topicSrc" [hidden]="!item.IsShow" class="filter">
+                            <input class="input-value" type="text" (keyup)="TopicChangePvValue($event)"
+                                [value]="ticketIngest.TopicName" [(ngModel)]="ticketIngest.TopicName">
+                            <div *ngFor="let item of topicSrc" [hidden]="!item.IsShow" class="filter"
+                                (click)="TopicSelect(item)">
                                 <span>{{item.Name}}</span>
                             </div>
                         </div>
@@ -23,18 +25,21 @@
                             <label for="employee" class="title">Phóng viên: </label>
                         </div>
                         <div class="right">
-                            <input class="input-value" name="employee" type="text" (keyup)="eplChangePvValue($event)">
-                            <div *ngFor="let item of employeeReportSrc" [hidden]="!item.IsShow" class="filter">
+                            <input class="input-value" name="employee" type="text" (keyup)="eplChangePvValue($event)"
+                                [value]="ticketIngest.ReporterName" [(ngModel)]="ticketIngest.ReporterName">
+                            <div *ngFor="let item of employeeReportSrc" [hidden]="!item.IsShow" class="filter"
+                                (click)="EmployeePVSelect(item)">
                                 <span>{{item.Name}}</span>
                             </div>
                         </div>
                     </div>
                     <div class="item">
                         <div class="left">
-                            <span class="title">Người đăng ký: </span>
+                            <label for="createName" class="title">Người đăng ký: </label>
                         </div>
                         <div class="right">
-                            <input class="input-value" type="text">
+                            <input class="input-value" name="createName" type="text" [value]="ticketIngest.CreateName"
+                                [(ngModel)]="ticketIngest.CreateName">
                         </div>
                     </div>
                 </div>
@@ -45,8 +50,10 @@
                         </div>
                         <div class="right">
                             <input class="input-value" name="productionUnit" type="text"
-                                (keyup)="proUnitChangenValue($event)">
-                            <div *ngFor="let item of productionUnitSrc" [hidden]="!item.IsShow" class="filter">
+                                (keyup)="proUnitChangenValue($event)" [value]="ticketIngest.ProductionName"
+                                [(ngModel)]="ticketIngest.ProductionName">
+                            <div *ngFor="let item of productionUnitSrc" [hidden]="!item.IsShow" class="filter"
+                                (click)="ProductionSelect(item)">
                                 <span>{{item.Name}}</span>
                             </div>
                         </div>
@@ -58,8 +65,10 @@
                             </div>
                             <div class="right">
                                 <input class="input-value" name="cameraman" type="text"
-                                    (keyup)="eplChangeQPValue($event)">
-                                <div *ngFor="let item of employeeCameramanSrc" [hidden]="!item.IsShow" class="filter">
+                                    (keyup)="eplChangeQPValue($event)" [value]="ticketIngest.CameramanName"
+                                    [(ngModel)]="ticketIngest.CameramanName">
+                                <div *ngFor="let item of employeeCameramanSrc" [hidden]="!item.IsShow" class="filter"
+                                    (click)="EmployeeQPSelect(item)">
                                     <span>{{item.Name}}</span>
                                 </div>
                             </div>
@@ -70,8 +79,10 @@
                             <span class="title">Chương trình phát sóng: </span>
                         </div>
                         <div class="right">
-                            <input class="input-value" type="text">
-                            <div *ngFor="let item of programShowSrc"  class="filter">
+                            <input class="input-value" type="text" (keyup)="programChangeValue($event)"
+                                [value]="ticketIngest.ProgramName" [(ngModel)]="ticketIngest.ProgramName">
+                            <div *ngFor="let item of programShowSrc" [hidden]="!item.IsShow" class="filter"
+                                (click)="programSelect(item)">
                                 <span>{{item.Name}}</span>
                             </div>
                         </div>
@@ -82,37 +93,42 @@
             <div class="input-checkbox">
                 <div class="item">
                     <label>Bản tin: </label>
-                    <input class="input-value" type="checkbox" name="" id="">
+                    <input class="input-value" type="checkbox" name="" id="" [checked]="ticketIngest.IsNew"
+                        [(ngModel)]="ticketIngest.IsNew">
                 </div>
                 <div class="item">
                     <label>Chuyên mục: </label>
-                    <input class="input-value" type="checkbox" name="" id="">
+                    <input class="input-value" type="checkbox" name="" id="" [checked]="ticketIngest.IsCategory"
+                        [(ngModel)]="ticketIngest.IsCategory">
                 </div>
                 <div class="item">
                     <label>Phóng sự: </label>
-                    <input class="input-value" type="checkbox" name="" id="">
+                    <input class="input-value" type="checkbox" name="" id="" [checked]="ticketIngest.IsReporting"
+                        [(ngModel)]="ticketIngest.IsReporting">
                 </div>
                 <div class="item">
                     <label>Chương trình khác: </label>
-                    <input class="input-value" type="checkbox" name="" id="">
+                    <input class="input-value" type="checkbox" name="" id="" [checked]="ticketIngest.IsOtherProgram"
+                        [(ngModel)]="ticketIngest.IsOtherProgram">
                 </div>
             </div>
             <div class="input-select">
                 <div class="item">
                     <label>Mã thẻ: </label>
-                    <select class="input-value" name="" id="">
-                        <option value="1">1</option>
+                    <select class="input-value" name="" id="" (click)="SelectIngest($event)" [(ngModel)]="ingest.IngestCode">
+                        <option *ngFor="let item of ingestSrc" [value]=item.IngestCode>{{item.IngestCode}}</option>
                     </select>
                 </div>
                 <div class="item">
                     <label>Thẻ loại ingest: </label>
                     <select class="input-value" name="" id="">
-                        <option value="1">1</option>
+                        <option *ngFor="let item of categorySrc" [value]=item.CategoryId>{{item.Name}}</option>
                     </select>
                 </div>
                 <div class="item">
                     <label>Lưu tư liệu: </label>
-                    <input class="input-value" type="datetime" placeholder="Nhập text">
+                    <input class="input-value" type="date" placeholder="Nhập text"
+                        [(ngModel)]="ticketIngest.SaveDocument">
                 </div>
             </div>
         </div>
@@ -130,49 +146,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <!-- <tr>
                         <td>1</td>
                         <td>MT0001</td>
                         <td>T/Xuân</td>
                         <td>ổ cứng</td>
                         <td>04/04/2021</td>
-                        <td><select name="" id="">
+                        <td class="center">
+                            <select name="" id="">
                                 <option value="1">Thanh Hà</option>
-                            </select></td>
-                        <td></td>
-                    </tr>
-                    <tr>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="act center"><i class="delete far fa-trash-alt"></i></div>
+                        </td>
+                    </tr> -->
+
+                    <tr *ngFor="let item of ingestSelect">
                         <td>1</td>
-                        <td>MT0001</td>
-                        <td>T/Xuân</td>
-                        <td>ổ cứng</td>
-                        <td>04/04/2021</td>
-                        <td><select name="" id="">
-                                <option value="1">Thanh Hà</option>
-                            </select></td>
+                        <td>{{item.IngestCode}}</td>
+                        <td>{{item.CardholderName}}</td>
+                        <td>{{item.CategoryName}}</td>
                         <td></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>MT0001</td>
-                        <td>T/Xuân</td>
-                        <td>ổ cứng</td>
-                        <td>04/04/2021</td>
-                        <td><select name="" id="">
+                        <td class="center">
+                            <select name="" id="">
                                 <option value="1">Thanh Hà</option>
-                            </select></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>MT0001</td>
-                        <td>T/Xuân</td>
-                        <td>ổ cứng</td>
-                        <td>04/04/2021</td>
-                        <td><select name="" id="">
-                                <option value="1">Thanh Hà</option>
-                            </select></td>
-                        <td></td>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="act center"><i class="delete far fa-trash-alt" (click)="Remove(item)"></i></div>
+                        </td>
                     </tr>
                 </tbody>
             </table>

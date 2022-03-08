@@ -1,16 +1,21 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { flush } from '@angular/core/testing';
-import { Employee, EmployeeFilte } from 'src/app/shared/employee/employee.model';
+import { tick } from '@angular/core/testing';
+import { Category } from 'src/app/shared/Category/category.model';
+import { CategoryService } from 'src/app/shared/Category/category.service';
+import { EmployeeFilte } from 'src/app/shared/employee/employee.model';
 import { EmployeeService } from 'src/app/shared/employee/employee.service';
+import { Ingest } from 'src/app/shared/ingest/ingest.model';
 import { IngestService } from 'src/app/shared/ingest/ingest.service';
 import { Position } from 'src/app/shared/position/position.model';
 import { PositionService } from 'src/app/shared/position/position.service';
-import { ProductionUnit, ProductionUnitFilter } from 'src/app/shared/ProductionUnit/production-unit.model';
+import { ProductionUnitFilter } from 'src/app/shared/ProductionUnit/production-unit.model';
 import { ProductionUnitService } from 'src/app/shared/ProductionUnit/production-unit.service';
-import { ProgramShow } from 'src/app/shared/ProgramShow/program-show.module';
+import { ProgramShow, ProgramShowFilter } from 'src/app/shared/ProgramShow/program-show.model';
 import { ProgramShowService } from 'src/app/shared/ProgramShow/program-show.service';
 import { StatusIngest } from 'src/app/shared/StatusInges/status-ingest.model';
 import { StatusIngestService } from 'src/app/shared/StatusInges/status-ingest.service';
+import { TicketIngest } from 'src/app/shared/TicketIngest/ticket-ingest.model';
+import { TicketIngestService } from 'src/app/shared/TicketIngest/ticket-ingest.service';
 import { Topic, TopicFilter } from 'src/app/shared/Topics/topic.module';
 import { TopicService } from 'src/app/shared/Topics/topic.service';
 
@@ -21,15 +26,22 @@ import { TopicService } from 'src/app/shared/Topics/topic.service';
 })
 export class IngestTagDetailComponent implements OnInit {
   @Input() isShow: boolean = false;
+  @Input() isAdd : boolean = true;
   @Output() changeStatusShow = new EventEmitter();
+
   statusIngests: StatusIngest[] = [];
   statusSelect: StatusIngest = new StatusIngest();
   employeeReportSrc: EmployeeFilte[] = [];
   employeeCameramanSrc: EmployeeFilte[] = [];
   positionSrc: Position[] = [];
   productionUnitSrc: ProductionUnitFilter[] = [];
-  programShowSrc: ProgramShow[] = [];
+  programShowSrc: ProgramShowFilter[] = [];
   topicSrc: TopicFilter[] = [];
+  ingestSrc: Ingest[] = [];
+  categorySrc: Category[] = [];
+  ticketIngest: TicketIngest = new TicketIngest();
+  ingestSelect: Ingest[] = [];
+  ingest: Ingest = new Ingest();
 
   constructor(
     private statusIngestService: StatusIngestService,
@@ -38,7 +50,9 @@ export class IngestTagDetailComponent implements OnInit {
     private ingestService: IngestService,
     private productionUnitService: ProductionUnitService,
     private programShowService: ProgramShowService,
-    private topicService: TopicService
+    private topicService: TopicService,
+    private categoryService: CategoryService,
+    private ticketIngestService: TicketIngestService
   ) { }
 
   ngOnInit(): void {
@@ -51,26 +65,24 @@ export class IngestTagDetailComponent implements OnInit {
         });
       });
     });
-
     this.topicService.GetAllTopic().subscribe(s => {
       s.forEach((element: any) => {
         this.topicSrc.push({
-          TopicId: element.TopicId,
-          Name: element.Name,
-          ProgramName: element.ProductionName,
-          CameramanName: element.CameramanName,
-          ProductionName: element.ProductionName,
-          ReporterName: element.ReporterName,
-          CreateName: element.CreateName,
-          IsReporting: element.IsReporting,
-          IsNew: element.IsNew,
-          IsCategory: element.IsCategory,
-          IsOtherProgram: element.IsOtherProgram,
-          IsShow : true
+          TopicId: element.topicId,
+          Name: element.name,
+          ProgramName: element.productionName,
+          CameramanName: element.cameramanName,
+          ProductionName: element.productionName,
+          ReporterName: element.reporterName,
+          CreateName: element.createName,
+          IsReporting: element.isReporting,
+          IsNew: element.isNew,
+          IsCategory: element.isCategory,
+          IsOtherProgram: element.isOtherProgram,
+          IsShow: false
         });
       });
     });
-
     this.employeeService.GetAllEmployeeReporter().subscribe(s => {
       s.forEach((element: any) => {
         this.employeeReportSrc.push({
@@ -101,7 +113,6 @@ export class IngestTagDetailComponent implements OnInit {
         });
       });
     });
-
     this.productionUnitService.GetAllProductionUnits().subscribe(s => {
       s.forEach((element: any) => {
         this.productionUnitSrc.push({
@@ -111,15 +122,42 @@ export class IngestTagDetailComponent implements OnInit {
         });
       });
     });
-
     this.programShowService.GetAllProgramShow().subscribe(s => {
       s.forEach((element: any) => {
         this.programShowSrc.push({
           PropgramShowId: element.programShow,
+          Name: element.name,
+          IsShow: false
+        });
+      });
+    });
+
+    this.ingestService.GetAllIngest().subscribe(s => {
+      s.forEach((element: any) => {
+        this.ingestSrc.push({
+          IngestTagId: element.ingestTagId,
+          IngestCode: element.ingestCode,
+          Name: element.name,
+          Note: element.note,
+          Status: element.status,
+          CategoryId: element.categoryId,
+          CardholderId: element.cardholderId,
+          EmployeeId: element.employeeId,
+          CategoryName: element.categoryName,
+          CardholderName: element.cardholderName
+        });
+      });
+    });
+    this.categoryService.GetAllCategories().subscribe(s => {
+      s.forEach((element: any) => {
+        this.categorySrc.push({
+          CategoryId: element.categoryId,
           Name: element.name
         });
       });
     });
+
+    //this.ingestSelect = this.ingestSrc;
   }
 
   changeShow() {
@@ -130,7 +168,15 @@ export class IngestTagDetailComponent implements OnInit {
     this.changeShow();
   }
   Save() {
-    this.changeShow();
+    //this.changeShow();
+    if(this.isAdd){
+      this.ticketIngest.StatusIngest = "Draft";
+    }
+    console.log(this.ticketIngest);
+    this.ticketIngestService.PostIngest(this.ticketIngest).subscribe(s => {
+      
+    });
+    
   }
 
   eplChangePvValue(event: any) {
@@ -144,7 +190,10 @@ export class IngestTagDetailComponent implements OnInit {
       });
     }
   }
-
+  EmployeePVSelect(event: any) {
+    this.clearShow();
+    this.ticketIngest.ReporterName = event.Name;
+  }
   eplChangeQPValue(event: any) {
     var strInput = event.target.value;
     this.clearShow();
@@ -155,6 +204,10 @@ export class IngestTagDetailComponent implements OnInit {
         };
       });
     }
+  }
+  EmployeeQPSelect(event: any) {
+    this.clearShow();
+    this.ticketIngest.CameramanName = event.Name;
   }
   proUnitChangenValue(event: any) {
     var strInput = event.target.value;
@@ -167,9 +220,81 @@ export class IngestTagDetailComponent implements OnInit {
       });
     }
   }
+  TopicChangePvValue(event: any) {
+    var strInput = event.target.value;
+    this.clearShow();
+    if (strInput.length > 0) {
+      this.topicSrc.forEach(element => {
+        if (element.Name?.toLowerCase().includes(strInput.toLowerCase())) {
+          element.IsShow = true;
+        };
+      });
+    }
+  }
+  TopicSelect(event: Topic) {
+    this.clearShow();
+    this.ticketIngest.TopicName = event.Name;
+    this.ticketIngest.CreateName = event.CreateName;
+    this.ticketIngest.ProgramName = event.ProgramName;
+    this.ticketIngest.ReporterName = event.ReporterName;
+    this.ticketIngest.CameramanName = event.CameramanName;
+    this.ticketIngest.ProductionName = event.ProductionName;
+    this.ticketIngest.Name = event.Name,
+      this.ticketIngest.IsCategory = event.IsCategory,
+      this.ticketIngest.IsNew = event.IsNew,
+      this.ticketIngest.IsOtherProgram = event.IsOtherProgram,
+      this.ticketIngest.IsReporting = event.IsReporting
+  }
+  programChangeValue(event: any) {
+    var strInput = event.target.value;
+    this.clearShow();
+    if (strInput.length > 0) {
+      this.programShowSrc.forEach(element => {
+        if (element.Name?.toLowerCase().includes(strInput.toLowerCase())) {
+          element.IsShow = true;
+        };
+      });
+    }
+  }
+  ProductionSelect(event: any) {
+    this.clearShow();
+    this.ticketIngest.ProductionName = event.Name;
+  }
+  programSelect(event: any) {
+    this.clearShow();
+    this.ticketIngest.ProgramName = event.Name;
+  }
+  SelectIngest(event: any) {
+    //console.log(this.ingest);
+    var item = this.ingestSrc.find(e => e.IngestCode == this.ingest.IngestCode);
+    if (item != undefined) {
+      this.ingestSelect.push(item);
+      this.ingest = new Ingest();
+      this.removeElement(this.ingestSrc, item);
+    }
+
+  }
+  removeElement(array: any[], elem: any) {
+    var index = array.indexOf(elem);
+    //array.splice(index, 1);
+    if (index > -1) {
+      array.splice(index, 1);
+    }
+  }
+  Remove(element: any) {
+    console.log(element);
+    if (element != undefined) {
+      this.ingestSrc.push(element);
+      this.ingest = new Ingest();
+      this.removeElement(this.ingestSelect, element);
+
+    }
+  }
   clearShow() {
     this.employeeReportSrc.forEach(element => { element.IsShow = false; });
     this.employeeCameramanSrc.forEach(element => { element.IsShow = false; });
     this.productionUnitSrc.forEach(element => { element.IsShow = false; });
+    this.topicSrc.forEach(element => { element.IsShow = false; });
+    this.programShowSrc.forEach(element => { element.IsShow = false; });
   }
 }

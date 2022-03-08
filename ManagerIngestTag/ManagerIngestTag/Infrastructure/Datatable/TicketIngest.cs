@@ -20,6 +20,10 @@ namespace ManagerIngest.Infrastructure.Datatable
         public bool IsNew { get; set; }
         public bool IsCategory { get; set; }
         public bool IsOtherProgram { get; set; }
-        public StatusIngest StatusIngest { get; set; }
+        public string StatusIngest { get; set; }
+    }
+    public class TicketReturn : TicketIngest
+    {
+
     }
 }

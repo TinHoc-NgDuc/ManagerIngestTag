@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ManagerIngest.Infrastructure;
-using ManagerIngest.Infrastructure.Datatable;
+using ManagerIngestTag.Infrastructure.Datatable;
 
 namespace ManagerIngestTag.Controllers
 {
@@ -23,14 +23,14 @@ namespace ManagerIngestTag.Controllers
 
         // GET: api/Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CategoryModel>>> GetCategories()
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
             return await _context.Categories.ToListAsync();
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CategoryModel>> GetCategory(Guid id)
+        public async Task<ActionResult<Category>> GetCategory(Guid id)
         {
             var category = await _context.Categories.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace ManagerIngestTag.Controllers
         // PUT: api/Categories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategory(Guid id, CategoryModel category)
+        public async Task<IActionResult> PutCategory(Guid id, Category category)
         {
             if (id != category.CategoryId)
             {
@@ -76,7 +76,7 @@ namespace ManagerIngestTag.Controllers
         // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<CategoryModel>> PostCategory(CategoryModel category)
+        public async Task<ActionResult<Category>> PostCategory(Category category)
         {
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();

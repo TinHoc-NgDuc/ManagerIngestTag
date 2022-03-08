@@ -1,5 +1,6 @@
 ﻿using ManagerIngest.Infrastructure.Datatable;
 using Microsoft.EntityFrameworkCore;
+using ManagerIngestTag.Infrastructure.Datatable;
 
 namespace ManagerIngest.Infrastructure
 {
@@ -9,7 +10,7 @@ namespace ManagerIngest.Infrastructure
         {
 
         }
-        public DbSet<CategoryModel> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<HistoryIngest> HistoryIngests { get; set; }
         public DbSet<IngestDetail> IngestDetails { get; set; }
@@ -22,5 +23,6 @@ namespace ManagerIngest.Infrastructure
         public DbSet<TicketIngest> TicketIngests { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<UserLogin> UserLogins { get; set; }
+        public DbSet<IngestInTicket> IngestInTicket { get; set; }
     }
 }

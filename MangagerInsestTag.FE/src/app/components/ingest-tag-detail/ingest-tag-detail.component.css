@@ -3,7 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+.input-checkbox input{
+    cursor: pointer;
+}
 .content {
     position: absolute;
     top: 10%;
@@ -148,11 +150,11 @@
 
 }
 
-.gTable table tbody tr:hover {
+/* .gTable table tbody tr:hover {
     cursor: pointer;
     background-color: rgb(134, 255, 175);
     box-shadow: 10px 10px 50px gray;
-}
+} */
 
 .gTable table tbody tr td::first-letter {
     text-transform: uppercase;
@@ -160,6 +162,17 @@
 
 .gTable table td, th {
     border: 1px solid #333;
+}
+.center{
+    text-align: center;
+}
+td .delete{
+    background-color: #ff000f;
+    display: inline-block;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 25px;
+    cursor: pointer;
 }
 
 .histroy {
@@ -178,7 +191,7 @@
 
 .action {
     margin-top: 30px;
-    width: 100;
+    width: 100%;
     text-align: right;
     right: 20px;
     padding-bottom: 10px;

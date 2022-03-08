@@ -34,8 +34,8 @@ namespace ManagerIngestTag.Controllers
                              IngestCode = i.IngestCode,
                              Name = i.Name,
                              Note = i.Note,
-                             PositionId = i.Position.PositionId,
-                             PositionName = i.Position.Name,
+                             CategoryId = i.category.CategoryId,
+                             CategoryName = i.category.Name,
                              Status = i.Status,
                              cardholderId = i.cardholderId,
                              CardholderName = i.Employee.Name,
@@ -57,8 +57,8 @@ namespace ManagerIngestTag.Controllers
                                  IngestCode = i.IngestCode,
                                  Name = i.Name,
                                  Note = i.Note,
-                                 PositionId = i.Position.PositionId,
-                                 PositionName = i.Position.Name,
+                                 CategoryId = i.category.CategoryId,
+                                 CategoryName = i.category.Name,
                                  Status = i.Status,
                                  cardholderId = i.cardholderId,
                                  CardholderName = i.Employee.Name,
@@ -78,13 +78,12 @@ namespace ManagerIngestTag.Controllers
                                  IngestCode = i.IngestCode,
                                  Name = i.Name,
                                  Note = i.Note,
-                                 PositionId = i.Position.PositionId,
-                                 PositionName = i.Position.Name,
+                                 CategoryId = i.category.CategoryId,
+                                 CategoryName = i.category.Name,
                                  Status = i.Status,
                                  cardholderId = i.cardholderId,
                                  CardholderName = i.Employee.Name,
                                  EmployeeId = i.Employee.EmployeeId
-
                              };
                 result = result.Take(filter.PageSize).Skip(filter.PageSize * (filter.NumberPage - 1));
                 return await result.ToListAsync();
@@ -104,7 +103,8 @@ namespace ManagerIngestTag.Controllers
             return resutl;
         }
         [HttpGet("getSumRecord")]
-        public async Task<ActionResult<int>> GetSumRecord() {
+        public async Task<ActionResult<int>> GetSumRecord()
+        {
             var query = from i in _context.IngestTags
                         select i;
             var list = await query.ToListAsync();
@@ -125,8 +125,8 @@ namespace ManagerIngestTag.Controllers
                              IngestCode = i.IngestCode,
                              Name = i.Name,
                              Note = i.Note,
-                             PositionId = i.Position.PositionId,
-                             PositionName = i.Position.Name,
+                             CategoryId = i.category.CategoryId,
+                             CategoryName = i.category.Name,
                              Status = i.Status,
                              cardholderId = i.cardholderId,
                              CardholderName = i.Employee.Name,
@@ -159,7 +159,7 @@ namespace ManagerIngestTag.Controllers
                 Name = ingestTag.Name,
                 Note = ingestTag.Note,
                 Status = ingestTag.Status,
-                Position = _context.Positions.Find(ingestTag.PositionId),
+                //category = _context.Categories.Find(ingestTag.PositionId),
                 IngestCode = ingestTag.IngestCode,
                 cardholderId = ingestTag.cardholderId,
                 Employee = _context.Employees.Find(ingestTag.EmployeeId)
@@ -219,7 +219,7 @@ namespace ManagerIngestTag.Controllers
                 Name = ingestTagModel.Name,
                 Note = ingestTagModel.Note,
                 Status = ingestTagModel.Status,
-                Position = _context.Positions.Find(ingestTagModel.PositionId),
+                category = _context.Categories.Find(ingestTagModel.CategoryId),
                 IngestCode = ingestCode,
                 cardholderId = ingestTagModel.cardholderId,
                 Employee = _context.Employees.Find(ingestTagModel.EmployeeId)
