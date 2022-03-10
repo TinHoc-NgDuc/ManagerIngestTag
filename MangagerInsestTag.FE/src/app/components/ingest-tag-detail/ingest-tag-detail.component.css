@@ -183,10 +183,12 @@ td .delete{
 
 .histroy span {
     font-weight: bold;
+    cursor:context-menu;
 }
 
 .histroy textarea {
     width: 100%;
+    cursor: auto;
 }
 
 .action {

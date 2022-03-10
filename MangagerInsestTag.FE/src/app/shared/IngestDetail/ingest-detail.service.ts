@@ -1,11 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TicketIngestService {
+export class IngestDetailService {
   constructor(private httpCilent: HttpClient) { }
   //init
   private REST_API_SERVER = 'https://localhost:5001';
@@ -14,13 +14,9 @@ export class TicketIngestService {
       'Content-Type': 'application/json'
     }),
   }
-  private url = this.REST_API_SERVER + '/api/TicketIngests';
+  private url = this.REST_API_SERVER + '/api/IngestDetails/';
 
-  // public GetAllProgramShow(): Observable<any> {
-  //   return this.httpCilent.get<any>(this.url, this.httpOptions);
-  // }
-
-  public  PostIngest(ticketIngest: any): Observable<any> {
+  public PostIngestDetail(ticketIngest: any): Observable<any> {
     return this.httpCilent.post<any>(this.url, ticketIngest, this.httpOptions);
   }
 }

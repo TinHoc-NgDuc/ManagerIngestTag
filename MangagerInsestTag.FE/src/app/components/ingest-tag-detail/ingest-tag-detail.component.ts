@@ -1,16 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { tick } from '@angular/core/testing';
 import { Category } from 'src/app/shared/Category/category.model';
 import { CategoryService } from 'src/app/shared/Category/category.service';
-import { EmployeeFilte } from 'src/app/shared/employee/employee.model';
+import { Employee, EmployeeFilte } from 'src/app/shared/employee/employee.model';
 import { EmployeeService } from 'src/app/shared/employee/employee.service';
 import { Ingest } from 'src/app/shared/ingest/ingest.model';
 import { IngestService } from 'src/app/shared/ingest/ingest.service';
+import { IngestDetail } from 'src/app/shared/IngestDetail/ingest-detail.model';
+import { IngestDetailService } from 'src/app/shared/IngestDetail/ingest-detail.service';
 import { Position } from 'src/app/shared/position/position.model';
 import { PositionService } from 'src/app/shared/position/position.service';
 import { ProductionUnitFilter } from 'src/app/shared/ProductionUnit/production-unit.model';
 import { ProductionUnitService } from 'src/app/shared/ProductionUnit/production-unit.service';
-import { ProgramShow, ProgramShowFilter } from 'src/app/shared/ProgramShow/program-show.model';
+import { ProgramShowFilter } from 'src/app/shared/ProgramShow/program-show.model';
 import { ProgramShowService } from 'src/app/shared/ProgramShow/program-show.service';
 import { StatusIngest } from 'src/app/shared/StatusInges/status-ingest.model';
 import { StatusIngestService } from 'src/app/shared/StatusInges/status-ingest.service';
@@ -26,13 +27,14 @@ import { TopicService } from 'src/app/shared/Topics/topic.service';
 })
 export class IngestTagDetailComponent implements OnInit {
   @Input() isShow: boolean = false;
-  @Input() isAdd : boolean = true;
+  @Input() isAdd: boolean = true;
   @Output() changeStatusShow = new EventEmitter();
 
   statusIngests: StatusIngest[] = [];
   statusSelect: StatusIngest = new StatusIngest();
   employeeReportSrc: EmployeeFilte[] = [];
   employeeCameramanSrc: EmployeeFilte[] = [];
+  employeeInRoomIngest: Employee[] = [];
   positionSrc: Position[] = [];
   productionUnitSrc: ProductionUnitFilter[] = [];
   programShowSrc: ProgramShowFilter[] = [];
@@ -40,9 +42,9 @@ export class IngestTagDetailComponent implements OnInit {
   ingestSrc: Ingest[] = [];
   categorySrc: Category[] = [];
   ticketIngest: TicketIngest = new TicketIngest();
-  ingestSelect: Ingest[] = [];
-  ingest: Ingest = new Ingest();
-
+  ingestSelect: IngestDetail[] = [];
+  ingestDetailCreate: IngestDetail = new IngestDetail();
+  temptEplInRoomIngest: string = '';
   constructor(
     private statusIngestService: StatusIngestService,
     private employeeService: EmployeeService,
@@ -52,7 +54,8 @@ export class IngestTagDetailComponent implements OnInit {
     private programShowService: ProgramShowService,
     private topicService: TopicService,
     private categoryService: CategoryService,
-    private ticketIngestService: TicketIngestService
+    private ticketIngestService: TicketIngestService,
+    private ingestDetailService: IngestDetailService
   ) { }
 
   ngOnInit(): void {
@@ -156,6 +159,16 @@ export class IngestTagDetailComponent implements OnInit {
         });
       });
     });
+    this.employeeService.GetAllEmployeeInRoomIngest().subscribe(s => {
+      s.forEach((element: any) => {
+        this.employeeInRoomIngest.push({
+          EmployeeId: element.employeeId,
+          Name: element.name,
+          PositionId: element.positionId,
+          ProductionUnitId: element.productionUnitId
+        });
+      });
+    });
 
     //this.ingestSelect = this.ingestSrc;
   }
@@ -169,14 +182,24 @@ export class IngestTagDetailComponent implements OnInit {
   }
   Save() {
     //this.changeShow();
-    if(this.isAdd){
+    if (this.isAdd) {
       this.ticketIngest.StatusIngest = "Draft";
     }
-    console.log(this.ticketIngest);
+    //console.log(this.ingestSelect);
+
     this.ticketIngestService.PostIngest(this.ticketIngest).subscribe(s => {
-      
+      this.ingestSelect.forEach(element => {
+        element.TicketIngestId = s.ticketIngestId,
+        element.EmployeeReceive = this.employeeInRoomIngest.find(f => f.EmployeeId == element.EmployeeReceiveId)?.Name;
+      });
+      this.ingestDetailService.PostIngestDetail(this.ingestSelect).subscribe(
+        (resp) => {
+          console.log(resp);
+        },
+        (error) => {
+          console.log(error.error);
+        });
     });
-    
   }
 
   eplChangePvValue(event: any) {
@@ -266,10 +289,32 @@ export class IngestTagDetailComponent implements OnInit {
   }
   SelectIngest(event: any) {
     //console.log(this.ingest);
-    var item = this.ingestSrc.find(e => e.IngestCode == this.ingest.IngestCode);
+    var item = this.ingestSrc.find(e => e.IngestCode == this.ingestDetailCreate.Ingest.IngestCode);
     if (item != undefined) {
-      this.ingestSelect.push(item);
-      this.ingest = new Ingest();
+      this.ingestSelect.push({
+        IngestDeltailId: "00000000-0000-0000-0000-000000000000",
+        DateReceive: "",
+        DateSend: new Date().toLocaleString().split(',')[0],
+        EmployeeReceive: "",
+        EmployeeSend: "",
+        Sender: "",
+        TicketIngestId: "00000000-0000-0000-0000-000000000000",
+        EmployeeReceiveId: "00000000-0000-0000-0000-000000000000",
+        EmployeeSendId: "00000000-0000-0000-0000-000000000000",
+        Ingest: {
+          IngestTagId: item.IngestTagId,
+          IngestCode: item.IngestCode,
+          Name: item.Name,
+          Note: item.Note,
+          Status: item.Status,
+          CategoryId: item.CardholderId,
+          CategoryName: item.CategoryName,
+          CardholderId: item.CardholderId,
+          EmployeeId: item.EmployeeId,
+          CardholderName: item.CardholderId
+        }
+      });
+      // this.ingestCreate = new IngestCreate();
       this.removeElement(this.ingestSrc, item);
     }
 
@@ -282,13 +327,13 @@ export class IngestTagDetailComponent implements OnInit {
     }
   }
   Remove(element: any) {
-    console.log(element);
-    if (element != undefined) {
-      this.ingestSrc.push(element);
-      this.ingest = new Ingest();
-      this.removeElement(this.ingestSelect, element);
+    // console.log(element);
+    // if (element != undefined) {
+    //   this.ingestSrc.push(element);
+    //   this.ingestCreate = new IngestCreate();
+    //   this.removeElement(this.ingestSelect, element);
 
-    }
+    // }
   }
   clearShow() {
     this.employeeReportSrc.forEach(element => { element.IsShow = false; });
@@ -296,5 +341,10 @@ export class IngestTagDetailComponent implements OnInit {
     this.productionUnitSrc.forEach(element => { element.IsShow = false; });
     this.topicSrc.forEach(element => { element.IsShow = false; });
     this.programShowSrc.forEach(element => { element.IsShow = false; });
+  }
+
+  changeEmployee(item: IngestDetail) {
+    item.EmployeeReceiveId = this.temptEplInRoomIngest;
+    this.temptEplInRoomIngest = '';
   }
 }

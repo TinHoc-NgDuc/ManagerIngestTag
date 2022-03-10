@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ManagerIngest.Infrastructure;
 using ManagerIngest.Infrastructure.Datatable;
 using ManagerIngest.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ManagerIngestTag.Controllers
 {
@@ -16,10 +17,11 @@ namespace ManagerIngestTag.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly DataContext _context;
-
-        public EmployeesController(DataContext context)
+        public IConfiguration Configuration { get; }
+        public EmployeesController(DataContext context, IConfiguration configuration)
         {
             _context = context;
+            Configuration = configuration;
         }
 
         // GET: api/Employees
@@ -37,12 +39,13 @@ namespace ManagerIngestTag.Controllers
             return await query.ToListAsync();
         }
 
-        // GET: api/Employees
+        // GET: api/Employees/reporter
         [HttpGet("reporter")]
         public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployeesReporter()
         {
+            string EmployeesReporterId = Configuration.GetValue<string>("EmployeesReporterId");
             var query = from e in _context.Employees
-                        where (e.Position.PositionId == Guid.Parse("350B3DC0-3DCF-45BC-A41C-943621E511EC"))
+                        where (e.Position.PositionId == Guid.Parse(EmployeesReporterId))
                         select new EmployeeModel
                         {
                             EmployeeId = e.EmployeeId,
@@ -53,12 +56,30 @@ namespace ManagerIngestTag.Controllers
             return await query.ToListAsync();
         }
 
-        // GET: api/Employees
+        // GET: api/Employees/InRoomIngest
+        [HttpGet("InRoomIngest")]
+        public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployeesInRoomIngest()
+        {
+            string EmployeesInRoomIngest = Configuration.GetValue<string>("EmployeesInRoomIngest");
+            var query = from e in _context.Employees
+                        where (e.Position.PositionId == Guid.Parse(EmployeesInRoomIngest))
+                        select new EmployeeModel
+                        {
+                            EmployeeId = e.EmployeeId,
+                            Name = e.Name,
+                            PositionId = e.Position.PositionId,
+                            ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                        };
+            return await query.ToListAsync();
+        }
+
+        // GET: api/Employees/cameraman
         [HttpGet("cameraman")]
         public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployeesCameraman()
         {
+            string EmployeesCameraman = Configuration.GetValue<string>("EmployeesCameraman");
             var query = from e in _context.Employees
-                        where (e.Position.PositionId == Guid.Parse("04B29736-6E76-42DE-AE4A-9967BD1A1CFB"))
+                        where (e.Position.PositionId == Guid.Parse(EmployeesCameraman))
                         select new EmployeeModel
                         {
                             EmployeeId = e.EmployeeId,

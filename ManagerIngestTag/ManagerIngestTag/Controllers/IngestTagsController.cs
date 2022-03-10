@@ -89,6 +89,7 @@ namespace ManagerIngestTag.Controllers
                 return await result.ToListAsync();
             }
         }
+       
         [HttpPost("getNumberPage")]
         public async Task<ActionResult<int>> GetNumberPage(Filter filter)
         {

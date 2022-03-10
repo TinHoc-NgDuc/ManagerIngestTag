@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ManagerIngestTag.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220308101218_v3")]
-    partial class v3
+    [Migration("20220310040908_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,26 +76,25 @@ namespace ManagerIngestTag.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("DateReceive")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateSent")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DateSend")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("EmployeeReceive")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("IngestTagId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("EmployeeSend")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Recipient")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("TicketIngestId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("IngestDeltailId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("IngestTagId");
 
                     b.HasIndex("TicketIngestId");
 
@@ -335,27 +334,6 @@ namespace ManagerIngestTag.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("ManagerIngestTag.Infrastructure.Datatable.IngestInTicket", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("IngestTagId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("TicketIngestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IngestTagId");
-
-                    b.HasIndex("TicketIngestId");
-
-                    b.ToTable("IngestInTicket");
-                });
-
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.Employee", b =>
                 {
                     b.HasOne("ManagerIngest.Infrastructure.Datatable.Position", "Position")
@@ -382,21 +360,9 @@ namespace ManagerIngestTag.Migrations
 
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.IngestDetail", b =>
                 {
-                    b.HasOne("ManagerIngestTag.Infrastructure.Datatable.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
-
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.IngestTag", "IngestTag")
-                        .WithMany()
-                        .HasForeignKey("IngestTagId");
-
                     b.HasOne("ManagerIngest.Infrastructure.Datatable.TicketIngest", "TicketIngest")
                         .WithMany()
                         .HasForeignKey("TicketIngestId");
-
-                    b.Navigation("Category");
-
-                    b.Navigation("IngestTag");
 
                     b.Navigation("TicketIngest");
                 });
@@ -425,21 +391,6 @@ namespace ManagerIngestTag.Migrations
                         .HasForeignKey("RoleId");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("ManagerIngestTag.Infrastructure.Datatable.IngestInTicket", b =>
-                {
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.IngestTag", "ingestTag")
-                        .WithMany()
-                        .HasForeignKey("IngestTagId");
-
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.TicketIngest", "TicketIngest")
-                        .WithMany()
-                        .HasForeignKey("TicketIngestId");
-
-                    b.Navigation("ingestTag");
-
-                    b.Navigation("TicketIngest");
                 });
 #pragma warning restore 612, 618
         }

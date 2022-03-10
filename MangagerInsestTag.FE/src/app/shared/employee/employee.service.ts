@@ -22,7 +22,10 @@ export class EmployeeService {
     return this.httpCilent.get<any>(url, this.httpOptions);
   }
 
-  
+  public GetAllEmployeeInRoomIngest(): Observable<any> {
+    let url = this.REST_API_SERVER + '/api/Employees/InRoomIngest';
+    return this.httpCilent.get<any>(url, this.httpOptions);
+  }
   public GetAllEmployeeReporter(): Observable<any> {
     let url = this.REST_API_SERVER + '/api/Employees/reporter';
     return this.httpCilent.get<any>(url, this.httpOptions);

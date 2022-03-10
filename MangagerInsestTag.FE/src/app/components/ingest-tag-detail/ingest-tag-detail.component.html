@@ -115,7 +115,8 @@
             <div class="input-select">
                 <div class="item">
                     <label>Mã thẻ: </label>
-                    <select class="input-value" name="" id="" (click)="SelectIngest($event)" [(ngModel)]="ingest.IngestCode">
+                    <select class="input-value" name="" id="" (click)="SelectIngest($event)"
+                        [(ngModel)]="ingestDetailCreate.Ingest.IngestCode">
                         <option *ngFor="let item of ingestSrc" [value]=item.IngestCode>{{item.IngestCode}}</option>
                     </select>
                 </div>
@@ -141,7 +142,7 @@
                         <th>Tên thẻ</th>
                         <th>Thể loại ingest</th>
                         <th>Ngày gửi thẻ</th>
-                        <th>Người nhận thẻ<span>(Ngày trả thẻ)</span></th>
+                        <th>Người nhận thẻ <br/> <span>(Ngày trả thẻ)</span></th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
@@ -164,18 +165,20 @@
 
                     <tr *ngFor="let item of ingestSelect">
                         <td>1</td>
-                        <td>{{item.IngestCode}}</td>
-                        <td>{{item.CardholderName}}</td>
-                        <td>{{item.CategoryName}}</td>
-                        <td></td>
+                        <td>{{item.Ingest.IngestCode}}</td>
+                        <td>{{item.Ingest.Name}}</td>
+                        <td>{{item.Ingest.CategoryName}}</td>
+                        <td><input name="" id="" [value]=item.DateSend></td>
                         <td class="center">
-                            <select name="" id="">
-                                <option value="1">Thanh Hà</option>
+                            <select name="" id="" (change)="changeEmployee(item)" [(ngModel)]="temptEplInRoomIngest">
+                                <option *ngFor="let epl of employeeInRoomIngest" [value]=epl.EmployeeId>{{epl.Name}}
+                                </option>
                             </select>
                         </td>
                         <td>
                             <div class="act center"><i class="delete far fa-trash-alt" (click)="Remove(item)"></i></div>
                         </td>
+                        
                     </tr>
                 </tbody>
             </table>
@@ -183,8 +186,9 @@
         <div class="histroy">
             <span>*Lịch sử xử lý</span>
             <div class="text">
-                <textarea name="" id="" rows="5" placeholder="Chưa có"></textarea>
+                <textarea name="" id="" rows="5" placeholder="Chưa có lịch sử" readonly></textarea>
             </div>
+            <p>{{this.ingestSelect|json}}</p>
         </div>
         <div class="action">
             <i class="btn btn-primary" (click)="Save()">Lưu và đóng</i>

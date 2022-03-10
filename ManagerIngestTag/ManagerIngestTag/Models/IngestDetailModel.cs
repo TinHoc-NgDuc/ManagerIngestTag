@@ -9,11 +9,19 @@ namespace ManagerIngest.Models
     public class IngestDetailModel
     {
         public Guid IngestDeltailId { get; set; }
-        public DateTime DateSent { get; set; }
-        public Guid EmployeeId { get; set; }
         public Guid TicketIngestId { get; set; }
-        public Guid IngestTagId { get; set; }
-        public Guid CategoryId { get; set; }
-        
+        public string EmployeeSend { get; set; }
+        public string EmployeeReceive { get; set; }
+        public string DateSend { get; set; }
+        public string DateReceive { get; set; }
+        public string Recipient { get; set; }
+
+    }
+
+    public class IngestDetailCreate : IngestDetailModel
+    {
+        public Guid EmployeeSendId { get; set; }
+        public Guid EmployeeReceiveId{ get; set; }
+        public IngestTagModel Ingest { get; set; }
     }
 }

@@ -8,11 +8,12 @@ namespace ManagerIngest.Infrastructure.Datatable
     {
         [Key]
         public Guid IngestDeltailId { get; set; }
-        public DateTime DateSent { get; set; }
-        public Guid EmployeeId { get; set; }
         public TicketIngest TicketIngest { get; set; }
-        public IngestTag IngestTag { get; set; }
-        public Category Category { get; set; }
-        
+        public string EmployeeSend { get; set; }
+        public string EmployeeReceive { get; set; }
+        public string DateSend { get; set; }
+        public string DateReceive { get; set; }
+        public string Recipient { get; set; }
+
     }
 }

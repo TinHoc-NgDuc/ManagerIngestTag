@@ -116,8 +116,8 @@ namespace ManagerIngestTag.Controllers
             };
             _context.TicketIngests.Add(tickketIngest);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetTicketIngest", new { id = ticketIngest.TicketIngestId }, ticketIngest);
+            ticketIngest.TicketIngestId = tickketIngest.TicketIngestId;
+            return CreatedAtAction("GetTicketIngest", new { id = tickketIngest.TicketIngestId }, ticketIngest);
         }
 
         // DELETE: api/TicketIngests/5

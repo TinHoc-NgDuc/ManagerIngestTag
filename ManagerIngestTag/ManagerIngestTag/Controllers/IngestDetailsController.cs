@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ManagerIngest.Infrastructure;
 using ManagerIngest.Infrastructure.Datatable;
+using ManagerIngest.Models;
 
 namespace ManagerIngestTag.Controllers
 {
@@ -76,12 +77,28 @@ namespace ManagerIngestTag.Controllers
         // POST: api/IngestDetails
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<IngestDetail>> PostIngestDetail(IngestDetail ingestDetail)
+        public async Task<ActionResult<IngestDetail>> PostIngestDetail(IngestDetailCreate[] ingestDetail)
         {
-            _context.IngestDetails.Add(ingestDetail);
+            foreach (var item in ingestDetail)
+            {
+                IngestDetail ingest = new IngestDetail()
+                {
+                    IngestDeltailId = Guid.NewGuid(),
+                    EmployeeSend = item.EmployeeSend,
+                    EmployeeReceive = item.EmployeeReceive,
+                    DateSend = item.DateSend,
+                    DateReceive = item.DateReceive,
+                    Recipient = item.Recipient,
+                    TicketIngest = _context.TicketIngests.Find(item.TicketIngestId)
+                };
+                _context.IngestDetails.Add(ingest);
+            }
+            //_context.IngestDetails.Add(ingestDetail);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetIngestDetail", new { id = ingestDetail.IngestDeltailId }, ingestDetail);
+            return CreatedAtAction("GetIngestDetails", ingestDetail);
+
+            //return null;
         }
 
         // DELETE: api/IngestDetails/5

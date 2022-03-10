@@ -10,6 +10,3 @@ export class Ingest {
     EmployeeId: string = '';
     CardholderName?: string = '';
 }
-export class IngestCreate extends Ingest{
-    ingestInTicket : Ingest = new Ingest();
-}
