@@ -115,6 +115,16 @@ namespace ManagerIngestTag.Controllers
                 StatusIngest = ticketIngest.StatusIngest
             };
             _context.TicketIngests.Add(tickketIngest);
+
+
+            //HistoryIngest historyIngest = new HistoryIngest();
+            //historyIngest.HistoryIngestId = Guid.NewGuid();
+            //historyIngest.ActionCode = "Draf";
+            //historyIngest.NameAction = "Tạo thẻ ingest";
+            //historyIngest.Performer = "";
+            //historyIngest.TimeAction = DateTime.Now.ToString("dd/mm/yyyy");
+            //historyIngest.TicketIngest = _context.TicketIngests.Find(tickketIngest.TicketIngestId);
+            //_context.HistoryIngests.Add(historyIngest);
             await _context.SaveChangesAsync();
             ticketIngest.TicketIngestId = tickketIngest.TicketIngestId;
             return CreatedAtAction("GetTicketIngest", new { id = tickketIngest.TicketIngestId }, ticketIngest);

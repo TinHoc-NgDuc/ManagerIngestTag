@@ -77,7 +77,7 @@ namespace ManagerIngestTag.Controllers
         // POST: api/IngestDetails
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<IngestDetail>> PostIngestDetail(IngestDetailCreate[] ingestDetail)
+        public async Task<ActionResult<IngestDetail>> PostIngestDetail(IngestDetailFull[] ingestDetail)
         {
             foreach (var item in ingestDetail)
             {
@@ -89,17 +89,18 @@ namespace ManagerIngestTag.Controllers
                     DateSend = item.DateSend,
                     DateReceive = item.DateReceive,
                     Recipient = item.Recipient,
-                    TicketIngest = _context.TicketIngests.Find(item.TicketIngestId)
+                    TicketIngest = _context.TicketIngests.Find(item.TicketIngestId),
+                    IngestTag = _context.IngestTags.Find(item.IngestId)
                 };
                 _context.IngestDetails.Add(ingest);
             }
             //_context.IngestDetails.Add(ingestDetail);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetIngestDetails", ingestDetail);
 
             //return null;
         }
+
 
         // DELETE: api/IngestDetails/5
         [HttpDelete("{id}")]

@@ -4,14 +4,16 @@ using ManagerIngest.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ManagerIngestTag.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220310073629_v1")]
+    partial class v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,9 +91,6 @@ namespace ManagerIngestTag.Migrations
                     b.Property<string>("EmployeeSend")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("IngestTagId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Recipient")
                         .HasColumnType("nvarchar(max)");
 
@@ -99,8 +98,6 @@ namespace ManagerIngestTag.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("IngestDeltailId");
-
-                    b.HasIndex("IngestTagId");
 
                     b.HasIndex("TicketIngestId");
 
@@ -366,15 +363,9 @@ namespace ManagerIngestTag.Migrations
 
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.IngestDetail", b =>
                 {
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.IngestTag", "IngestTag")
-                        .WithMany()
-                        .HasForeignKey("IngestTagId");
-
                     b.HasOne("ManagerIngest.Infrastructure.Datatable.TicketIngest", "TicketIngest")
                         .WithMany()
                         .HasForeignKey("TicketIngestId");
-
-                    b.Navigation("IngestTag");
 
                     b.Navigation("TicketIngest");
                 });

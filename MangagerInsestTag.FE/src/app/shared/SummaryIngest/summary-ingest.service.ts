@@ -6,8 +6,9 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class TopicService {
+export class SummaryIngestService {
   constructor(private httpCilent: HttpClient) { }
+
   //init
   private REST_API_SERVER = environment.baseUrl;
   private httpOptions = {
@@ -15,9 +16,9 @@ export class TopicService {
       'Content-Type': 'application/json'
     }),
   }
-  private url = this.REST_API_SERVER + '/api/Topics';
 
-  public GetAllTopic(): Observable<any> {
-    return this.httpCilent.get<any>(this.url, this.httpOptions);
+  public GetAllSummaryIngest(): Observable<any> {
+    let url = this.REST_API_SERVER + '/api/SumaryIngest';
+    return this.httpCilent.get<any>(url, this.httpOptions);
   }
 }

@@ -77,7 +77,6 @@ export class IngestDetailComponent implements OnInit {
     this.ingestData.EmployeeId = this.employeeSelect.EmployeeId;
     this.ingestData.CardholderId = this.employeeSelect.EmployeeId;
     // debugger
-    console.log(this.ingestData);
     this.ingestService.PutIngest(this.ingestData).subscribe(s => {
       this.ClearData();
       this.Close();

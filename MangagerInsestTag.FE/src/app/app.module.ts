@@ -22,6 +22,8 @@ import { ProductionUnit } from './shared/ProductionUnit/production-unit.model';
 import { ProgramShowService } from './shared/ProgramShow/program-show.service';
 import { TopicService } from './shared/Topics/topic.service';
 import { CategoryService } from './shared/Category/category.service';
+import { HistoryIngestService } from './shared/HistoryIngest/history-ingest.service';
+import { SummaryIngestService } from './shared/SummaryIngest/summary-ingest.service';
 
 
 
@@ -45,7 +47,19 @@ import { CategoryService } from './shared/Category/category.service';
     MatSelectModule
 
   ],
-  providers: [CategoryService, EmployeeService, PositionService, IngestService, StatusIngestService, ProductionUnit, ProgramShowService, TopicService],
+  providers:
+  [
+    CategoryService,
+    EmployeeService, 
+    PositionService, 
+    IngestService, 
+    StatusIngestService, 
+    ProductionUnit, 
+    ProgramShowService,
+    HistoryIngestService, 
+    TopicService,
+    SummaryIngestService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

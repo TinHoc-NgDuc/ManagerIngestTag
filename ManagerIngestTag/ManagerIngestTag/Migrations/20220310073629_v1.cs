@@ -172,6 +172,28 @@ namespace ManagerIngestTag.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HistoryIngests",
+                columns: table => new
+                {
+                    HistoryIngestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ActionCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NameAction = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Performer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeAction = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TicketIngestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HistoryIngests", x => x.HistoryIngestId);
+                    table.ForeignKey(
+                        name: "FK_HistoryIngests_TicketIngests_TicketIngestId",
+                        column: x => x.TicketIngestId,
+                        principalTable: "TicketIngests",
+                        principalColumn: "TicketIngestId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "IngestDetails",
                 columns: table => new
                 {
@@ -223,27 +245,6 @@ namespace ManagerIngestTag.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "HistoryIngests",
-                columns: table => new
-                {
-                    HistoryIngestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Action = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NameAction = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TimeAction = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IngestTagId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HistoryIngests", x => x.HistoryIngestId);
-                    table.ForeignKey(
-                        name: "FK_HistoryIngests_IngestTags_IngestTagId",
-                        column: x => x.IngestTagId,
-                        principalTable: "IngestTags",
-                        principalColumn: "IngestTagId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_PositionId",
                 table: "Employees",
@@ -255,9 +256,9 @@ namespace ManagerIngestTag.Migrations
                 column: "ProductionUnitId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HistoryIngests_IngestTagId",
+                name: "IX_HistoryIngests_TicketIngestId",
                 table: "HistoryIngests",
-                column: "IngestTagId");
+                column: "TicketIngestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IngestDetails_TicketIngestId",
@@ -289,6 +290,9 @@ namespace ManagerIngestTag.Migrations
                 name: "IngestDetails");
 
             migrationBuilder.DropTable(
+                name: "IngestTags");
+
+            migrationBuilder.DropTable(
                 name: "ProgramShows");
 
             migrationBuilder.DropTable(
@@ -301,19 +305,16 @@ namespace ManagerIngestTag.Migrations
                 name: "UserLogins");
 
             migrationBuilder.DropTable(
-                name: "IngestTags");
-
-            migrationBuilder.DropTable(
                 name: "TicketIngests");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Positions");

@@ -8,6 +8,8 @@ import { ProductionUnit } from 'src/app/shared/ProductionUnit/production-unit.mo
 import { ProductionUnitService } from 'src/app/shared/ProductionUnit/production-unit.service';
 import { StatusIngest } from 'src/app/shared/StatusInges/status-ingest.model';
 import { StatusIngestService } from 'src/app/shared/StatusInges/status-ingest.service';
+import { SummaryIngest } from 'src/app/shared/SummaryIngest/summary-ingest.model';
+import { SummaryIngestService } from 'src/app/shared/SummaryIngest/summary-ingest.service';
 
 
 @Component({
@@ -20,20 +22,23 @@ export class SummaryTableIngestComponent implements OnInit {
   statusSelect: StatusIngest = new StatusIngest();
   employeeReportSrc: Employee[] = [];
   employeeCameramanSrc: Employee[] = [];
-
+  summaryingests: SummaryIngest[] = [];
+  summaryingest: SummaryIngest = new SummaryIngest();
   positionSrc: Position[] = [];
   productionUnitSrc: ProductionUnit[] = [];
   productionUnitSelect: ProductionUnit = new ProductionUnit();
-
   isShow = true;
-
+  isAdd = false;
+  isReceive = false;
+  isReturn = false;
 
   constructor(
     private statusIngestService: StatusIngestService,
     private employeeService: EmployeeService,
     private positionService: PositionService,
     private ingestService: IngestService,
-    private productionUnitService: ProductionUnitService
+    private productionUnitService: ProductionUnitService,
+    private summaryIngestService: SummaryIngestService
   ) { }
 
   ngOnInit(): void {
@@ -45,8 +50,8 @@ export class SummaryTableIngestComponent implements OnInit {
           StatusCode: element.statusCode
         });
       });
-    });
 
+    });
     this.employeeService.GetAllEmployeeReporter().subscribe(s => {
       s.forEach((element: any) => {
         this.employeeReportSrc.push({
@@ -75,7 +80,6 @@ export class SummaryTableIngestComponent implements OnInit {
         });
       });
     });
-
     this.productionUnitService.GetAllProductionUnits().subscribe(s => {
       s.forEach((element: any) => {
         this.productionUnitSrc.push({
@@ -84,15 +88,70 @@ export class SummaryTableIngestComponent implements OnInit {
         });
       });
     });
+    this.summaryIngestService.GetAllSummaryIngest().subscribe(s => {
+      console.log(s);
+      s.forEach((element: any) => {
+        this.summaryingest = new SummaryIngest();
+        this.summaryingest.ticketIngest = {
+          CreateName: element.ticketIngest.createName,
+          CameramanName: element.ticketIngest.cameramanName,
+          IsNew: element.ticketIngest.isNew,
+          IsCategory: element.ticketIngest.isCategory,
+          IsOtherProgram: element.ticketIngest.isOtherProgram,
+          IsReporting: element.ticketIngest.isReporting,
+          Name: element.ticketIngest.name,
+          ProductionName: element.ticketIngest.productionName,
+          ProgramName: element.ticketIngest.productionName,
+          ReporterName: element.ticketIngest.reporterName,
+          SaveDocument: element.ticketIngest.saveDocument,
+          StatusIngest: element.ticketIngest.statusName,
+          StatusIngestId: element.ticketIngest.statusIngestId,
+          TicketIngestId: element.ticketIngest.ticketIngestId,
+          TopicName: element.ticketIngest.topicName
+        }
+        element.ingestDetail.forEach((obj: any) => {
+          this.summaryingest.ingestDetail.push({
+            IngestDeltailId: obj.ingestDeltailId,
+            TicketIngestId: obj.ticketIngestId,
+            EmployeeSendId: obj.employeeSendId,
+            EmployeeSend: obj.employeeSend,
+            EmployeeReceiveId: obj.employeeReceiveId,
+            EmployeeReceive: obj.employeeReceive,
+            DateSend: obj.dateSend,
+            DateReceive: obj.dateReceive,
+            Recipient: obj.recipient,
+            Ingest: {
+              CardholderId: obj.ingestTag.cardholderId,
+              CardholderName: obj.ingestTag.cardholderName,
+              CategoryId: obj.ingestTag.categoryId,
+              CategoryName: obj.ingestTag.categoryName,
+              EmployeeId: obj.ingestTag.employeeId,
+              IngestCode: obj.ingestTag.ingestCode,
+              IngestTagId: obj.ingestTag.ingestTagId,
+              Name: obj.ingestTag.name,
+              Note: obj.ingestTag.note,
+              Status: obj.ingestTag.status
+            },
+            Ingestid: obj.ingestid
+          });
+        });
 
-    
+        this.summaryingests.push(this.summaryingest);
+      });
+
+      console.log(this.summaryingest);
+    });
   }
 
-  changeStatusShow(){
+  changeStatusShow() {
     this.isShow = !this.isShow;
   }
 
-  Add(){
+  Add() {
     this.changeStatusShow();
+  }
+  onClick(item: any) {
+    //console.log('Click '+ JSON.stringify(item));
+
   }
 }

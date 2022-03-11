@@ -14,6 +14,6 @@ namespace ManagerIngest.Infrastructure.Datatable
         public string DateSend { get; set; }
         public string DateReceive { get; set; }
         public string Recipient { get; set; }
-
+        public IngestTag IngestTag { get; set; }
     }
 }

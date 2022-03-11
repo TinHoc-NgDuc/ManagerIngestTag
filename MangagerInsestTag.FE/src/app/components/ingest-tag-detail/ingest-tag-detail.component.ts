@@ -3,6 +3,8 @@ import { Category } from 'src/app/shared/Category/category.model';
 import { CategoryService } from 'src/app/shared/Category/category.service';
 import { Employee, EmployeeFilte } from 'src/app/shared/employee/employee.model';
 import { EmployeeService } from 'src/app/shared/employee/employee.service';
+import { HistoryIngest } from 'src/app/shared/HistoryIngest/history-ingest.model';
+import { HistoryIngestService } from 'src/app/shared/HistoryIngest/history-ingest.service';
 import { Ingest } from 'src/app/shared/ingest/ingest.model';
 import { IngestService } from 'src/app/shared/ingest/ingest.service';
 import { IngestDetail } from 'src/app/shared/IngestDetail/ingest-detail.model';
@@ -28,7 +30,11 @@ import { TopicService } from 'src/app/shared/Topics/topic.service';
 export class IngestTagDetailComponent implements OnInit {
   @Input() isShow: boolean = false;
   @Input() isAdd: boolean = true;
+  isReceive:boolean = false;
+  isReturn:boolean = false;
   @Output() changeStatusShow = new EventEmitter();
+
+
 
   statusIngests: StatusIngest[] = [];
   statusSelect: StatusIngest = new StatusIngest();
@@ -45,6 +51,8 @@ export class IngestTagDetailComponent implements OnInit {
   ingestSelect: IngestDetail[] = [];
   ingestDetailCreate: IngestDetail = new IngestDetail();
   temptEplInRoomIngest: string = '';
+  histroyIngest: HistoryIngest = new HistoryIngest();
+
   constructor(
     private statusIngestService: StatusIngestService,
     private employeeService: EmployeeService,
@@ -55,7 +63,8 @@ export class IngestTagDetailComponent implements OnInit {
     private topicService: TopicService,
     private categoryService: CategoryService,
     private ticketIngestService: TicketIngestService,
-    private ingestDetailService: IngestDetailService
+    private ingestDetailService: IngestDetailService,
+    private historyIngestService: HistoryIngestService
   ) { }
 
   ngOnInit(): void {
@@ -190,15 +199,23 @@ export class IngestTagDetailComponent implements OnInit {
     this.ticketIngestService.PostIngest(this.ticketIngest).subscribe(s => {
       this.ingestSelect.forEach(element => {
         element.TicketIngestId = s.ticketIngestId,
-        element.EmployeeReceive = this.employeeInRoomIngest.find(f => f.EmployeeId == element.EmployeeReceiveId)?.Name;
+          element.EmployeeSend = s.createName,
+          element.EmployeeReceive = this.employeeInRoomIngest.find(f => f.EmployeeId == element.EmployeeReceiveId)?.Name;
       });
+
+
       this.ingestDetailService.PostIngestDetail(this.ingestSelect).subscribe(
-        (resp) => {
-          console.log(resp);
-        },
-        (error) => {
-          console.log(error.error);
-        });
+        ingestDetail => {
+          this.histroyIngest.HistoryIngestId = '00000000-0000-0000-0000-000000000000';
+          this.histroyIngest.ActionCode = 'Send';
+          this.histroyIngest.NameAction = 'Tạo mới';
+          this.histroyIngest.Performer = s.createName;
+          this.histroyIngest.TimeAction = new Date().toLocaleString().split(',')[0];
+          this.histroyIngest.TicketIngestId = s.ticketIngestId;
+          this.historyIngestService.PostHistoryIngest(this.histroyIngest).subscribe();
+
+        }
+      );
     });
   }
 
@@ -297,7 +314,7 @@ export class IngestTagDetailComponent implements OnInit {
         DateSend: new Date().toLocaleString().split(',')[0],
         EmployeeReceive: "",
         EmployeeSend: "",
-        Sender: "",
+        Recipient: "",
         TicketIngestId: "00000000-0000-0000-0000-000000000000",
         EmployeeReceiveId: "00000000-0000-0000-0000-000000000000",
         EmployeeSendId: "00000000-0000-0000-0000-000000000000",
@@ -312,7 +329,8 @@ export class IngestTagDetailComponent implements OnInit {
           CardholderId: item.CardholderId,
           EmployeeId: item.EmployeeId,
           CardholderName: item.CardholderId
-        }
+        },
+        Ingestid: item.IngestTagId
       });
       // this.ingestCreate = new IngestCreate();
       this.removeElement(this.ingestSrc, item);

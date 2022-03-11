@@ -82,86 +82,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Chờ duyệt</td>
-                    <td>04/03/2021</td>
-                    <td>Đại hộ đảng toàn quốc</td>
-                    <td>Đặng tú</td>
-                    <td>D/Công</td>
-                    <td>Thẻ nhớ</td>
-                    <td>24 tháng</td>
-                    <td>Tin</td>
-                    <td>05/03/2021</td>
-                    <td>Đặng Tú</td>
-                    <td>1</td>
-                    <td>D/Công</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
+                <tr *ngFor="let item of summaryingests" (click)="onClick(item)">
                     <td>2</td>
-                    <td>Chờ duyệt</td>
-                    <td>04/03/2021</td>
-                    <td>Đại hộ đảng toàn quốc</td>
-                    <td>Đặng tú</td>
-                    <td>D/Công</td>
-                    <td>Thẻ nhớ</td>
-                    <td>24 tháng</td>
-                    <td>Tin</td>
-                    <td>05/03/2021</td>
-                    <td>Đặng Tú</td>
+                    <td>{{item.ticketIngest.StatusIngest}}</td>
+                    <td>{{item.ticketIngest.SaveDocument}}</td>
+                    <td>{{item.ticketIngest.Name}}</td>
+                    <td>{{item.ticketIngest.ReporterName}}</td>
+                    <td>{{item.ticketIngest.CameramanName}}</td>
+                    <td>{{item.ingestDetail[0].Ingest.CategoryName}}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{item.ingestDetail[0].DateSend}}</td>
+                    <td>{{item.ingestDetail[0].EmployeeSend}}</td>
                     <td>1</td>
-                    <td>D/Công</td>
+                    <td>{{item.ingestDetail[0].Ingest.Name}}</td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
                 </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Chờ duyệt</td>
-                    <td>04/03/2021</td>
-                    <td>Đại hộ đảng toàn quốc</td>
-                    <td>Đặng tú</td>
-                    <td>D/Công</td>
-                    <td>Thẻ nhớ</td>
-                    <td>24 tháng</td>
-                    <td>Tin</td>
-                    <td>05/03/2021</td>
-                    <td>Đặng Tú</td>
-                    <td>1</td>
-                    <td>D/Công</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Chờ duyệt</td>
-                    <td>04/03/2021</td>
-                    <td>Đại hộ đảng toàn quốc</td>
-                    <td>Đặng tú</td>
-                    <td>D/Công</td>
-                    <td>Thẻ nhớ</td>
-                    <td>24 tháng</td>
-                    <td>Tin</td>
-                    <td>05/03/2021</td>
-                    <td>Đặng Tú</td>
-                    <td>1</td>
-                    <td>D/Công</td>
-                    <td>05/02/2021</td>
-                    <td>M/Đức</td>
-                    <td>1</td>
-                    <td>M/Đức</td>
-                    <td>Thanh Hà</td>
-                </tr>
+                
             </tbody>
         </table>
     </div>

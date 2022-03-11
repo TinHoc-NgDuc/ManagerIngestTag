@@ -22,4 +22,8 @@ namespace ManagerIngest.Models
         public bool IsOtherProgram { get; set; }
         public string StatusIngest { get; set; }
     }
+    public class TicketIngestFull : TicketIngestModel
+    {
+        public string StatusName { get; set; }
+    }
 }

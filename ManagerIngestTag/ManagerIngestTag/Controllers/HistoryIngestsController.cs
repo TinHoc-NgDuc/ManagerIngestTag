@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ManagerIngest.Infrastructure;
 using ManagerIngest.Infrastructure.Datatable;
+using ManagerIngest.Models;
 
 namespace ManagerIngestTag.Controllers
 {
@@ -74,14 +75,22 @@ namespace ManagerIngestTag.Controllers
         }
 
         // POST: api/HistoryIngests
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<HistoryIngest>> PostHistoryIngest(HistoryIngest historyIngest)
+        public async Task<ActionResult<HistoryIngest>> PostHistoryIngest(HistoryIngestModel historyIngest)
         {
-            _context.HistoryIngests.Add(historyIngest);
+
+            HistoryIngest history = new HistoryIngest();
+            history.HistoryIngestId = Guid.NewGuid();
+            history.ActionCode = historyIngest.ActionCode;
+            history.NameAction = historyIngest.NameAction;
+            history.Performer = historyIngest.Performer;
+            history.TimeAction = DateTime.Now.ToString("h:m")+" " + DateTime.Now.ToString("dd/M/yyyy");
+            history.TicketIngest = _context.TicketIngests.Find(historyIngest.TicketIngestId);
+
+            _context.HistoryIngests.Add(history);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetHistoryIngest", new { id = historyIngest.HistoryIngestId }, historyIngest);
+            return CreatedAtAction("GetHistoryIngest", new { id = history.HistoryIngestId }, historyIngest);
         }
 
         // DELETE: api/HistoryIngests/5

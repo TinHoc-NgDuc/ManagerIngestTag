@@ -15,13 +15,14 @@ namespace ManagerIngest.Models
         public string DateSend { get; set; }
         public string DateReceive { get; set; }
         public string Recipient { get; set; }
-
+        public Guid IngestId { get; set; }
     }
 
-    public class IngestDetailCreate : IngestDetailModel
+    public class IngestDetailFull : IngestDetailModel
     {
         public Guid EmployeeSendId { get; set; }
         public Guid EmployeeReceiveId{ get; set; }
-        public IngestTagModel Ingest { get; set; }
+        public IngestTagReturnModel IngestTag { get; set; }
+
     }
 }

@@ -160,7 +160,7 @@ namespace ManagerIngestTag.Controllers
                 Name = ingestTag.Name,
                 Note = ingestTag.Note,
                 Status = ingestTag.Status,
-                //category = _context.Categories.Find(ingestTag.PositionId),
+                category = _context.Categories.Find(ingestTag.CategoryId),
                 IngestCode = ingestTag.IngestCode,
                 cardholderId = ingestTag.cardholderId,
                 Employee = _context.Employees.Find(ingestTag.EmployeeId)

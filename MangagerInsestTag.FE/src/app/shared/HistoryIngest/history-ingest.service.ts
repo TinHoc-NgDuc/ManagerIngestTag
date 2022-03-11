@@ -2,11 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
 @Injectable({
   providedIn: 'root'
 })
-export class TopicService {
+export class HistoryIngestService {
   constructor(private httpCilent: HttpClient) { }
   //init
   private REST_API_SERVER = environment.baseUrl;
@@ -15,9 +14,9 @@ export class TopicService {
       'Content-Type': 'application/json'
     }),
   }
-  private url = this.REST_API_SERVER + '/api/Topics';
+  private url = this.REST_API_SERVER + '/api/HistoryIngests';
 
-  public GetAllTopic(): Observable<any> {
-    return this.httpCilent.get<any>(this.url, this.httpOptions);
+  public PostHistoryIngest(HistoryIngest: any): Observable<any> {
+    return this.httpCilent.post<any>(this.url, HistoryIngest, this.httpOptions);
   }
 }

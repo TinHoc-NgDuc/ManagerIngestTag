@@ -134,7 +134,8 @@
             </div>
         </div>
         <div class="gTable">
-            <table>
+            <!-- Thêm mới thẻ -->
+            <table *ngIf="isAdd">
                 <thead>
                     <tr>
                         <th>STT</th>
@@ -142,27 +143,11 @@
                         <th>Tên thẻ</th>
                         <th>Thể loại ingest</th>
                         <th>Ngày gửi thẻ</th>
-                        <th>Người nhận thẻ <br/> <span>(Ngày trả thẻ)</span></th>
+                        <th>Người nhận thẻ <br /> <span>(Ngày trả thẻ)</span></th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- <tr>
-                        <td>1</td>
-                        <td>MT0001</td>
-                        <td>T/Xuân</td>
-                        <td>ổ cứng</td>
-                        <td>04/04/2021</td>
-                        <td class="center">
-                            <select name="" id="">
-                                <option value="1">Thanh Hà</option>
-                            </select>
-                        </td>
-                        <td>
-                            <div class="act center"><i class="delete far fa-trash-alt"></i></div>
-                        </td>
-                    </tr> -->
-
                     <tr *ngFor="let item of ingestSelect">
                         <td>1</td>
                         <td>{{item.Ingest.IngestCode}}</td>
@@ -178,7 +163,83 @@
                         <td>
                             <div class="act center"><i class="delete far fa-trash-alt" (click)="Remove(item)"></i></div>
                         </td>
-                        
+
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Duyệt thẻ, gửi file -->
+            <table *ngIf="isReceive">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã thẻ</th>
+                        <th>Tên thẻ</th>
+                        <th>Thể loại ingest</th>
+                        <th>Ngày gửi thẻ</th>
+                        <th>Người nhận thẻ</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of ingestSelect">
+                        <td>1</td>
+                        <td>{{item.Ingest.IngestCode}}</td>
+                        <td>{{item.Ingest.Name}}</td>
+                        <td>{{item.Ingest.CategoryName}}</td>
+                        <td><input name="" id="" [value]=item.DateSend></td>
+                        <td class="center">
+                            <select name="" id="" (change)="changeEmployee(item)" [(ngModel)]="temptEplInRoomIngest">
+                                <option *ngFor="let epl of employeeInRoomIngest" [value]=epl.EmployeeId>{{epl.Name}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="act center">
+                                <input type="checkbox" class="checkAction" name="" id="">
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table >
+            <!-- Trả thẻ -->
+            <table *ngIf="isReturn">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã thẻ</th>
+                        <th>Tên thẻ</th>
+                        <th>Thể loại</th>
+                        <th>Trả thẻ</th>
+                        <th>Ngày gửi thẻ</th>
+                        <th>Người lấy thẻ</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of ingestSelect">
+                        <td>1</td>
+                        <td>{{item.Ingest.IngestCode}}</td>
+                        <td>{{item.Ingest.Name}}</td>
+                        <td>{{item.Ingest.CategoryName}}</td>
+                        <td>
+                            <div class="act center">
+                                <input type="checkbox" class="checkAction" name="" id="">
+                            </div>
+                        </td>
+                        <td><input name="" id="" [value]=item.DateSend></td>
+                        <td class="center">
+                            <select name="" id="" (change)="changeEmployee(item)" [(ngModel)]="temptEplInRoomIngest">
+                                <option *ngFor="let epl of employeeInRoomIngest" [value]=epl.EmployeeId>{{epl.Name}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="act center">
+                                <input type="checkbox" class="checkAction" name="" id="">
+                            </div>
+                        </td>
+
                     </tr>
                 </tbody>
             </table>
@@ -188,11 +249,13 @@
             <div class="text">
                 <textarea name="" id="" rows="5" placeholder="Chưa có lịch sử" readonly></textarea>
             </div>
-            <p>{{this.ingestSelect|json}}</p>
         </div>
         <div class="action">
+            <i class="btn btn-primary" [hidden]="!isReturn">Trả thẻ</i>
+            <i class="btn btn-primary" [hidden]="!isReceive">Đã gửi file</i>
+            <i class="btn btn-primary" [hidden]="!isReceive">Nhận yêu cầu</i>
             <i class="btn btn-primary" (click)="Save()">Lưu và đóng</i>
-            <i class="btn btn-primary">Trình duyệt</i>
+            <i class="btn btn-primary" [hidden]="!isAdd">Trình duyệt</i>
             <i class="btn btn-warning" (click)="Close()">Đóng</i>
         </div>
     </div>
