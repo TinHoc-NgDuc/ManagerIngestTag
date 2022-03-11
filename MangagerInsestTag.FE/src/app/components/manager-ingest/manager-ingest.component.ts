@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from 'src/app/shared/employee/employee.model';
-import { EmployeeService } from 'src/app/shared/employee/employee.service';
-import { Filter } from 'src/app/shared/filter/filter.model';
-import { Ingest } from 'src/app/shared/ingest/ingest.model';
-import { IngestService } from 'src/app/shared/ingest/ingest.service';
-import { PositionService } from 'src/app/shared/position/position.service';
+import { Employee } from 'src/app/shared/Employee/employee.model';
+import { EmployeeService } from 'src/app/shared/Employee/employee.service';
+import { Filter } from 'src/app/shared/Filter/filter.model';
+import { Ingest } from 'src/app/shared/Ingest/ingest.model';
+import { IngestService } from 'src/app/shared/Ingest/ingest.service';
+import { PositionService } from 'src/app/shared/Position/position.service';
 
 @Component({
   selector: 'app-manager-ingest',

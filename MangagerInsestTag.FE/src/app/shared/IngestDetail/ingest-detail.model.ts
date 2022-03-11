@@ -1,4 +1,4 @@
-import { Ingest } from "../ingest/ingest.model";
+import { Ingest } from "../Ingest/ingest.model";
 
 export class IngestDetail {
     IngestDeltailId: string = '00000000-0000-0000-0000-000000000000';

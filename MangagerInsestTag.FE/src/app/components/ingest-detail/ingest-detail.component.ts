@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { Category } from 'src/app/shared/Category/category.model';
 import { CategoryService } from 'src/app/shared/Category/category.service';
-import { Employee } from 'src/app/shared/employee/employee.model';
-import { EmployeeService } from 'src/app/shared/employee/employee.service';
-import { Ingest } from 'src/app/shared/ingest/ingest.model';
-import { IngestService } from 'src/app/shared/ingest/ingest.service';
+import { Employee } from 'src/app/shared/Employee/employee.model';
+import { EmployeeService } from 'src/app/shared/Employee/employee.service';
+import { Ingest } from 'src/app/shared/Ingest/ingest.model';
+import { IngestService } from 'src/app/shared/Ingest/ingest.service';
 
 @Component({
   selector: 'app-ingest-detail',

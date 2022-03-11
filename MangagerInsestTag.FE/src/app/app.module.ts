@@ -14,9 +14,9 @@ import { SummaryTableIngestComponent } from './components/summary-table-ingest/s
 import { IngestTagDetailComponent } from './components/ingest-tag-detail/ingest-tag-detail.component';
 import { SubmitReturnTagComponent } from './components/submit-return-tag/submit-return-tag.component';
 import { NavigationPanelComponent } from './components/navigation-panel/navigation-panel.component';
-import { EmployeeService } from './shared/employee/employee.service';
-import { PositionService } from './shared/position/position.service';
-import { IngestService } from './shared/ingest/ingest.service';
+import { EmployeeService } from './shared/Employee/employee.service';
+import { PositionService } from './shared/Position/position.service';
+import { IngestService } from './shared/Ingest/ingest.service';
 import { StatusIngestService } from './shared/StatusInges/status-ingest.service';
 import { ProductionUnit } from './shared/ProductionUnit/production-unit.model';
 import { ProgramShowService } from './shared/ProgramShow/program-show.service';

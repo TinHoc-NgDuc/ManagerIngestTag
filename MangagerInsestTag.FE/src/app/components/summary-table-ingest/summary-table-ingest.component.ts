@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from 'src/app/shared/employee/employee.model';
-import { EmployeeService } from 'src/app/shared/employee/employee.service';
-import { IngestService } from 'src/app/shared/ingest/ingest.service';
-import { Position } from 'src/app/shared/position/position.model';
-import { PositionService } from 'src/app/shared/position/position.service';
+import { Employee } from 'src/app/shared/Employee/employee.model';
+import { EmployeeService } from 'src/app/shared/Employee/employee.service';
+import { IngestService } from 'src/app/shared/Ingest/ingest.service';
+import { Position } from 'src/app/shared/Position/position.model';
+import { PositionService } from 'src/app/shared/Position/position.service';
 import { ProductionUnit } from 'src/app/shared/ProductionUnit/production-unit.model';
 import { ProductionUnitService } from 'src/app/shared/ProductionUnit/production-unit.service';
 import { StatusIngest } from 'src/app/shared/StatusInges/status-ingest.model';
