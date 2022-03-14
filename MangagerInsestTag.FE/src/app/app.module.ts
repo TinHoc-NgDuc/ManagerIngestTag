@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ManagerIngestComponent } from './components/manager-ingest/manager-ingest.component';
@@ -26,7 +25,6 @@ import { HistoryIngestService } from './shared/HistoryIngest/history-ingest.serv
 import { SummaryIngestService } from './shared/SummaryIngest/summary-ingest.service';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +43,6 @@ import { SummaryIngestService } from './shared/SummaryIngest/summary-ingest.serv
     BrowserAnimationsModule,
     MatCheckboxModule,
     MatSelectModule
-
   ],
   providers:
   [

@@ -253,9 +253,9 @@
         <div class="action">
             <i class="btn btn-primary" [hidden]="!isReturn">Trả thẻ</i>
             <i class="btn btn-primary" [hidden]="!isReceive">Đã gửi file</i>
-            <i class="btn btn-primary" [hidden]="!isReceive">Nhận yêu cầu</i>
-            <i class="btn btn-primary" (click)="Save()">Lưu và đóng</i>
-            <i class="btn btn-primary" [hidden]="!isAdd">Trình duyệt</i>
+            <i class="btn btn-primary" [hidden]="!isPending">Nhận yêu cầu</i>
+            <i class="btn btn-primary" [hidden]="!isAdd" (click)="Save(1)">Trình duyệt</i>
+            <i class="btn btn-primary" (click)="Save(0)">Lưu và đóng</i>
             <i class="btn btn-warning" (click)="Close()">Đóng</i>
         </div>
     </div>

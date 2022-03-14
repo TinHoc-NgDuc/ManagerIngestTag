@@ -7,7 +7,8 @@
             <div class="item">
                 <div class="item-1">
                     <span>Thời gian</span>
-                    <select class="item-input" name="" id="" title="Thời gian"></select>
+                    <input type="date" name="" id="">
+                    
                 </div>
                 <div>
                     <span>Tên phóng viên</span>
@@ -20,7 +21,8 @@
                 <div class="item-1">
                     <span>Đơn vị sản xuất</span>
                     <select class="item-input" name="" id="" title="Đơn vị sản xuất">
-                        <option *ngFor="let item of productionUnitSrc" value="item.ProductionUnitId">{{item.Name}}</option>
+                        <option *ngFor="let item of productionUnitSrc" value="item.ProductionUnitId">{{item.Name}}
+                        </option>
                     </select>
                 </div>
                 <div>
@@ -37,7 +39,7 @@
                     <select class="item-input" name="" id="" title="Trạng thái" hidden>
                         <option *ngFor="let item of statusIngests" value="item.StatusIngestId">{{item.Name}}</option>
                     </select>
-                    
+
                 </div>
                 <div>
                     <span>Tìm kiếm</span>
@@ -48,7 +50,7 @@
                 <i class="btn btn-success">Xuất Execl</i>
                 <i class="btn btn-primary" (click)="Add()">Thêm mới</i>
             </div>
-        </div> 
+        </div>
     </div>
     <div class="gTable">
         <table>
@@ -93,7 +95,8 @@
                     <td></td>
                     <td></td>
                     <td>{{item.ingestDetail[0].DateSend}}</td>
-                    <td>{{item.ingestDetail[0].EmployeeSend}}</td>
+                    <td></td>
+                    <!-- <td>{{item.ingestDetail[0].EmployeeSend}}</td> -->
                     <td>1</td>
                     <td>{{item.ingestDetail[0].Ingest.Name}}</td>
                     <td></td>
@@ -102,10 +105,11 @@
                     <td></td>
                     <td></td>
                 </tr>
-                
+
             </tbody>
         </table>
     </div>
 </div>
-<app-ingest-tag-detail [isShow]=isShow (changeStatusShow)="changeStatusShow()"></app-ingest-tag-detail>
+<app-ingest-tag-detail [isShow]=isShow [isReturn]=isReturn [isReceive]=isReceive [isPending]=isPending
+    (changeStatusShow)="changeStatusShow()"></app-ingest-tag-detail>
 <app-submit-return-tag></app-submit-return-tag>

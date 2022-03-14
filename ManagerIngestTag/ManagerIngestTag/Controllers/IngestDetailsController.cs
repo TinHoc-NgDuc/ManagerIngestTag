@@ -84,17 +84,16 @@ namespace ManagerIngestTag.Controllers
                 IngestDetail ingest = new IngestDetail()
                 {
                     IngestDeltailId = Guid.NewGuid(),
-                    EmployeeSend = item.EmployeeSend,
-                    EmployeeReceive = item.EmployeeReceive,
+                    DateReturn = item.DateReturn,
                     DateSend = item.DateSend,
-                    DateReceive = item.DateReceive,
-                    Recipient = item.Recipient,
-                    TicketIngest = _context.TicketIngests.Find(item.TicketIngestId),
-                    IngestTag = _context.IngestTags.Find(item.IngestId)
+                    RecipientId = item.RecipientId,
+                    RecipientName = item.RecipientName,
+                    TakerId = item.TakerId,
+                    TakerName = item.TakerName,
+                    ticketIngest = _context.TicketIngests.Find(item.IngestTagId)
                 };
                 _context.IngestDetails.Add(ingest);
             }
-            //_context.IngestDetails.Add(ingestDetail);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetIngestDetails", ingestDetail);
 

@@ -12,6 +12,6 @@ export class TicketIngest {
     IsNew: boolean = false;
     IsCategory: boolean = false;
     IsOtherProgram: boolean = false;
-    StatusIngestId: string = '';
+    StatusIngestCode: string = '';
     StatusIngest: string = '';
 }

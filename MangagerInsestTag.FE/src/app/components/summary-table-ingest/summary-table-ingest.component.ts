@@ -10,6 +10,7 @@ import { StatusIngest } from 'src/app/shared/StatusInges/status-ingest.model';
 import { StatusIngestService } from 'src/app/shared/StatusInges/status-ingest.service';
 import { SummaryIngest } from 'src/app/shared/SummaryIngest/summary-ingest.model';
 import { SummaryIngestService } from 'src/app/shared/SummaryIngest/summary-ingest.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -27,8 +28,9 @@ export class SummaryTableIngestComponent implements OnInit {
   positionSrc: Position[] = [];
   productionUnitSrc: ProductionUnit[] = [];
   productionUnitSelect: ProductionUnit = new ProductionUnit();
-  isShow = true;
+  isShow = false;
   isAdd = false;
+  isPending = false;
   isReceive = false;
   isReturn = false;
 
@@ -105,21 +107,21 @@ export class SummaryTableIngestComponent implements OnInit {
           ReporterName: element.ticketIngest.reporterName,
           SaveDocument: element.ticketIngest.saveDocument,
           StatusIngest: element.ticketIngest.statusName,
-          StatusIngestId: element.ticketIngest.statusIngestId,
+          StatusIngestCode: element.ticketIngest.statusIngest,
           TicketIngestId: element.ticketIngest.ticketIngestId,
           TopicName: element.ticketIngest.topicName
         }
         element.ingestDetail.forEach((obj: any) => {
           this.summaryingest.ingestDetail.push({
             IngestDeltailId: obj.ingestDeltailId,
-            TicketIngestId: obj.ticketIngestId,
-            EmployeeSendId: obj.employeeSendId,
-            EmployeeSend: obj.employeeSend,
-            EmployeeReceiveId: obj.employeeReceiveId,
-            EmployeeReceive: obj.employeeReceive,
-            DateSend: obj.dateSend,
-            DateReceive: obj.dateReceive,
-            Recipient: obj.recipient,
+            ticketIngestId: obj.TicketIngestId,
+            DateReturn: obj.DateReturn,
+            DateSend: obj.DateSend,
+            IngestTagId: obj.IngestTagId,
+            RecipientId: obj.RecipientId,
+            RecipientName: obj.RecipientName,
+            TakerId: obj.TakerId,
+            TakerName: obj.TakerName,
             Ingest: {
               CardholderId: obj.ingestTag.cardholderId,
               CardholderName: obj.ingestTag.cardholderName,
@@ -131,8 +133,7 @@ export class SummaryTableIngestComponent implements OnInit {
               Name: obj.ingestTag.name,
               Note: obj.ingestTag.note,
               Status: obj.ingestTag.status
-            },
-            Ingestid: obj.ingestid
+            }
           });
         });
 
@@ -150,8 +151,34 @@ export class SummaryTableIngestComponent implements OnInit {
   Add() {
     this.changeStatusShow();
   }
-  onClick(item: any) {
-    //console.log('Click '+ JSON.stringify(item));
+  onClick(item: SummaryIngest) {
+    // console.log('Click '+ JSON.stringify(item));
+    // console.log(item.ticketIngest.StatusIngestCode + "\n"+environment.Darft);
+
+    if (item.ticketIngest.StatusIngestCode.toLocaleLowerCase() == environment.Pending.toLocaleLowerCase()) {
+      this.isPending = true;
+      this.isShow = false;
+      this.isAdd = false;
+      this.isReceive = false;
+      this.isReturn = false;
+      this.changeStatusShow();
+    }
+    else if (item.ticketIngest.StatusIngestCode.toLocaleLowerCase() == environment.Approved.toLocaleLowerCase()) {
+      this.isPending = false;
+      this.isShow = false;
+      this.isAdd = false;
+      this.isReceive = true;
+      this.isReturn = false;
+      this.changeStatusShow();
+    }
+    else if (item.ticketIngest.StatusIngestCode.toLocaleLowerCase() == environment.SentFile.toLocaleLowerCase()) {
+      this.isPending = false;
+      this.isShow = false;
+      this.isAdd = false;
+      this.isReceive = true;
+      this.isReturn = false;
+      this.changeStatusShow();
+    }
 
   }
 }

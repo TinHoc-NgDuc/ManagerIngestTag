@@ -52,21 +52,21 @@ namespace ManagerIngestTag.Migrations
                     b.Property<string>("ActionCode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("IngestDetailIngestDeltailId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("NameAction")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Performer")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("TicketIngestId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("TimeAction")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("HistoryIngestId");
 
-                    b.HasIndex("TicketIngestId");
+                    b.HasIndex("IngestDetailIngestDeltailId");
 
                     b.ToTable("HistoryIngests");
                 });
@@ -77,22 +77,25 @@ namespace ManagerIngestTag.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("DateReceive")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateReturn")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("DateSend")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployeeReceive")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployeeSend")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateSend")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid?>("IngestTagId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Recipient")
+                    b.Property<Guid>("RecipientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RecipientName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TakerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TakerName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("TicketIngestId")
@@ -310,6 +313,9 @@ namespace ManagerIngestTag.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
@@ -320,6 +326,8 @@ namespace ManagerIngestTag.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserLoginId");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("RoleId");
 
@@ -357,11 +365,11 @@ namespace ManagerIngestTag.Migrations
 
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.HistoryIngest", b =>
                 {
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.TicketIngest", "TicketIngest")
+                    b.HasOne("ManagerIngest.Infrastructure.Datatable.IngestDetail", "IngestDetail")
                         .WithMany()
-                        .HasForeignKey("TicketIngestId");
+                        .HasForeignKey("IngestDetailIngestDeltailId");
 
-                    b.Navigation("TicketIngest");
+                    b.Navigation("IngestDetail");
                 });
 
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.IngestDetail", b =>
@@ -370,13 +378,13 @@ namespace ManagerIngestTag.Migrations
                         .WithMany()
                         .HasForeignKey("IngestTagId");
 
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.TicketIngest", "TicketIngest")
+                    b.HasOne("ManagerIngest.Infrastructure.Datatable.TicketIngest", "ticketIngest")
                         .WithMany()
                         .HasForeignKey("TicketIngestId");
 
                     b.Navigation("IngestTag");
 
-                    b.Navigation("TicketIngest");
+                    b.Navigation("ticketIngest");
                 });
 
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.IngestTag", b =>
@@ -398,9 +406,15 @@ namespace ManagerIngestTag.Migrations
 
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.UserLogin", b =>
                 {
+                    b.HasOne("ManagerIngest.Infrastructure.Datatable.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
                     b.HasOne("ManagerIngest.Infrastructure.Datatable.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId");
+
+                    b.Navigation("Employee");
 
                     b.Navigation("Role");
                 });

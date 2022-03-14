@@ -12,6 +12,6 @@ namespace ManagerIngest.Models
         public string NameAction { get; set; }
         public string Performer { get; set; }
         public string TimeAction { get; set; }
-        public Guid TicketIngestId { get; set; }
+        public Guid IngestDetailId { get; set; }
     }
 }

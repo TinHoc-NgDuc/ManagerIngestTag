@@ -64,25 +64,27 @@ namespace ManagerIngestTag.Controllers
                     IsOtherProgram = item.IsOtherProgram,
                     StatusIngest = item.StatusIngest
                 };
+               
                 summary.ticketIngest.StatusName = (from st in _context.StatusIngests
                          where st.StatusCode.Contains(item.StatusIngest)
                          select new StatusIngestModel { 
                              Name = st.Name,
                              StatusCode = st.StatusCode,
                              StatusIngestId =st.StatusIngestId
-                         }).ToList().FirstOrDefault().Name; 
-                var query1 = from id in _context.IngestDetails
-                             where id.TicketIngest.TicketIngestId == item.TicketIngestId
+                         }).ToList().FirstOrDefault().Name;
+                var query2 = from id in _context.IngestDetails
+                             where id.IngestDeltailId == item.TicketIngestId
                              select new IngestDetailFull
                              {
                                  IngestDeltailId = id.IngestDeltailId,
-                                 TicketIngestId = id.TicketIngest.TicketIngestId,
-                                 EmployeeSend = id.EmployeeSend,
-                                 EmployeeReceive = id.EmployeeReceive,
+                                 DateReturn = id.DateReturn,
                                  DateSend = id.DateSend,
-                                 DateReceive = id.DateReceive,
-                                 Recipient = id.Recipient,
-                                 IngestId = id.IngestTag.IngestTagId,
+                                 IngestTagId = id.IngestTag.IngestTagId,
+                                 RecipientName = id.RecipientName,
+                                 TakerName = id.TakerName,
+                                 TakerId = id.TakerId,
+                                 ticketIngestId= id.ticketIngest.TicketIngestId,
+                                 RecipientId = id.RecipientId,
                                  IngestTag = new IngestTagReturnModel
                                  {
                                      IngestTagId = id.IngestTag.IngestTagId,
@@ -97,7 +99,7 @@ namespace ManagerIngestTag.Controllers
                                      CategoryName = id.IngestTag.category.Name
                                  }
                              };
-                summary.ingestDetail = query1.ToList();
+                summary.ingestDetail = query2.ToList();
 
                 result.Add(summary);
             }
@@ -107,8 +109,9 @@ namespace ManagerIngestTag.Controllers
 
         // POST api/<SumaryIngestController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<SummaryIngest>> Post(SummaryIngest summaryIngest)
         {
+            return null;
         }
 
         // PUT api/<SumaryIngestController>/5

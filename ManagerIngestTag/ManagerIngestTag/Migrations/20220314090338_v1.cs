@@ -152,71 +152,6 @@ namespace ManagerIngestTag.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserLogins",
-                columns: table => new
-                {
-                    UserLoginId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserLogins", x => x.UserLoginId);
-                    table.ForeignKey(
-                        name: "FK_UserLogins_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "RoleId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "HistoryIngests",
-                columns: table => new
-                {
-                    HistoryIngestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ActionCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NameAction = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Performer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TimeAction = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TicketIngestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HistoryIngests", x => x.HistoryIngestId);
-                    table.ForeignKey(
-                        name: "FK_HistoryIngests_TicketIngests_TicketIngestId",
-                        column: x => x.TicketIngestId,
-                        principalTable: "TicketIngests",
-                        principalColumn: "TicketIngestId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "IngestDetails",
-                columns: table => new
-                {
-                    IngestDeltailId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TicketIngestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EmployeeSend = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmployeeReceive = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateSend = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateReceive = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Recipient = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_IngestDetails", x => x.IngestDeltailId);
-                    table.ForeignKey(
-                        name: "FK_IngestDetails_TicketIngests_TicketIngestId",
-                        column: x => x.TicketIngestId,
-                        principalTable: "TicketIngests",
-                        principalColumn: "TicketIngestId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "IngestTags",
                 columns: table => new
                 {
@@ -245,6 +180,86 @@ namespace ManagerIngestTag.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserLogins",
+                columns: table => new
+                {
+                    UserLoginId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLogins", x => x.UserLoginId);
+                    table.ForeignKey(
+                        name: "FK_UserLogins_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserLogins_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "RoleId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IngestDetails",
+                columns: table => new
+                {
+                    IngestDeltailId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateSend = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateReturn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RecipientName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RecipientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TakerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TakerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TicketIngestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IngestTagId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IngestDetails", x => x.IngestDeltailId);
+                    table.ForeignKey(
+                        name: "FK_IngestDetails_IngestTags_IngestTagId",
+                        column: x => x.IngestTagId,
+                        principalTable: "IngestTags",
+                        principalColumn: "IngestTagId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_IngestDetails_TicketIngests_TicketIngestId",
+                        column: x => x.TicketIngestId,
+                        principalTable: "TicketIngests",
+                        principalColumn: "TicketIngestId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HistoryIngests",
+                columns: table => new
+                {
+                    HistoryIngestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ActionCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NameAction = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Performer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeAction = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IngestDetailIngestDeltailId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HistoryIngests", x => x.HistoryIngestId);
+                    table.ForeignKey(
+                        name: "FK_HistoryIngests_IngestDetails_IngestDetailIngestDeltailId",
+                        column: x => x.IngestDetailIngestDeltailId,
+                        principalTable: "IngestDetails",
+                        principalColumn: "IngestDeltailId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_PositionId",
                 table: "Employees",
@@ -256,9 +271,14 @@ namespace ManagerIngestTag.Migrations
                 column: "ProductionUnitId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HistoryIngests_TicketIngestId",
+                name: "IX_HistoryIngests_IngestDetailIngestDeltailId",
                 table: "HistoryIngests",
-                column: "TicketIngestId");
+                column: "IngestDetailIngestDeltailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IngestDetails_IngestTagId",
+                table: "IngestDetails",
+                column: "IngestTagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IngestDetails_TicketIngestId",
@@ -276,6 +296,11 @@ namespace ManagerIngestTag.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserLogins_EmployeeId",
+                table: "UserLogins",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserLogins_RoleId",
                 table: "UserLogins",
                 column: "RoleId");
@@ -285,12 +310,6 @@ namespace ManagerIngestTag.Migrations
         {
             migrationBuilder.DropTable(
                 name: "HistoryIngests");
-
-            migrationBuilder.DropTable(
-                name: "IngestDetails");
-
-            migrationBuilder.DropTable(
-                name: "IngestTags");
 
             migrationBuilder.DropTable(
                 name: "ProgramShows");
@@ -305,6 +324,15 @@ namespace ManagerIngestTag.Migrations
                 name: "UserLogins");
 
             migrationBuilder.DropTable(
+                name: "IngestDetails");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "IngestTags");
+
+            migrationBuilder.DropTable(
                 name: "TicketIngests");
 
             migrationBuilder.DropTable(
@@ -312,9 +340,6 @@ namespace ManagerIngestTag.Migrations
 
             migrationBuilder.DropTable(
                 name: "Employees");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Positions");

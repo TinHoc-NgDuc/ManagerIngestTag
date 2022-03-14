@@ -22,8 +22,4 @@ namespace ManagerIngest.Infrastructure.Datatable
         public bool IsOtherProgram { get; set; }
         public string StatusIngest { get; set; }
     }
-    public class TicketReturn : TicketIngest
-    {
-
-    }
 }

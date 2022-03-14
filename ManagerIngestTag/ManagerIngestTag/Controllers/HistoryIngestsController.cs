@@ -85,7 +85,7 @@ namespace ManagerIngestTag.Controllers
             history.NameAction = historyIngest.NameAction;
             history.Performer = historyIngest.Performer;
             history.TimeAction = DateTime.Now.ToString("h:m")+" " + DateTime.Now.ToString("dd/M/yyyy");
-            history.TicketIngest = _context.TicketIngests.Find(historyIngest.TicketIngestId);
+            history.IngestDetail = _context.IngestDetails.Find(historyIngest.IngestDetailId);
 
             _context.HistoryIngests.Add(history);
             await _context.SaveChangesAsync();

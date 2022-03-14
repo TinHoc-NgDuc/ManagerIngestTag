@@ -10,7 +10,8 @@ export const environment = {
   Darft:'Darft',
   Pending:'Pending',
   SentFile:'Senfile',
-  ReturnTag:'ReturnTag'
+  ReturnTag:'ReturnTag',
+  Approved:'Approved'
 };
 
 /*
