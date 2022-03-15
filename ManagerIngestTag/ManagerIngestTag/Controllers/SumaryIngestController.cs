@@ -25,6 +25,7 @@ namespace ManagerIngestTag.Controllers
         public IEnumerable<SummaryIngest> Get()
         {
             List<SummaryIngest> result = new List<SummaryIngest>();
+            //select all ticket
             var query = from tk in _context.TicketIngests
                         select new TicketIngestModel
                         {
@@ -44,6 +45,7 @@ namespace ManagerIngestTag.Controllers
                             StatusIngest = tk.StatusIngest
                         };
             var data = query.ToList();
+            //get all ticket 
             foreach (var item in data)
             {
                 SummaryIngest summary = new SummaryIngest();
@@ -54,7 +56,7 @@ namespace ManagerIngestTag.Controllers
                     CreateName = item.CreateName,
                     TopicName = item.TopicName,
                     ProgramName = item.ProductionName,
-                    CameramanName = item.CreateName,
+                    CameramanName = item.CameramanName,
                     ProductionName = item.ProductionName,
                     ReporterName = item.ReporterName,
                     SaveDocument = item.SaveDocument,
@@ -64,7 +66,7 @@ namespace ManagerIngestTag.Controllers
                     IsOtherProgram = item.IsOtherProgram,
                     StatusIngest = item.StatusIngest
                 };
-               
+
                 summary.ticketIngest.StatusName = (from st in _context.StatusIngests
                          where st.StatusCode.Contains(item.StatusIngest)
                          select new StatusIngestModel { 
@@ -73,7 +75,7 @@ namespace ManagerIngestTag.Controllers
                              StatusIngestId =st.StatusIngestId
                          }).ToList().FirstOrDefault().Name;
                 var query2 = from id in _context.IngestDetails
-                             where id.IngestDeltailId == item.TicketIngestId
+                             where id.ticketIngest.TicketIngestId == item.TicketIngestId
                              select new IngestDetailFull
                              {
                                  IngestDeltailId = id.IngestDeltailId,

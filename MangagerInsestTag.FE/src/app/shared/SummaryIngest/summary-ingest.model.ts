@@ -1,7 +1,9 @@
+import { HistoryIngest } from "../HistoryIngest/history-ingest.model";
 import { IngestDetail } from "../IngestDetail/ingest-detail.model";
-import { TicketIngest } from "../TicketIngest/ticket-ingest.model";
+import { TicketIngestFull } from "../TicketIngest/ticket-ingest.model";
 
 export class SummaryIngest {
-    ticketIngest: TicketIngest = new TicketIngest();
-    ingestDetail: IngestDetail[] =[];
+    ticketIngest: TicketIngestFull = new TicketIngestFull();
+    ingestDetail: IngestDetail[] = [];
+    HistoryIngest: HistoryIngest[] =[];
 }

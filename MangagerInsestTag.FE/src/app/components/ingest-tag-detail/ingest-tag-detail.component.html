@@ -13,7 +13,7 @@
                         </div>
                         <div class="right">
                             <input class="input-value" type="text" (keyup)="TopicChangePvValue($event)"
-                                [value]="ticketIngest.TopicName" [(ngModel)]="ticketIngest.TopicName">
+                                [value]="summaryIngest.ticketIngest.TopicName" [(ngModel)]="summaryIngest.ticketIngest.TopicName">
                             <div *ngFor="let item of topicSrc" [hidden]="!item.IsShow" class="filter"
                                 (click)="TopicSelect(item)">
                                 <span>{{item.Name}}</span>
@@ -26,7 +26,7 @@
                         </div>
                         <div class="right">
                             <input class="input-value" name="employee" type="text" (keyup)="eplChangePvValue($event)"
-                                [value]="ticketIngest.ReporterName" [(ngModel)]="ticketIngest.ReporterName">
+                                [value]="summaryIngest.ticketIngest.ReporterName" [(ngModel)]="summaryIngest.ticketIngest.ReporterName">
                             <div *ngFor="let item of employeeReportSrc" [hidden]="!item.IsShow" class="filter"
                                 (click)="EmployeePVSelect(item)">
                                 <span>{{item.Name}}</span>
@@ -38,8 +38,8 @@
                             <label for="createName" class="title">Người đăng ký: </label>
                         </div>
                         <div class="right">
-                            <input class="input-value" name="createName" type="text" [value]="ticketIngest.CreateName"
-                                [(ngModel)]="ticketIngest.CreateName">
+                            <input class="input-value" name="createName" type="text" [value]="summaryIngest.ticketIngest.CreateName"
+                                [(ngModel)]="summaryIngest.ticketIngest.CreateName">
                         </div>
                     </div>
                 </div>
@@ -50,8 +50,8 @@
                         </div>
                         <div class="right">
                             <input class="input-value" name="productionUnit" type="text"
-                                (keyup)="proUnitChangenValue($event)" [value]="ticketIngest.ProductionName"
-                                [(ngModel)]="ticketIngest.ProductionName">
+                                (keyup)="proUnitChangenValue($event)" [value]="summaryIngest.ticketIngest.ProductionName"
+                                [(ngModel)]="summaryIngest.ticketIngest.ProductionName">
                             <div *ngFor="let item of productionUnitSrc" [hidden]="!item.IsShow" class="filter"
                                 (click)="ProductionSelect(item)">
                                 <span>{{item.Name}}</span>
@@ -65,8 +65,8 @@
                             </div>
                             <div class="right">
                                 <input class="input-value" name="cameraman" type="text"
-                                    (keyup)="eplChangeQPValue($event)" [value]="ticketIngest.CameramanName"
-                                    [(ngModel)]="ticketIngest.CameramanName">
+                                    (keyup)="eplChangeQPValue($event)" [value]="summaryIngest.ticketIngest.CameramanName"
+                                    [(ngModel)]="summaryIngest.ticketIngest.CameramanName">
                                 <div *ngFor="let item of employeeCameramanSrc" [hidden]="!item.IsShow" class="filter"
                                     (click)="EmployeeQPSelect(item)">
                                     <span>{{item.Name}}</span>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="right">
                             <input class="input-value" type="text" (keyup)="programChangeValue($event)"
-                                [value]="ticketIngest.ProgramName" [(ngModel)]="ticketIngest.ProgramName">
+                                [value]="summaryIngest.ticketIngest.ProgramName" [(ngModel)]="summaryIngest.ticketIngest.ProgramName">
                             <div *ngFor="let item of programShowSrc" [hidden]="!item.IsShow" class="filter"
                                 (click)="programSelect(item)">
                                 <span>{{item.Name}}</span>
@@ -93,30 +93,30 @@
             <div class="input-checkbox">
                 <div class="item">
                     <label>Bản tin: </label>
-                    <input class="input-value" type="checkbox" name="" id="" [checked]="ticketIngest.IsNew"
-                        [(ngModel)]="ticketIngest.IsNew">
+                    <input class="input-value" type="checkbox" name="" id="" [checked]="summaryIngest.ticketIngest.IsNew"
+                        [(ngModel)]="summaryIngest.ticketIngest.IsNew">
                 </div>
                 <div class="item">
                     <label>Chuyên mục: </label>
-                    <input class="input-value" type="checkbox" name="" id="" [checked]="ticketIngest.IsCategory"
-                        [(ngModel)]="ticketIngest.IsCategory">
+                    <input class="input-value" type="checkbox" name="" id="" [checked]="summaryIngest.ticketIngest.IsCategory"
+                        [(ngModel)]="summaryIngest.ticketIngest.IsCategory">
                 </div>
                 <div class="item">
                     <label>Phóng sự: </label>
-                    <input class="input-value" type="checkbox" name="" id="" [checked]="ticketIngest.IsReporting"
-                        [(ngModel)]="ticketIngest.IsReporting">
+                    <input class="input-value" type="checkbox" name="" id="" [checked]="summaryIngest.ticketIngest.IsReporting"
+                        [(ngModel)]="summaryIngest.ticketIngest.IsReporting">
                 </div>
                 <div class="item">
                     <label>Chương trình khác: </label>
-                    <input class="input-value" type="checkbox" name="" id="" [checked]="ticketIngest.IsOtherProgram"
-                        [(ngModel)]="ticketIngest.IsOtherProgram">
+                    <input class="input-value" type="checkbox" name="" id="" [checked]="summaryIngest.ticketIngest.IsOtherProgram"
+                        [(ngModel)]="summaryIngest.ticketIngest.IsOtherProgram">
                 </div>
             </div>
             <div class="input-select">
                 <div class="item">
                     <label>Mã thẻ: </label>
                     <select class="input-value" name="" id="" (click)="SelectIngest($event)"
-                        [(ngModel)]="ingestDetailCreate.Ingest.IngestCode">
+                        [(ngModel)]="ingestDetailCreate.IngestTag.IngestCode">
                         <option *ngFor="let item of ingestSrc" [value]=item.IngestCode>{{item.IngestCode}}</option>
                     </select>
                 </div>
@@ -128,8 +128,8 @@
                 </div>
                 <div class="item">
                     <label>Lưu tư liệu: </label>
-                    <input class="input-value" type="date" placeholder="Nhập text"
-                        [(ngModel)]="ticketIngest.SaveDocument">
+                    <input class="input-value" type="text" placeholder="Nhập text"
+                        [(ngModel)]="summaryIngest.ticketIngest.SaveDocument">
                 </div>
             </div>
         </div>
@@ -150,9 +150,9 @@
                 <tbody>
                     <tr *ngFor="let item of ingestSelect">
                         <td>1</td>
-                        <td>{{item.Ingest.IngestCode}}</td>
-                        <td>{{item.Ingest.Name}}</td>
-                        <td>{{item.Ingest.CategoryName}}</td>
+                        <td>{{item.IngestTag.IngestCode}}</td>
+                        <td>{{item.IngestTag.Name}}</td>
+                        <td>{{item.IngestTag.CategoryName}}</td>
                         <td><input name="" id="" [value]=item.DateSend></td>
                         <td class="center">
                             <select name="" id="" (change)="changeEmployee(item)" [(ngModel)]="temptEplInRoomIngest">
@@ -162,6 +162,41 @@
                         </td>
                         <td>
                             <div class="act center"><i class="delete far fa-trash-alt" (click)="Remove(item)"></i></div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Duyệt thẻ, gửi file -->
+            <table *ngIf="isPending">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã thẻ</th>
+                        <th>Tên thẻ</th>
+                        <th>Thể loại ingest</th>
+                        <th>Ngày gửi thẻ</th>
+                        <th>Người nhận thẻ</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of ingestSelect">
+                        <td>1</td>
+                        <td>{{item.IngestTag.IngestCode}}</td>
+                        <td>{{item.IngestTag.Name}}</td>
+                        <td>{{item.IngestTag.CategoryName}}</td>
+                        <td><input name="" id="" [value]=item.DateSend></td>
+                        <td class="center">
+                            <select name="" id="" (change)="changeEmployee(item)" [(ngModel)]="temptEplInRoomIngest">
+                                <option *ngFor="let epl of employeeInRoomIngest" [value]=epl.EmployeeId>{{epl.Name}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="act center">
+                                <input type="checkbox" class="checkAction" name="" id="">
+                            </div>
                         </td>
 
                     </tr>
@@ -183,9 +218,9 @@
                 <tbody>
                     <tr *ngFor="let item of ingestSelect">
                         <td>1</td>
-                        <td>{{item.Ingest.IngestCode}}</td>
-                        <td>{{item.Ingest.Name}}</td>
-                        <td>{{item.Ingest.CategoryName}}</td>
+                        <td>{{item.IngestTag.IngestCode}}</td>
+                        <td>{{item.IngestTag.Name}}</td>
+                        <td>{{item.IngestTag.CategoryName}}</td>
                         <td><input name="" id="" [value]=item.DateSend></td>
                         <td class="center">
                             <select name="" id="" (change)="changeEmployee(item)" [(ngModel)]="temptEplInRoomIngest">
@@ -201,7 +236,7 @@
 
                     </tr>
                 </tbody>
-            </table >
+            </table>
             <!-- Trả thẻ -->
             <table *ngIf="isReturn">
                 <thead>
@@ -219,9 +254,9 @@
                 <tbody>
                     <tr *ngFor="let item of ingestSelect">
                         <td>1</td>
-                        <td>{{item.Ingest.IngestCode}}</td>
-                        <td>{{item.Ingest.Name}}</td>
-                        <td>{{item.Ingest.CategoryName}}</td>
+                        <td>{{item.IngestTag.IngestCode}}</td>
+                        <td>{{item.IngestTag.Name}}</td>
+                        <td>{{item.IngestTag.CategoryName}}</td>
                         <td>
                             <div class="act center">
                                 <input type="checkbox" class="checkAction" name="" id="">
@@ -247,7 +282,9 @@
         <div class="histroy">
             <span>*Lịch sử xử lý</span>
             <div class="text">
-                <textarea name="" id="" rows="5" placeholder="Chưa có lịch sử" readonly></textarea>
+                <div *ngFor="let item of this.summaryIngest.HistoryIngest">
+                    {{item.NameAction}}
+                </div>
             </div>
         </div>
         <div class="action">
@@ -258,5 +295,7 @@
             <i class="btn btn-primary" (click)="Save(0)">Lưu và đóng</i>
             <i class="btn btn-warning" (click)="Close()">Đóng</i>
         </div>
+
+        <p>{{ this.summaryIngest.ticketIngest |json}}</p>
     </div>
 </div>

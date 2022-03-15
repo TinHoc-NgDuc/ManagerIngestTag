@@ -17,7 +17,7 @@ import { ProgramShowFilter } from 'src/app/shared/ProgramShow/program-show.model
 import { ProgramShowService } from 'src/app/shared/ProgramShow/program-show.service';
 import { StatusIngest } from 'src/app/shared/StatusInges/status-ingest.model';
 import { StatusIngestService } from 'src/app/shared/StatusInges/status-ingest.service';
-import { TicketIngest } from 'src/app/shared/TicketIngest/ticket-ingest.model';
+import { SummaryIngest } from 'src/app/shared/SummaryIngest/summary-ingest.model';
 import { TicketIngestService } from 'src/app/shared/TicketIngest/ticket-ingest.service';
 import { Topic, TopicFilter } from 'src/app/shared/Topics/topic.module';
 import { TopicService } from 'src/app/shared/Topics/topic.service';
@@ -32,9 +32,11 @@ export class IngestTagDetailComponent implements OnInit {
   @Input() isShow: boolean = false;
   @Input() isAdd: boolean = false;
   @Input() isPending: boolean = false;
-  @Input() isReceive:boolean = false;
-  @Input() isReturn:boolean = false;
+  @Input() isReceive: boolean = false;
+  @Input() isReturn: boolean = false;
+  @Input() summaryIngest: SummaryIngest = new SummaryIngest();
   @Output() changeStatusShow = new EventEmitter();
+
 
   statusIngests: StatusIngest[] = [];
   statusSelect: StatusIngest = new StatusIngest();
@@ -47,8 +49,6 @@ export class IngestTagDetailComponent implements OnInit {
   topicSrc: TopicFilter[] = [];
   ingestSrc: Ingest[] = [];
   categorySrc: Category[] = [];
-  ticketIngest: TicketIngest = new TicketIngest();
-  ingestSelect: IngestDetail[] = [];
   ingestDetailCreate: IngestDetail = new IngestDetail();
   temptEplInRoomIngest: string = '';
   histroyIngest: HistoryIngest = new HistoryIngest();
@@ -143,7 +143,6 @@ export class IngestTagDetailComponent implements OnInit {
         });
       });
     });
-
     this.ingestService.GetAllIngest().subscribe(s => {
       s.forEach((element: any) => {
         this.ingestSrc.push({
@@ -179,7 +178,24 @@ export class IngestTagDetailComponent implements OnInit {
       });
     });
 
-    //this.ingestSelect = this.ingestSrc;
+    this.summaryIngest.HistoryIngest.push({
+      HistoryIngestId: '',
+      ActionCode: '',
+      NameAction: 'Thêm mới',
+      Performer: '',
+      TimeAction: '',
+      TicketIngest: '',
+      TicketIngestId: '',
+    });
+    this.summaryIngest.HistoryIngest.push({
+      HistoryIngestId: '',
+      ActionCode: '',
+      NameAction: 'Thêm mới',
+      Performer: '',
+      TimeAction: '',
+      TicketIngest: '',
+      TicketIngestId: '',
+    });
   }
 
   changeShow() {
@@ -189,32 +205,15 @@ export class IngestTagDetailComponent implements OnInit {
   Close() {
     this.changeShow();
   }
-  Save(action:number) {
-    if(action==0){
-      this.ticketIngest.StatusIngest = environment.Darft;
+  Save(action: number) {
+    if (action == 0) {
+      this.summaryIngest.ticketIngest.StatusIngest = environment.Darft;
     }
-    if(action==1){
-      this.ticketIngest.StatusIngest = environment.Pending;
+    if (action == 1) {
+      this.summaryIngest.ticketIngest.StatusIngest = environment.Pending;
     }
-    this.ticketIngestService.PostIngest(this.ticketIngest).subscribe(s => {
-      this.ingestSelect.forEach(element => {
-        element.TicketIngestId = s.ticketIngestId,
-          element.EmployeeSend = s.createName,
-          element.EmployeeReceive = this.employeeInRoomIngest.find(f => f.EmployeeId == element.EmployeeReceiveId)?.Name;
-      });
-      this.ingestDetailService.PostIngestDetail(this.ingestSelect).subscribe(
-        ingestDetail => {
-          this.histroyIngest.HistoryIngestId = '00000000-0000-0000-0000-000000000000';
-          this.histroyIngest.ActionCode = 'Send';
-          this.histroyIngest.NameAction = 'Tạo mới';
-          this.histroyIngest.Performer = s.createName;
-          this.histroyIngest.TimeAction = new Date().toLocaleString().split(',')[0];
-          this.histroyIngest.TicketIngestId = s.ticketIngestId;
-          this.historyIngestService.PostHistoryIngest(this.histroyIngest).subscribe();
-
-        }
-
-      );
+    this.ticketIngestService.PostIngest(this.summaryIngest.ticketIngest).subscribe(s => {
+      console.log(s);
     });
   }
 
@@ -231,7 +230,7 @@ export class IngestTagDetailComponent implements OnInit {
   }
   EmployeePVSelect(event: any) {
     this.clearShow();
-    this.ticketIngest.ReporterName = event.Name;
+    this.summaryIngest.ticketIngest.ReporterName = event.Name;
   }
   eplChangeQPValue(event: any) {
     var strInput = event.target.value;
@@ -246,7 +245,7 @@ export class IngestTagDetailComponent implements OnInit {
   }
   EmployeeQPSelect(event: any) {
     this.clearShow();
-    this.ticketIngest.CameramanName = event.Name;
+    this.summaryIngest.ticketIngest.CameramanName = event.Name;
   }
   proUnitChangenValue(event: any) {
     var strInput = event.target.value;
@@ -272,17 +271,18 @@ export class IngestTagDetailComponent implements OnInit {
   }
   TopicSelect(event: Topic) {
     this.clearShow();
-    this.ticketIngest.TopicName = event.Name;
-    this.ticketIngest.CreateName = event.CreateName;
-    this.ticketIngest.ProgramName = event.ProgramName;
-    this.ticketIngest.ReporterName = event.ReporterName;
-    this.ticketIngest.CameramanName = event.CameramanName;
-    this.ticketIngest.ProductionName = event.ProductionName;
-    this.ticketIngest.Name = event.Name,
-      this.ticketIngest.IsCategory = event.IsCategory,
-      this.ticketIngest.IsNew = event.IsNew,
-      this.ticketIngest.IsOtherProgram = event.IsOtherProgram,
-      this.ticketIngest.IsReporting = event.IsReporting
+    this.summaryIngest.ticketIngest.TopicName = event.Name;
+    this.summaryIngest.ticketIngest.CreateName = event.CreateName;
+    this.summaryIngest.ticketIngest.ProgramName = event.ProgramName;
+    this.summaryIngest.ticketIngest.ReporterName = event.ReporterName;
+    this.summaryIngest.ticketIngest.CameramanName = event.CameramanName;
+    this.summaryIngest.ticketIngest.ProductionName = event.ProductionName;
+    this.summaryIngest.ticketIngest.Name = event.Name,
+      this.summaryIngest.ticketIngest.IsCategory = event.IsCategory,
+      this.summaryIngest.ticketIngest.IsNew = event.IsNew,
+      this.summaryIngest.ticketIngest.IsOtherProgram = event.IsOtherProgram,
+      this.summaryIngest.ticketIngest.IsReporting = event.IsReporting
+    debugger
   }
   programChangeValue(event: any) {
     var strInput = event.target.value;
@@ -297,27 +297,27 @@ export class IngestTagDetailComponent implements OnInit {
   }
   ProductionSelect(event: any) {
     this.clearShow();
-    this.ticketIngest.ProductionName = event.Name;
+    this.summaryIngest.ticketIngest.ProductionName = event.Name;
   }
   programSelect(event: any) {
     this.clearShow();
-    this.ticketIngest.ProgramName = event.Name;
+    this.summaryIngest.ticketIngest.ProgramName = event.Name;
   }
   SelectIngest(event: any) {
     //console.log(this.ingest);
-    var item = this.ingestSrc.find(e => e.IngestCode == this.ingestDetailCreate.Ingest.IngestCode);
+    var item = this.ingestSrc.find(e => e.IngestCode == this.ingestDetailCreate.IngestTag.IngestCode);
     if (item != undefined) {
-      this.ingestSelect.push({
+      this.summaryIngest.ticketIngest.IngestDetailFull.push({
         IngestDeltailId: "00000000-0000-0000-0000-000000000000",
         DateSend: new Date().toLocaleString().split(',')[0],
-        IngestTagId : "00000000-0000-0000-0000-000000000000",
+        IngestTagId: "00000000-0000-0000-0000-000000000000",
         RecipientId: "00000000-0000-0000-0000-000000000000",
         TakerId: "00000000-0000-0000-0000-000000000000",
-        RecipientName:"",
+        RecipientName: "",
         ticketIngestId: "00000000-0000-0000-0000-000000000000",
-        TakerName:"",
+        TakerName: "",
         DateReturn: '',
-        Ingest: {
+        IngestTag: {
           IngestTagId: item.IngestTagId,
           IngestCode: item.IngestCode,
           Name: item.Name,
@@ -358,9 +358,9 @@ export class IngestTagDetailComponent implements OnInit {
     this.topicSrc.forEach(element => { element.IsShow = false; });
     this.programShowSrc.forEach(element => { element.IsShow = false; });
   }
-
   changeEmployee(item: IngestDetail) {
     item.RecipientId = this.temptEplInRoomIngest;
+    item.RecipientName = this.employeeInRoomIngest.find(f => f.EmployeeId == item.RecipientId)?.Name;
     this.temptEplInRoomIngest = '';
   }
 }

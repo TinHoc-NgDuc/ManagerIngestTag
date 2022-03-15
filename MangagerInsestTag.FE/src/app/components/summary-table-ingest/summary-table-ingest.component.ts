@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Employee } from 'src/app/shared/Employee/employee.model';
 import { EmployeeService } from 'src/app/shared/Employee/employee.service';
 import { IngestService } from 'src/app/shared/Ingest/ingest.service';
+import { IngestDetail } from 'src/app/shared/IngestDetail/ingest-detail.model';
 import { Position } from 'src/app/shared/Position/position.model';
 import { PositionService } from 'src/app/shared/Position/position.service';
 import { ProductionUnit } from 'src/app/shared/ProductionUnit/production-unit.model';
@@ -91,7 +92,6 @@ export class SummaryTableIngestComponent implements OnInit {
       });
     });
     this.summaryIngestService.GetAllSummaryIngest().subscribe(s => {
-      console.log(s);
       s.forEach((element: any) => {
         this.summaryingest = new SummaryIngest();
         this.summaryingest.ticketIngest = {
@@ -109,20 +109,21 @@ export class SummaryTableIngestComponent implements OnInit {
           StatusIngest: element.ticketIngest.statusName,
           StatusIngestCode: element.ticketIngest.statusIngest,
           TicketIngestId: element.ticketIngest.ticketIngestId,
-          TopicName: element.ticketIngest.topicName
+          TopicName: element.ticketIngest.topicName,
+          IngestDetailFull: []
         }
         element.ingestDetail.forEach((obj: any) => {
           this.summaryingest.ingestDetail.push({
             IngestDeltailId: obj.ingestDeltailId,
-            ticketIngestId: obj.TicketIngestId,
-            DateReturn: obj.DateReturn,
-            DateSend: obj.DateSend,
-            IngestTagId: obj.IngestTagId,
-            RecipientId: obj.RecipientId,
-            RecipientName: obj.RecipientName,
-            TakerId: obj.TakerId,
-            TakerName: obj.TakerName,
-            Ingest: {
+            ticketIngestId: obj.ticketIngestId,
+            DateReturn: obj.dateReturn,
+            DateSend: obj.dateSend,
+            IngestTagId: obj.ingestTagId,
+            RecipientId: obj.recipientId,
+            RecipientName: obj.recipientName,
+            TakerId: obj.takerId,
+            TakerName: obj.takerName,
+            IngestTag: {
               CardholderId: obj.ingestTag.cardholderId,
               CardholderName: obj.ingestTag.cardholderName,
               CategoryId: obj.ingestTag.categoryId,
@@ -139,8 +140,6 @@ export class SummaryTableIngestComponent implements OnInit {
 
         this.summaryingests.push(this.summaryingest);
       });
-
-      console.log(this.summaryingest);
     });
   }
 
@@ -149,12 +148,18 @@ export class SummaryTableIngestComponent implements OnInit {
   }
 
   Add() {
+    this.isPending = false;
+    this.isShow = false;
+    this.isAdd = true;
+    this.isReceive = false;
+    this.isReturn = false;
     this.changeStatusShow();
   }
   onClick(item: SummaryIngest) {
     // console.log('Click '+ JSON.stringify(item));
     // console.log(item.ticketIngest.StatusIngestCode + "\n"+environment.Darft);
-
+    this.summaryingest = item;
+    debugger
     if (item.ticketIngest.StatusIngestCode.toLocaleLowerCase() == environment.Pending.toLocaleLowerCase()) {
       this.isPending = true;
       this.isShow = false;

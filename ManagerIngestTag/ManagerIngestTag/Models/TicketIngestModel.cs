@@ -25,5 +25,6 @@ namespace ManagerIngest.Models
     public class TicketIngestFull : TicketIngestModel
     {
         public string StatusName { get; set; }
+        public List<IngestDetailFull> IngestDetailFull { get; set; }
     }
 }

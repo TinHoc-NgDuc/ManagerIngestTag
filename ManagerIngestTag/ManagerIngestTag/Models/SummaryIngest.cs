@@ -10,6 +10,6 @@ namespace ManagerIngestTag.Models
     {
         public TicketIngestFull ticketIngest { get; set; }
         public List<IngestDetailFull> ingestDetail { get; set; }
-
+        public List<HistoryIngestModel> HistoryIngest { get; set; }
     }
 }

@@ -8,7 +8,7 @@
                 <div class="item-1">
                     <span>Thời gian</span>
                     <input type="date" name="" id="">
-                    
+
                 </div>
                 <div>
                     <span>Tên phóng viên</span>
@@ -35,8 +35,7 @@
             <div class="item">
                 <div class="item-1">
                     <span>Trang thái</span>
-                    <input class="item-input" type="text">
-                    <select class="item-input" name="" id="" title="Trạng thái" hidden>
+                    <select class="item-input" name="" id="" title="Trạng thái">
                         <option *ngFor="let item of statusIngests" value="item.StatusIngestId">{{item.Name}}</option>
                     </select>
 
@@ -91,25 +90,33 @@
                     <td>{{item.ticketIngest.Name}}</td>
                     <td>{{item.ticketIngest.ReporterName}}</td>
                     <td>{{item.ticketIngest.CameramanName}}</td>
-                    <td>{{item.ingestDetail[0].Ingest.CategoryName}}</td>
-                    <td></td>
-                    <td></td>
+                    <td>{{item.ingestDetail[0].IngestTag.CategoryName}}</td>
+                    <td>{{item.ticketIngest.SaveDocument}}</td>
+                    <td [hidden]="!item.ticketIngest.IsNew">Tin</td>
+                    <td [hidden]="!item.ticketIngest.IsCategory">Chuyên Mục</td>
+                    <td [hidden]="!item.ticketIngest.IsReporting">Phóng sự</td>
+                    <td [hidden]="!item.ticketIngest.IsOtherProgram">Chương trình khác</td>
                     <td>{{item.ingestDetail[0].DateSend}}</td>
-                    <td></td>
-                    <!-- <td>{{item.ingestDetail[0].EmployeeSend}}</td> -->
-                    <td>1</td>
-                    <td>{{item.ingestDetail[0].Ingest.Name}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{item.ticketIngest.CreateName}}</td>
+                    <td>{{item.ingestDetail[0].IngestTag.IngestCode}}</td>
+                    <td>{{item.ingestDetail[0].IngestTag.Name}}</td>
+                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].DateReturn}}</td>
+                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].TakerName}}</td>
+                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].IngestTag.IngestCode}}</td>
+                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].IngestTag.Name}}</td>
+                    <td [hidden]="!(item.ingestDetail[0].TakerName.length <= 0)"></td>
+                    <td [hidden]="!(item.ingestDetail[0].TakerName.length <= 0)"></td>
+                    <td [hidden]="!(item.ingestDetail[0].TakerName.length <= 0)"></td>
+                    <td [hidden]="!(item.ingestDetail[0].TakerName.length <= 0)"></td>
+                    <td>{{item.ingestDetail[0].RecipientName}}</td>
                 </tr>
 
             </tbody>
         </table>
+        <!-- <p>{{summaryingests[0]|json}}</p> -->
     </div>
 </div>
-<app-ingest-tag-detail [isShow]=isShow [isReturn]=isReturn [isReceive]=isReceive [isPending]=isPending
+<app-ingest-tag-detail [isShow]=isShow [isReturn]=isReturn [isReceive]=isReceive [isPending]=isPending [isAdd]=isAdd
+[summaryIngest]=summaryingest
     (changeStatusShow)="changeStatusShow()"></app-ingest-tag-detail>
 <app-submit-return-tag></app-submit-return-tag>

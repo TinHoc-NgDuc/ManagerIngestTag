@@ -1,3 +1,5 @@
+import { IngestDetail } from "../IngestDetail/ingest-detail.model";
+
 export class TicketIngest {
     TicketIngestId: string  = '00000000-0000-0000-0000-000000000000';
     Name: string = '';
@@ -14,4 +16,7 @@ export class TicketIngest {
     IsOtherProgram: boolean = false;
     StatusIngestCode: string = '';
     StatusIngest: string = '';
+}
+export class TicketIngestFull extends TicketIngest{
+    IngestDetailFull: IngestDetail[] = [];
 }

@@ -95,39 +95,74 @@ namespace ManagerIngestTag.Controllers
         // POST: api/TicketIngests
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TicketIngest>> PostTicketIngest(TicketIngestModel ticketIngest)
+        public async Task<ActionResult<TicketIngest>> PostTicketIngest(TicketIngestFull ticketIngest)
         {
-            var tickketIngest = new TicketIngest()
+            try
             {
-                TicketIngestId = Guid.NewGuid(),
-                Name = ticketIngest.Name,
-                CreateName = ticketIngest.CreateName,
-                TopicName = ticketIngest.TopicName,
-                ProgramName = ticketIngest.ProductionName,
-                CameramanName = ticketIngest.CameramanName,
-                ProductionName = ticketIngest.ProductionName,
-                ReporterName = ticketIngest.ReporterName,
-                SaveDocument = ticketIngest.SaveDocument,
-                IsReporting = ticketIngest.IsReporting,
-                IsNew = ticketIngest.IsNew,
-                IsCategory = ticketIngest.IsCategory,
-                IsOtherProgram = ticketIngest.IsOtherProgram,
-                StatusIngest = ticketIngest.StatusIngest
-            };
-            _context.TicketIngests.Add(tickketIngest);
+                var tickketIngest = new TicketIngest()
+                {
+                    TicketIngestId = Guid.NewGuid(),
+                    Name = ticketIngest.Name,
+                    CreateName = ticketIngest.CreateName,
+                    TopicName = ticketIngest.TopicName,
+                    ProgramName = ticketIngest.ProductionName,
+                    CameramanName = ticketIngest.CameramanName,
+                    ProductionName = ticketIngest.ProductionName,
+                    ReporterName = ticketIngest.ReporterName,
+                    SaveDocument = ticketIngest.SaveDocument,
+                    IsReporting = ticketIngest.IsReporting,
+                    IsNew = ticketIngest.IsNew,
+                    IsCategory = ticketIngest.IsCategory,
+                    IsOtherProgram = ticketIngest.IsOtherProgram,
+                    StatusIngest = ticketIngest.StatusIngest
+                };
+                _context.TicketIngests.Add(tickketIngest);
 
+                foreach (var item in ticketIngest.IngestDetailFull)
+                {
+                    var ingestDetail = new IngestDetail()
+                    {
+                        IngestDeltailId = Guid.NewGuid(),
+                        DateSend = item.DateSend,
+                        DateReturn = item.DateReturn,
+                        RecipientName = item.RecipientName,
+                        RecipientId = item.RecipientId,
+                        TakerName = item.TakerName,
+                        TakerId = item.TakerId,
+                        ticketIngest = _context.TicketIngests.Find(tickketIngest.TicketIngestId),
+                        IngestTag = _context.IngestTags.Find(item.IngestTag.IngestTagId)
+                        //IngestTag = new IngestTag()
+                        //{
+                        //    IngestTagId = item.IngestTag.IngestTagId,
+                        //    IngestCode = item.IngestTag.IngestCode,
+                        //    Name = item.IngestTag.Name,
+                        //    Note = item.IngestTag.Note,
+                        //    Status = item.IngestTag.Status,
+                        //    category = _context.Categories.Find(item.IngestTag.CategoryId),
+                        //    cardholderId = item.IngestTag.cardholderId,
+                        //    Employee = _context.Employees.Find(item.IngestTag.cardholderId)
+                        //}
+                    };
+                    _context.IngestDetails.Add(ingestDetail);
+                    HistoryIngest historyIngest = new HistoryIngest();
+                    historyIngest.HistoryIngestId = Guid.NewGuid();
+                    historyIngest.ActionCode = "Draf";
+                    historyIngest.NameAction = "Tạo thẻ ingest";
+                    historyIngest.Performer = "";
+                    historyIngest.TimeAction = DateTime.Now.ToString("dd/mm/yyyy");
+                    historyIngest.IngestDetail = _context.IngestDetails.Find(ingestDetail.IngestDeltailId);
 
-            //HistoryIngest historyIngest = new HistoryIngest();
-            //historyIngest.HistoryIngestId = Guid.NewGuid();
-            //historyIngest.ActionCode = "Draf";
-            //historyIngest.NameAction = "Tạo thẻ ingest";
-            //historyIngest.Performer = "";
-            //historyIngest.TimeAction = DateTime.Now.ToString("dd/mm/yyyy");
-            //historyIngest.TicketIngest = _context.TicketIngests.Find(tickketIngest.TicketIngestId);
-            //_context.HistoryIngests.Add(historyIngest);
-            await _context.SaveChangesAsync();
-            ticketIngest.TicketIngestId = tickketIngest.TicketIngestId;
-            return CreatedAtAction("GetTicketIngest", new { id = tickketIngest.TicketIngestId }, ticketIngest);
+                    _context.HistoryIngests.Add(historyIngest);
+                }
+
+                await _context.SaveChangesAsync();
+                ticketIngest.TicketIngestId = tickketIngest.TicketIngestId;
+                return CreatedAtAction("GetTicketIngest", new { id = tickketIngest.TicketIngestId }, ticketIngest);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         // DELETE: api/TicketIngests/5

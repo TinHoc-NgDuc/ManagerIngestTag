@@ -89,7 +89,6 @@ export class ManagerIngestComponent implements OnInit {
     this.employeeSelect.EmployeeId = item.EmployeeId;
     this.employeeSelect.ProductionUnitId = item.ProductionUnitId;
 
-    //console.log(this.ingestEdit);
     this.changeShowAdd();
   }
   Search(event: any) {
