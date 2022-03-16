@@ -64,9 +64,10 @@ namespace ManagerIngestTag.Controllers
                     IsNew = item.IsNew,
                     IsCategory = item.IsCategory,
                     IsOtherProgram = item.IsOtherProgram,
-                    StatusIngest = item.StatusIngest
+                    StatusIngest = item.StatusIngest,
+                    
                 };
-
+                
                 summary.ticketIngest.StatusName = (from st in _context.StatusIngests
                          where st.StatusCode.Contains(item.StatusIngest)
                          select new StatusIngestModel { 
@@ -102,7 +103,7 @@ namespace ManagerIngestTag.Controllers
                                  }
                              };
                 summary.ingestDetail = query2.ToList();
-
+                summary.ticketIngest.IngestDetailFull = summary.ingestDetail;
                 result.Add(summary);
             }
 
@@ -110,11 +111,11 @@ namespace ManagerIngestTag.Controllers
         }
 
         // POST api/<SumaryIngestController>
-        [HttpPost]
-        public async Task<ActionResult<SummaryIngest>> Post(SummaryIngest summaryIngest)
-        {
-            return null;
-        }
+        //[HttpPost]
+        //public async Task<ActionResult<SummaryIngest>> Post(SummaryIngest summaryIngest)
+        //{
+        //    return null;
+        //}
 
         // PUT api/<SumaryIngestController>/5
         [HttpPut("{id}")]

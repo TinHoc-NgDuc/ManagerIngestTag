@@ -32,8 +32,8 @@ export class IngestTagDetailComponent implements OnInit {
   @Input() isShow: boolean = false;
   @Input() isAdd: boolean = false;
   @Input() isPending: boolean = false;
-  @Input() isReceive: boolean = false;
-  @Input() isReturn: boolean = false;
+  @Input() isApproved: boolean = false;
+  @Input() isDarft: boolean = false;
   @Input() summaryIngest: SummaryIngest = new SummaryIngest();
   @Output() changeStatusShow = new EventEmitter();
 
@@ -49,10 +49,10 @@ export class IngestTagDetailComponent implements OnInit {
   topicSrc: TopicFilter[] = [];
   ingestSrc: Ingest[] = [];
   categorySrc: Category[] = [];
-  ingestDetailCreate: IngestDetail = new IngestDetail();
   temptEplInRoomIngest: string = '';
   histroyIngest: HistoryIngest = new HistoryIngest();
-
+  IngestDetailActionSelect: IngestDetail[] = [];
+  IngestDetailReturnSelect: IngestDetail[] = [];
   constructor(
     private statusIngestService: StatusIngestService,
     private employeeService: EmployeeService,
@@ -206,15 +206,62 @@ export class IngestTagDetailComponent implements OnInit {
     this.changeShow();
   }
   Save(action: number) {
+    //luu
     if (action == 0) {
-      this.summaryIngest.ticketIngest.StatusIngest = environment.Darft;
+      // this.summaryIngest.ticketIngest.StatusIngest = environment.Darft;
+      // this.summaryIngest.ticketIngest.IngestDetailFull.forEach(element => {
+      //   element.Status = environment.Darft;
+      // });
+      // this.ticketIngestService.PostIngest(this.summaryIngest.ticketIngest).subscribe(s => {
+      //   console.log(s);
+      // });
     }
-    if (action == 1) {
+    //trinh
+    else if (action == 1) {
       this.summaryIngest.ticketIngest.StatusIngest = environment.Pending;
+      this.summaryIngest.ticketIngest.IngestDetailFull.forEach(element => {
+        element.Status = environment.Pending;
+      });
+      this.ticketIngestService.PostIngest(this.summaryIngest.ticketIngest).subscribe(s => {
+        console.log(s);
+      });
     }
-    this.ticketIngestService.PostIngest(this.summaryIngest.ticketIngest).subscribe(s => {
-      console.log(s);
-    });
+    //duyet
+    else if (action == 2) {
+      this.IngestDetailActionSelect.forEach(element => {
+        var item = this.summaryIngest.ingestDetail.find(f => f.IngestDeltailId == element.IngestDeltailId);
+        if(item != undefined){
+          item.Status = environment.Approved;
+        }
+      });
+      this.ticketIngestService.PutIngest(this.summaryIngest.ticketIngest).subscribe(s => {
+        console.log(s);
+      });
+    }
+    //gui file
+    else if (action == 3) {
+      this.IngestDetailActionSelect.forEach(element => {
+        var item = this.summaryIngest.ingestDetail.find(f => f.IngestDeltailId == element.IngestDeltailId);
+        if(item != undefined){
+          item.Status = environment.SentFile;
+        }
+      });
+      this.ticketIngestService.PutIngest(this.summaryIngest.ticketIngest).subscribe(s => {
+        console.log(s);
+      });
+    }
+    //tra the
+    else if (action == 4) {
+      this.IngestDetailReturnSelect.forEach(element => {
+        var item = this.summaryIngest.ingestDetail.find(f => f.IngestDeltailId == element.IngestDeltailId);
+        if(item != undefined){
+          item.Status = environment.ReturnTag;
+        }
+      });
+      this.ticketIngestService.PutIngest(this.summaryIngest.ticketIngest).subscribe(s => {
+        console.log(s);
+      });
+    }
   }
 
   eplChangePvValue(event: any) {
@@ -278,11 +325,10 @@ export class IngestTagDetailComponent implements OnInit {
     this.summaryIngest.ticketIngest.CameramanName = event.CameramanName;
     this.summaryIngest.ticketIngest.ProductionName = event.ProductionName;
     this.summaryIngest.ticketIngest.Name = event.Name,
-      this.summaryIngest.ticketIngest.IsCategory = event.IsCategory,
-      this.summaryIngest.ticketIngest.IsNew = event.IsNew,
-      this.summaryIngest.ticketIngest.IsOtherProgram = event.IsOtherProgram,
-      this.summaryIngest.ticketIngest.IsReporting = event.IsReporting
-    debugger
+    this.summaryIngest.ticketIngest.IsCategory = event.IsCategory,
+    this.summaryIngest.ticketIngest.IsNew = event.IsNew,
+    this.summaryIngest.ticketIngest.IsOtherProgram = event.IsOtherProgram,
+    this.summaryIngest.ticketIngest.IsReporting = event.IsReporting
   }
   programChangeValue(event: any) {
     var strInput = event.target.value;
@@ -304,36 +350,39 @@ export class IngestTagDetailComponent implements OnInit {
     this.summaryIngest.ticketIngest.ProgramName = event.Name;
   }
   SelectIngest(event: any) {
-    //console.log(this.ingest);
-    var item = this.ingestSrc.find(e => e.IngestCode == this.ingestDetailCreate.IngestTag.IngestCode);
-    if (item != undefined) {
-      this.summaryIngest.ticketIngest.IngestDetailFull.push({
-        IngestDeltailId: "00000000-0000-0000-0000-000000000000",
-        DateSend: new Date().toLocaleString().split(',')[0],
-        IngestTagId: "00000000-0000-0000-0000-000000000000",
-        RecipientId: "00000000-0000-0000-0000-000000000000",
-        TakerId: "00000000-0000-0000-0000-000000000000",
-        RecipientName: "",
-        ticketIngestId: "00000000-0000-0000-0000-000000000000",
-        TakerName: "",
-        DateReturn: '',
-        IngestTag: {
-          IngestTagId: item.IngestTagId,
-          IngestCode: item.IngestCode,
-          Name: item.Name,
-          Note: item.Note,
-          Status: item.Status,
-          CategoryId: item.CardholderId,
-          CategoryName: item.CategoryName,
-          CardholderId: item.CardholderId,
-          EmployeeId: item.EmployeeId,
-          CardholderName: item.CardholderId
-        }
-      });
-      // this.ingestCreate = new IngestCreate();
-      this.removeElement(this.ingestSrc, item);
+    //console.log(event.target);
+    if (event.target.value.length > 0) {
+      //console.log(event.target.value);
+      var item = this.ingestSrc.find(e => e.IngestCode == event.target.value);
+      debugger
+      if (item != undefined) {
+        this.summaryIngest.ticketIngest.IngestDetailFull.push({
+          IngestDeltailId: "00000000-0000-0000-0000-000000000000",
+          DateSend: new Date().toLocaleString().split(',')[0],
+          IngestTagId: "00000000-0000-0000-0000-000000000000",
+          RecipientId: "00000000-0000-0000-0000-000000000000",
+          TakerId: "00000000-0000-0000-0000-000000000000",
+          RecipientName: "",
+          ticketIngestId: "00000000-0000-0000-0000-000000000000",
+          TakerName: "",
+          DateReturn: '',
+          Status :'',
+          IngestTag: {
+            IngestTagId: item.IngestTagId,
+            IngestCode: item.IngestCode,
+            Name: item.Name,
+            Note: item.Note,
+            Status: item.Status,
+            CategoryId: item.CardholderId,
+            CategoryName: item.CategoryName,
+            CardholderId: item.CardholderId,
+            EmployeeId: item.EmployeeId,
+            CardholderName: item.CardholderId
+          }
+        });
+        this.removeElement(this.ingestSrc, item);
+      }
     }
-
   }
   removeElement(array: any[], elem: any) {
     var index = array.indexOf(elem);
@@ -343,13 +392,12 @@ export class IngestTagDetailComponent implements OnInit {
     }
   }
   Remove(element: any) {
-    // console.log(element);
-    // if (element != undefined) {
-    //   this.ingestSrc.push(element);
-    //   this.ingestCreate = new IngestCreate();
-    //   this.removeElement(this.ingestSelect, element);
+    console.log(element);
+    if (element != undefined) {
+      this.ingestSrc.push(element.IngestTag);
+      this.removeElement(this.summaryIngest.ticketIngest.IngestDetailFull, element);
 
-    // }
+    }
   }
   clearShow() {
     this.employeeReportSrc.forEach(element => { element.IsShow = false; });
@@ -362,5 +410,22 @@ export class IngestTagDetailComponent implements OnInit {
     item.RecipientId = this.temptEplInRoomIngest;
     item.RecipientName = this.employeeInRoomIngest.find(f => f.EmployeeId == item.RecipientId)?.Name;
     this.temptEplInRoomIngest = '';
+  }
+  SelectIngesAcitionDeltail(item: IngestDetail, event: any) {
+    if (event.srcElement.checked) {
+      this.IngestDetailActionSelect.push(item);
+    }
+    else {
+      this.removeElement(this.IngestDetailActionSelect, item);
+    }
+
+  }
+  SelectIngestReturnDeltail(item: IngestDetail, event: any) {
+    if (event.srcElement.checked) {
+      this.IngestDetailReturnSelect.push(item);
+    }
+    else {
+      this.removeElement(this.IngestDetailReturnSelect, item);
+    }
   }
 }

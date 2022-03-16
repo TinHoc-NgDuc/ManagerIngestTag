@@ -16,6 +16,7 @@ namespace ManagerIngest.Models
         public string TakerName { get; set; }
         public Guid TakerId { get; set; }
         public Guid ticketIngestId { get; set; }
+        public string Status { get; set; }
         public Guid IngestTagId { get; set; }
     }
 

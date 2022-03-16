@@ -16,11 +16,11 @@ export class TicketIngestService {
   }
   private url = this.REST_API_SERVER + '/api/TicketIngests';
 
-  // public GetAllProgramShow(): Observable<any> {
-  //   return this.httpCilent.get<any>(this.url, this.httpOptions);
-  // }
 
   public  PostIngest(ticketIngest: any): Observable<any> {
     return this.httpCilent.post<any>(this.url, ticketIngest, this.httpOptions);
+  }
+  public PutIngest(ticketIngest: any): Observable<any> {
+    return this.httpCilent.put<any>(this.url, ticketIngest, this.httpOptions);
   }
 }

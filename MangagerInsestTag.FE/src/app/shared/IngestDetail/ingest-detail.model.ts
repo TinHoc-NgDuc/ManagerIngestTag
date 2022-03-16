@@ -10,5 +10,6 @@ export class IngestDetail {
     TakerId: string = '';
     ticketIngestId: string = '';
     IngestTagId: string = '';
+    Status :string="";
     IngestTag: Ingest = new Ingest();
 }

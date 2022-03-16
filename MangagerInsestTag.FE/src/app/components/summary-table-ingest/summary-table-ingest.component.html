@@ -102,8 +102,10 @@
                     <td>{{item.ingestDetail[0].IngestTag.Name}}</td>
                     <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].DateReturn}}</td>
                     <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].TakerName}}</td>
-                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].IngestTag.IngestCode}}</td>
-                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].IngestTag.Name}}</td>
+                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">
+                        {{item.ingestDetail[0].IngestTag.IngestCode}}</td>
+                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].IngestTag.Name}}
+                    </td>
                     <td [hidden]="!(item.ingestDetail[0].TakerName.length <= 0)"></td>
                     <td [hidden]="!(item.ingestDetail[0].TakerName.length <= 0)"></td>
                     <td [hidden]="!(item.ingestDetail[0].TakerName.length <= 0)"></td>
@@ -116,7 +118,6 @@
         <!-- <p>{{summaryingests[0]|json}}</p> -->
     </div>
 </div>
-<app-ingest-tag-detail [isShow]=isShow [isReturn]=isReturn [isReceive]=isReceive [isPending]=isPending [isAdd]=isAdd
-[summaryIngest]=summaryingest
-    (changeStatusShow)="changeStatusShow()"></app-ingest-tag-detail>
+<app-ingest-tag-detail [isShow]=isShow [isAdd]=isAdd [isPending]=isPending [isApproved]=isApproved [isDarft]=isDarft
+    [summaryIngest]=summaryingest (changeStatusShow)="changeStatusShow()"></app-ingest-tag-detail>
 <app-submit-return-tag></app-submit-return-tag>

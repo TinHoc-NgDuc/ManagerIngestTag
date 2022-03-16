@@ -222,4 +222,10 @@ td .delete{
 .action i {
     width: 150px;
     margin-left: 15px;
+
+}
+.disabled{
+    background-color: #333;
+    color: #fff;
+    border: none;
 }

@@ -32,9 +32,8 @@ export class SummaryTableIngestComponent implements OnInit {
   isShow = false;
   isAdd = false;
   isPending = false;
-  isReceive = false;
-  isReturn = false;
-
+  isApproved = false;
+  isDarft = false;
   constructor(
     private statusIngestService: StatusIngestService,
     private employeeService: EmployeeService,
@@ -123,6 +122,7 @@ export class SummaryTableIngestComponent implements OnInit {
             RecipientName: obj.recipientName,
             TakerId: obj.takerId,
             TakerName: obj.takerName,
+            Status: obj.Status,
             IngestTag: {
               CardholderId: obj.ingestTag.cardholderId,
               CardholderName: obj.ingestTag.cardholderName,
@@ -137,9 +137,10 @@ export class SummaryTableIngestComponent implements OnInit {
             }
           });
         });
-
+        this.summaryingest.ticketIngest.IngestDetailFull = this.summaryingest.ingestDetail;
         this.summaryingests.push(this.summaryingest);
       });
+      this.summaryingest = new SummaryIngest();
     });
   }
 
@@ -148,40 +149,41 @@ export class SummaryTableIngestComponent implements OnInit {
   }
 
   Add() {
-    this.isPending = false;
     this.isShow = false;
     this.isAdd = true;
-    this.isReceive = false;
-    this.isReturn = false;
+    this.isPending = false;
+    this.isApproved = false;
+    this.isDarft = false;
     this.changeStatusShow();
   }
   onClick(item: SummaryIngest) {
     // console.log('Click '+ JSON.stringify(item));
     // console.log(item.ticketIngest.StatusIngestCode + "\n"+environment.Darft);
     this.summaryingest = item;
-    debugger
+    console.log(this.summaryingest);
+
     if (item.ticketIngest.StatusIngestCode.toLocaleLowerCase() == environment.Pending.toLocaleLowerCase()) {
-      this.isPending = true;
       this.isShow = false;
       this.isAdd = false;
-      this.isReceive = false;
-      this.isReturn = false;
+      this.isPending = true;
+      this.isApproved = false;
+      this.isDarft = false;
       this.changeStatusShow();
     }
     else if (item.ticketIngest.StatusIngestCode.toLocaleLowerCase() == environment.Approved.toLocaleLowerCase()) {
-      this.isPending = false;
       this.isShow = false;
       this.isAdd = false;
-      this.isReceive = true;
-      this.isReturn = false;
+      this.isPending = false;
+      this.isApproved = true;
+      this.isDarft = false;
       this.changeStatusShow();
     }
     else if (item.ticketIngest.StatusIngestCode.toLocaleLowerCase() == environment.SentFile.toLocaleLowerCase()) {
-      this.isPending = false;
       this.isShow = false;
       this.isAdd = false;
-      this.isReceive = true;
-      this.isReturn = false;
+      this.isPending = false;
+      this.isApproved = true;
+      this.isDarft = false;
       this.changeStatusShow();
     }
 

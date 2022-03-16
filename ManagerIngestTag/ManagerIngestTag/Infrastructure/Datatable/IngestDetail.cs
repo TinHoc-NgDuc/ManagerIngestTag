@@ -14,6 +14,7 @@ namespace ManagerIngest.Infrastructure.Datatable
         public Guid RecipientId { get; set; }
         public string TakerName { get; set; }
         public Guid TakerId { get; set; }
+        public string Status { get; set; }
         public TicketIngest ticketIngest { get; set; }
         public IngestTag IngestTag { get; set; }
     }

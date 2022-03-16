@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ManagerIngest.Infrastructure;
 using ManagerIngest.Infrastructure.Datatable;
 using ManagerIngest.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ManagerIngestTag.Controllers
 {
@@ -16,10 +17,33 @@ namespace ManagerIngestTag.Controllers
     public class TicketIngestsController : ControllerBase
     {
         private readonly DataContext _context;
+        public IConfiguration Configuration { get; }
+        string Darft { get; set; }
+        string Pending { get; set; }
+        string SentFile { get; set; }
+        string ReturnTag { get; set; }
+        string Approved { get; set; }
 
-        public TicketIngestsController(DataContext context)
+        string DarftName { get; set; }
+        string PendingName { get; set; }
+        string SentFileName { get; set; }
+        string ReturnTagName { get; set; }
+        string ApprovedName { get; set; }
+        public TicketIngestsController(DataContext context, IConfiguration configuration)
         {
             _context = context;
+            Configuration = configuration;
+            Darft = Configuration.GetValue<string>("Darft");
+            Pending = Configuration.GetValue<string>("Pending");
+            SentFile = Configuration.GetValue<string>("SentFile");
+            ReturnTag = Configuration.GetValue<string>("ReturnTag");
+            Approved = Configuration.GetValue<string>("Approved");
+
+            DarftName = Configuration.GetValue<string>("DarftName");
+            PendingName = Configuration.GetValue<string>("PendingName");
+            SentFileName = Configuration.GetValue<string>("SentFileName");
+            ReturnTagName = Configuration.GetValue<string>("ReturnTagName");
+            ApprovedName = Configuration.GetValue<string>("ApprovedName");
         }
 
         // GET: api/TicketIngests
@@ -61,39 +85,69 @@ namespace ManagerIngestTag.Controllers
             return ticketIngest;
         }
 
-        // PUT: api/TicketIngests/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTicketIngest(Guid id, TicketIngest ticketIngest)
+        // PUT: api/TicketIngests/{code}
+        [HttpPut]
+        public async Task<IActionResult> PutTicketIngest(TicketIngestFull ticketIngest)
         {
-            if (id != ticketIngest.TicketIngestId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(ticketIngest).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TicketIngestExists(id))
+                var ticket = await _context.TicketIngests.FindAsync(ticketIngest.TicketIngestId);
+                if (ticket == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    throw;
+                    var checkStatus = true;
+                    foreach (var item in ticketIngest.IngestDetailFull)
+                    {
+                        if(item.Status != ticketIngest.IngestDetailFull[0].Status)
+                        {
+                            checkStatus = false;
+                        }
+                        var ingestDetail = _context.IngestDetails.Find(item.IngestDeltailId);
+                        ingestDetail.Status = item.Status;
+                        HistoryIngest historyIngest = new HistoryIngest();
+                        historyIngest.HistoryIngestId = Guid.NewGuid();
+                        historyIngest.ActionCode = item.Status;
+                        if(item.Status.ToLower() == Pending.ToLower())
+                        {
+                            historyIngest.NameAction = PendingName;
+                        }
+                        else if (item.Status.ToLower() == SentFile.ToLower())
+                        {
+                            historyIngest.NameAction = SentFileName;
+                        }
+                        else if (item.Status.ToLower() == Approved.ToLower())
+                        {
+                            historyIngest.NameAction = ApprovedName;
+                        }
+                        else if (item.Status.ToLower() == ReturnTag.ToLower())
+                        {
+                            historyIngest.NameAction = ReturnTagName;
+                        }
+
+                        historyIngest.Performer = "";
+                        historyIngest.TimeAction = DateTime.Now.ToString("dd/mm/yyyy");
+                        historyIngest.IngestDetail = _context.IngestDetails.Find(item.IngestDeltailId);
+
+                        _context.HistoryIngests.Add(historyIngest);
+                    }
+                    if (checkStatus)
+                    {
+                        ticket.StatusIngest = ticketIngest.IngestDetailFull[0].Status;
+                    }
+                    await _context.SaveChangesAsync();
+                    return null;
                 }
             }
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                return NoContent();
+            }
         }
 
         // POST: api/TicketIngests
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<TicketIngest>> PostTicketIngest(TicketIngestFull ticketIngest)
         {
@@ -130,7 +184,8 @@ namespace ManagerIngestTag.Controllers
                         TakerName = item.TakerName,
                         TakerId = item.TakerId,
                         ticketIngest = _context.TicketIngests.Find(tickketIngest.TicketIngestId),
-                        IngestTag = _context.IngestTags.Find(item.IngestTag.IngestTagId)
+                        IngestTag = _context.IngestTags.Find(item.IngestTag.IngestTagId),
+                        Status = item.Status
                         //IngestTag = new IngestTag()
                         //{
                         //    IngestTagId = item.IngestTag.IngestTagId,
@@ -146,8 +201,8 @@ namespace ManagerIngestTag.Controllers
                     _context.IngestDetails.Add(ingestDetail);
                     HistoryIngest historyIngest = new HistoryIngest();
                     historyIngest.HistoryIngestId = Guid.NewGuid();
-                    historyIngest.ActionCode = "Draf";
-                    historyIngest.NameAction = "Tạo thẻ ingest";
+                    historyIngest.ActionCode = Darft;
+                    historyIngest.NameAction = DarftName;
                     historyIngest.Performer = "";
                     historyIngest.TimeAction = DateTime.Now.ToString("dd/mm/yyyy");
                     historyIngest.IngestDetail = _context.IngestDetails.Find(ingestDetail.IngestDeltailId);

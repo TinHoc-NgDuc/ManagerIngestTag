@@ -19,4 +19,5 @@ export class IngestDetailService {
   public PostIngestDetail(ticketIngest: any): Observable<any> {
     return this.httpCilent.post<any>(this.url, ticketIngest, this.httpOptions);
   }
+ 
 }
