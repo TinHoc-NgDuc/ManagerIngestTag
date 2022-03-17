@@ -138,7 +138,7 @@ namespace ManagerIngestTag.Controllers
                         ticket.StatusIngest = ticketIngest.IngestDetailFull[0].Status;
                     }
                     await _context.SaveChangesAsync();
-                    return null;
+                    return NoContent();
                 }
             }
             catch (Exception ex)
@@ -205,6 +205,7 @@ namespace ManagerIngestTag.Controllers
                     historyIngest.NameAction = DarftName;
                     historyIngest.Performer = "";
                     historyIngest.TimeAction = DateTime.Now.ToString("dd/mm/yyyy");
+                    historyIngest.TicketIngest = _context.TicketIngests.Find(tickketIngest.TicketIngestId);
                     historyIngest.IngestDetail = _context.IngestDetails.Find(ingestDetail.IngestDeltailId);
 
                     _context.HistoryIngests.Add(historyIngest);

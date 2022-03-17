@@ -18,7 +18,6 @@ namespace ManagerIngest.Infrastructure
         public DbSet<Position> Positions { get; set; }
         public DbSet<ProductionUnit> ProductionUnits { get; set; }
         public DbSet<ProgramShow> ProgramShows { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<StatusIngest> StatusIngests { get; set; }
         public DbSet<TicketIngest> TicketIngests { get; set; }
         public DbSet<Topic> Topics { get; set; }

@@ -4,14 +4,16 @@ using ManagerIngest.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ManagerIngestTag.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220317033420_v4")]
+    partial class v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,17 +63,12 @@ namespace ManagerIngestTag.Migrations
                     b.Property<string>("Performer")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("TicketIngestId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("TimeAction")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("HistoryIngestId");
 
                     b.HasIndex("IngestDetailIngestDeltailId");
-
-                    b.HasIndex("TicketIngestId");
 
                     b.ToTable("HistoryIngests");
                 });
@@ -363,13 +360,7 @@ namespace ManagerIngestTag.Migrations
                         .WithMany()
                         .HasForeignKey("IngestDetailIngestDeltailId");
 
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.TicketIngest", "TicketIngest")
-                        .WithMany()
-                        .HasForeignKey("TicketIngestId");
-
                     b.Navigation("IngestDetail");
-
-                    b.Navigation("TicketIngest");
                 });
 
             modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.IngestDetail", b =>

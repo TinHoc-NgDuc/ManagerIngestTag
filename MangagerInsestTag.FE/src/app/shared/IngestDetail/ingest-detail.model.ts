@@ -6,7 +6,7 @@ export class IngestDetail {
     DateReturn: string = '';
     RecipientName?: string = '';
     RecipientId: string = '';
-    TakerName: string = '';
+    TakerName?: string = '';
     TakerId: string = '';
     ticketIngestId: string = '';
     IngestTagId: string = '';

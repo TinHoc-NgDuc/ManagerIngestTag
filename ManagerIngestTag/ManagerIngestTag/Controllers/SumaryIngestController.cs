@@ -104,6 +104,20 @@ namespace ManagerIngestTag.Controllers
                              };
                 summary.ingestDetail = query2.ToList();
                 summary.ticketIngest.IngestDetailFull = summary.ingestDetail;
+
+                var query3 = from history in _context.HistoryIngests
+                             where (history.TicketIngest.TicketIngestId == item.TicketIngestId)
+                             select new HistoryIngestModel
+                             {
+                                 HistoryIngestId = history.HistoryIngestId,
+                                 TimeAction = history.TimeAction,
+                                 TicketIngestId = history.TicketIngest.TicketIngestId,
+                                 Performer = history.Performer,
+                                 NameAction = history.NameAction,
+                                 ActionCode = history.ActionCode,
+                                 IngestDetailId = history.IngestDetail.IngestDeltailId
+                             };
+                summary.HistoryIngest = query3.ToList();
                 result.Add(summary);
             }
 

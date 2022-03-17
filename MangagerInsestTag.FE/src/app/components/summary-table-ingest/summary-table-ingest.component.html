@@ -100,16 +100,31 @@
                     <td>{{item.ticketIngest.CreateName}}</td>
                     <td>{{item.ingestDetail[0].IngestTag.IngestCode}}</td>
                     <td>{{item.ingestDetail[0].IngestTag.Name}}</td>
-                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].DateReturn}}</td>
-                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].TakerName}}</td>
-                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">
+                    <td
+                        [hidden]="item.ingestDetail[0].TakerName != undefined && item.ingestDetail[0].TakerName.length <= 0">
+                        {{item.ingestDetail[0].DateReturn}}</td>
+                    <td
+                        [hidden]="item.ingestDetail[0].TakerName != undefined &&item.ingestDetail[0].TakerName.length <= 0">
+                        {{item.ingestDetail[0].TakerName}}</td>
+                    <td
+                        [hidden]="item.ingestDetail[0].TakerName != undefined &&item.ingestDetail[0].TakerName.length <= 0">
                         {{item.ingestDetail[0].IngestTag.IngestCode}}</td>
-                    <td [hidden]="item.ingestDetail[0].TakerName.length <= 0">{{item.ingestDetail[0].IngestTag.Name}}
+                    <td
+                        [hidden]="item.ingestDetail[0].TakerName != undefined &&item.ingestDetail[0].TakerName.length <= 0">
+                        {{item.ingestDetail[0].IngestTag.Name}}
                     </td>
-                    <td [hidden]="!(item.ingestDetail[0].TakerName.length <= 0)"></td>
-                    <td [hidden]="!(item.ingestDetail[0].TakerName.length <= 0)"></td>
-                    <td [hidden]="!(item.ingestDetail[0].TakerName.length <= 0)"></td>
-                    <td [hidden]="!(item.ingestDetail[0].TakerName.length <= 0)"></td>
+                    <td
+                        [hidden]="!(item.ingestDetail[0].TakerName == undefined || item.ingestDetail[0].TakerName.length <= 0)">
+                    </td>
+                    <td
+                        [hidden]="!(item.ingestDetail[0].TakerName == undefined ||item.ingestDetail[0].TakerName.length <= 0)">
+                    </td>
+                    <td
+                        [hidden]="!(item.ingestDetail[0].TakerName == undefined ||item.ingestDetail[0].TakerName.length <= 0)">
+                    </td>
+                    <td
+                        [hidden]="!(item.ingestDetail[0].TakerName == undefined ||item.ingestDetail[0].TakerName.length <= 0)">
+                    </td>
                     <td>{{item.ingestDetail[0].RecipientName}}</td>
                 </tr>
 
@@ -120,4 +135,3 @@
 </div>
 <app-ingest-tag-detail [isShow]=isShow [isAdd]=isAdd [isPending]=isPending [isApproved]=isApproved [isDarft]=isDarft
     [summaryIngest]=summaryingest (changeStatusShow)="changeStatusShow()"></app-ingest-tag-detail>
-<app-submit-return-tag></app-submit-return-tag>

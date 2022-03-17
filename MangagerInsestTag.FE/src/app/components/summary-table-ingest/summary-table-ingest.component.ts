@@ -90,6 +90,10 @@ export class SummaryTableIngestComponent implements OnInit {
         });
       });
     });
+    this.getSummary();
+  }
+  getSummary() {
+    this.summaryingests = [];
     this.summaryIngestService.GetAllSummaryIngest().subscribe(s => {
       s.forEach((element: any) => {
         this.summaryingest = new SummaryIngest();
@@ -143,9 +147,12 @@ export class SummaryTableIngestComponent implements OnInit {
       this.summaryingest = new SummaryIngest();
     });
   }
-
   changeStatusShow() {
     this.isShow = !this.isShow;
+    if (!this.isShow) {
+      debugger
+      this.getSummary();
+    }
   }
 
   Add() {

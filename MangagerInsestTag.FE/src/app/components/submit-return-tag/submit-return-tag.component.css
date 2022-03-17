@@ -24,6 +24,7 @@
     height: 270px;
     position: absolute; 
     top: 25%;
+    padding-top: 20px;
     left: calc(30% + 135px);
     background-color: #fff;
 }
@@ -34,12 +35,13 @@
     font-size: 20px;
     font-weight: bold;
     height: 60px;
+    position: relative;
 }
 .close i{ 
     color: rgb(255, 0, 0);
-    position: inherit;
-    right: 0;
-    padding: 3px 10px;
+    position: absolute;
+    right: 10px;
+    top: -10px;
     cursor: pointer;
 }
 .required {

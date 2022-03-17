@@ -89,7 +89,28 @@ namespace ManagerIngestTag.Controllers
                         };
             return await query.ToListAsync();
         }
+        //EmployeesEditor
 
+        // GET: api/Employees/cameraman
+        [HttpGet("reporterOrEditor")]
+        public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetreporterOrEditor()
+        {
+            string EmployeesEditor = Configuration.GetValue<string>("EmployeesEditor");
+            string EmployeesReporterId = Configuration.GetValue<string>("EmployeesReporterId");
+            var query = from e in _context.Employees
+                        where (
+                            (e.Position.PositionId == Guid.Parse(EmployeesEditor)) ||
+                            (e.Position.PositionId == Guid.Parse(EmployeesReporterId))
+                        )
+                        select new EmployeeModel
+                        {
+                            EmployeeId = e.EmployeeId,
+                            Name = e.Name,
+                            PositionId = e.Position.PositionId,
+                            ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                        };
+            return await query.ToListAsync();
+        }
         // GET: api/Employees/5
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeModel>> GetEmployee(Guid id)
@@ -103,7 +124,7 @@ namespace ManagerIngestTag.Controllers
                                PositionId = e.Position.PositionId,
                                ProductionUnitId = e.ProductionUnit.ProductionUnitId
                            };
-            var result = await employee.Where(e=>e.EmployeeId == id).FirstOrDefaultAsync();
+            var result = await employee.Where(e => e.EmployeeId == id).FirstOrDefaultAsync();
             if (result == null)
             {
                 return NotFound();

@@ -37,13 +37,13 @@ export class EmployeeService {
     return this.httpCilent.get<any>(url, this.httpOptions);
   }
   public GetEmployeeById(id: number): Observable<any> {
-    let url = this.REST_API_SERVER + '/api/Employees/'+id;
+    let url = this.REST_API_SERVER + '/api/Employees/' + id;
     return this.httpCilent.get<any>(url, this.httpOptions);
   }
-
-  // public PostEmployee(employee): Observable<any> {
-  //   let url = this.REST_API_SERVER + '/api/Employees';
-  //   return this.httpCilent.post<any>(url,{}, this.httpOptions);
-  // }
+  //reporterOrEditor
+  public GetAllReporterOrEditor(): Observable<any> {
+    let url = this.REST_API_SERVER + '/api/Employees/reporterOrEditor';
+    return this.httpCilent.get<any>(url, this.httpOptions);
+  }
 
 }

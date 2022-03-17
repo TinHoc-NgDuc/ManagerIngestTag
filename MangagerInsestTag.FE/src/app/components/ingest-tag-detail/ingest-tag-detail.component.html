@@ -19,6 +19,9 @@
                                 (click)="TopicSelect(item)">
                                 <span>{{item.Name}}</span>
                             </div>
+                            <div>
+                                <span class="required" [hidden]="!isShowTopicRequired">Tên đề tài không được để trống</span>
+                            </div>
                         </div>
                     </div>
                     <div class="item">
@@ -33,6 +36,9 @@
                                 (click)="EmployeePVSelect(item)">
                                 <span>{{item.Name}}</span>
                             </div>
+                            <div>
+                                <span class="required" [hidden]="!isShowReporterRequired">Tên phóng viên không được để trống</span>
+                            </div>
                         </div>
                     </div>
                     <div class="item">
@@ -41,8 +47,11 @@
                         </div>
                         <div class="right">
                             <input class="input-value" name="createName" type="text" [disabled]="!isAdd"
-                                [value]="summaryIngest.ticketIngest.CreateName"
+                                [value]="summaryIngest.ticketIngest.CreateName" (keyup)="eplCreate()"
                                 [(ngModel)]="summaryIngest.ticketIngest.CreateName">
+                            <div>
+                                <span class="required" [hidden]="!isShowCreateRequired">Tên người đăng ký không được để trống</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -60,6 +69,9 @@
                                 (click)="ProductionSelect(item)">
                                 <span>{{item.Name}}</span>
                             </div>
+                            <div>
+                                <span class="required" [hidden]="!isShowProductionRequired">Tên đơn vị sx không được để trống</span>
+                            </div>
                         </div>
                     </div>
                     <div class="item">
@@ -76,6 +88,9 @@
                                     (click)="EmployeeQPSelect(item)">
                                     <span>{{item.Name}}</span>
                                 </div>
+                                <div>
+                                    <span class="required" [hidden]="!isShowCameramanRequired">Tên quay phim không được để trống</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -91,6 +106,9 @@
                                 (click)="programSelect(item)">
                                 <span>{{item.Name}}</span>
                             </div>
+                            <div>
+                                <span class="required" [hidden]="!isShowProgramRequired" >Tên chương trình phát sóng không được để trống</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,27 +117,30 @@
             <div class="input-checkbox">
                 <div class="item">
                     <label>Bản tin: </label>
-                    <input class="input-value" type="checkbox" name="" id="" [disabled]="!isAdd"
+                    <input class="input-value" type="checkbox" name="" id="" [disabled]="!isAdd" (change)="checkTypeProgram()"
                         [checked]="summaryIngest.ticketIngest.IsNew" [(ngModel)]="summaryIngest.ticketIngest.IsNew">
                 </div>
                 <div class="item">
                     <label>Chuyên mục: </label>
-                    <input class="input-value" type="checkbox" name="" id="" [disabled]="!isAdd"
+                    <input class="input-value" type="checkbox" name="" id="" [disabled]="!isAdd" (change)="checkTypeProgram()"
                         [checked]="summaryIngest.ticketIngest.IsCategory"
                         [(ngModel)]="summaryIngest.ticketIngest.IsCategory">
                 </div>
                 <div class="item">
                     <label>Phóng sự: </label>
                     <input class="input-value" type="checkbox" name="" id="" [disabled]="!isAdd"
-                        [checked]="summaryIngest.ticketIngest.IsReporting"
+                        [checked]="summaryIngest.ticketIngest.IsReporting" (change)="checkTypeProgram()"
                         [(ngModel)]="summaryIngest.ticketIngest.IsReporting">
                 </div>
                 <div class="item">
                     <label>Chương trình khác: </label>
                     <input class="input-value" type="checkbox" name="" id="" [disabled]="!isAdd"
-                        [checked]="summaryIngest.ticketIngest.IsOtherProgram"
+                        [checked]="summaryIngest.ticketIngest.IsOtherProgram" (change)="checkTypeProgram()"
                         [(ngModel)]="summaryIngest.ticketIngest.IsOtherProgram">
                 </div>
+            </div>
+            <div>
+                <span class="required center" [hidden]="!isTypeProgramRequired">Phải chọn 1 loại chương trình</span>
             </div>
             <div class="input-select">
                 <div class="item">
@@ -203,8 +224,8 @@
                         </td>
                         <td>
                             <div class="act center">
-                                <input type="checkbox" class="checkAction" (change)="SelectIngesAcitionDeltail(item, $event)"
-                                    name="" id="">
+                                <input type="checkbox" class="checkAction"
+                                    (change)="SelectIngesAcitionDeltail(item, $event)" name="" id="">
                             </div>
                         </td>
 
@@ -212,7 +233,7 @@
                 </tbody>
             </table>
             <!-- trả thẻ, gửi file -->
-             <table *ngIf="isApproved">
+            <table *ngIf="isApproved">
                 <thead>
                     <tr>
                         <th>STT</th>
@@ -230,18 +251,20 @@
                         <td>1</td>
                         <td>{{item.IngestTag.IngestCode}}</td>
                         <td>{{item.IngestTag.Name}}</td>
-                        <td><input type="checkbox" class="checkAction" name="" (change)="SelectIngestReturnDeltail(item, $event)" id=""></td>
+                        <td><input type="checkbox" class="checkAction" name=""
+                                (change)="SelectIngestReturnDeltail(item, $event)" id=""></td>
                         <td>{{item.IngestTag.CategoryName}}</td>
                         <td><input name="" id="" [value]=item.DateSend></td>
                         <td class="center">
-                            <select name="" id="" (change)="changeEmployee(item)" [(ngModel)]="temptEplInRoomIngest">
-                                <option *ngFor="let epl of employeeInRoomIngest" [value]=epl.EmployeeId>{{epl.Name}}
+                            <select name="" id="" (change)="changeEmployeeReturn(item)" [(ngModel)]="temptEplTakerTag">
+                                <option *ngFor="let epl of employeeReporterOrEditor" [value]=epl.EmployeeId>{{epl.Name}}
                                 </option>
                             </select>
                         </td>
                         <td>
                             <div class="act center">
-                                <input type="checkbox" class="checkAction" name="" id="" (change)="SelectIngesAcitionDeltail(item, $event)" >
+                                <input type="checkbox" class="checkAction" name="" id=""
+                                    (change)="SelectIngesAcitionDeltail(item, $event)">
                             </div>
                         </td>
 
@@ -258,14 +281,18 @@
             </div>
         </div>
         <div class="action">
-            <i class="btn btn-primary" [ngClass]="{disabled: IngestDetailReturnSelect.length <= 0}" [hidden]="!isApproved" (click)="Save(4)">Trả thẻ</i>
-            <i class="btn btn-primary" [ngClass]="{disabled: IngestDetailActionSelect.length <= 0}" [hidden]="!isApproved" (click)="Save(3)">Đã gửi file</i>
-            <i class="btn btn-primary" [ngClass]="{disabled: IngestDetailActionSelect.length <= 0}" [hidden]="!isPending" (click)="Save(2)">Nhận yêu cầu</i>
+            <i class="btn btn-primary" [ngClass]="{disabled: IngestDetailReturnSelect.length <= 0}"
+                [hidden]="!isApproved" (click)="Save(4)">Trả thẻ</i>
+            <i class="btn btn-primary" [ngClass]="{disabled: IngestDetailActionSelect.length <= 0}"
+                [hidden]="!isApproved" (click)="Save(3)">Đã gửi file</i>
+            <i class="btn btn-primary" [ngClass]="{disabled: IngestDetailActionSelect.length <= 0}"
+                [hidden]="!isPending" (click)="Save(2)">Nhận yêu cầu</i>
             <i class="btn btn-primary" [hidden]="!isAdd" (click)="Save(1)">Trình duyệt</i>
             <i class="btn btn-primary" (click)="Save(0)">Lưu và đóng</i>
             <i class="btn btn-warning" (click)="Close()">Đóng</i>
         </div>
-
-        <p>{{ this.summaryIngest.ticketIngest |json}}</p>
     </div>
 </div>
+
+<app-submit-return-tag [isShowSubmit]=isShowSubmit [ticketIngest]="summaryIngest.ticketIngest"
+    (changeShowSubmit)="changeShowSubmit()"></app-submit-return-tag>

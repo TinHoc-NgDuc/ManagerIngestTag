@@ -1,33 +1,33 @@
-<div class="submitReturn" *ngIf="IsShow">
+<div class="submitReturn" *ngIf="isShowSubmit">
     <div class="bg"></div>
     <div class="content">
         <div class="hearder">
             <span>Xác nhận nhận thẻ Ingest</span>
-            <div class="close">
+            <div class="close" (click)="Close()">
                 <i class="fas fa-times"></i>
             </div>
         </div>
-    
+
         <div class="input">
             <div class="item">
                 <label class="title">Người nhận thẻ</label>
-                <input class="input-value" type="text" placeholder="" title="Nhập tên người nhận thẻ">
+                <input class="input-value" type="text" placeholder="" title="Nhập tên người nhận thẻ" [(ngModel)]="employeeTaker.Name">
             </div>
             <div class="item">
                 <label class="title">Tài khoản(<span class="required">*</span>)</label>
-                <input type="text" class="input-value" placeholder="" title="Nhập tên người nhận thẻ">
+                <input type="text" class="input-value" [(ngModel)]="userLogin.UserName" placeholder="" title="Nhập tên người nhận thẻ">
             </div>
             <div class="item">
                 <label class="title">Mật khẩu</label>
-                <input type="text" class="input-value" placeholder="" title="Nhập tên người nhận thẻ">
+                <input type="text" class="input-value" [(ngModel)]="userLogin.Password" placeholder="" title="Nhập tên người nhận thẻ">
             </div>
             <div class="item remeberPassword">
-                <input type="checkbox" placeholder="" title="Nhập tên người nhận thẻ">
+                <input type="checkbox" placeholder="" title="Nhập tên người nhận thẻ" [(ngModel)]="forgetPassword">
                 <span class="title">Quên mật khẩu</span>
             </div>
         </div>
         <div class="action">
-            <a href="#" class="btn btn-primary submit">Xác nhận</a>
+            <a href="#" class="btn btn-primary submit" (click)=Login()>Xác nhận</a>
         </div>
     </div>
 </div>
