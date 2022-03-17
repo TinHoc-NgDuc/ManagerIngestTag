@@ -212,9 +212,7 @@ td .delete{
     width: 100%;
     cursor: auto;
     border: #333 solid 1px;
-}
-.histroy textarea:focus-visible{
-    outline: none;
+    min-height: 30px;
 }
 
 .action {

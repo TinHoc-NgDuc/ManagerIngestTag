@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from 'src/app/shared/Employee/employee.model';
 import { EmployeeService } from 'src/app/shared/Employee/employee.service';
+import { HistoryIngestService } from 'src/app/shared/HistoryIngest/history-ingest.service';
 import { IngestService } from 'src/app/shared/Ingest/ingest.service';
 import { IngestDetail } from 'src/app/shared/IngestDetail/ingest-detail.model';
 import { Position } from 'src/app/shared/Position/position.model';
@@ -40,7 +41,8 @@ export class SummaryTableIngestComponent implements OnInit {
     private positionService: PositionService,
     private ingestService: IngestService,
     private productionUnitService: ProductionUnitService,
-    private summaryIngestService: SummaryIngestService
+    private summaryIngestService: SummaryIngestService,
+    private historyIngestService: HistoryIngestService
   ) { }
 
   ngOnInit(): void {
@@ -142,15 +144,27 @@ export class SummaryTableIngestComponent implements OnInit {
           });
         });
         this.summaryingest.ticketIngest.IngestDetailFull = this.summaryingest.ingestDetail;
+        element.historyIngest.forEach((item: any) => {
+          this.summaryingest.HistoryIngest.push({
+            TicketIngestId: item.ticketIngestId,
+            ActionCode: item.actionCode,
+            HistoryIngestId: item.HistoryIngestId,
+            NameAction: item.nameAction,
+            Performer: item.performer,
+            TicketIngest: item.ticketIngest,
+            TimeAction: item.timeAction
+          });
+        });
+
         this.summaryingests.push(this.summaryingest);
       });
       this.summaryingest = new SummaryIngest();
     });
+
   }
   changeStatusShow() {
     this.isShow = !this.isShow;
     if (!this.isShow) {
-      debugger
       this.getSummary();
     }
   }

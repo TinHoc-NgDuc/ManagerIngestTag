@@ -196,6 +196,9 @@
                     </tr>
                 </tbody>
             </table>
+            <div>
+                <span class="required center full-width">Bạn cần phải chọn người nhận thẻ</span>
+            </div>
             <!-- Chờ duyệt -->
             <table *ngIf="isPending">
                 <thead>
@@ -276,7 +279,7 @@
             <span>*Lịch sử xử lý</span>
             <div class="text">
                 <div *ngFor="let item of this.summaryIngest.HistoryIngest">
-                    {{item.NameAction}}
+                    {{item.TimeAction}} -- {{item.NameAction}}
                 </div>
             </div>
         </div>
