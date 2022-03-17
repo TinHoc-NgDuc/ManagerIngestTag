@@ -11,36 +11,78 @@
         <div class="form-input">
             <form #form="ngForm">
                 <div class="input-box">
-                    <label for="Name" class="title">Tên thẻ(<span class="required">*</span>)</label>
-                    <input type="text" name="Name" class="input-value input-text" placeholder="Nhập tên thẻ"
-                        [(ngModel)]="ingestData.Name">
+                    <div class="left">
+                        <label for="Name" class="title">Tên thẻ(<span class="required">*</span>)</label>
+                    </div>
+                    <div class="right">
+                        <input type="text" name="Name" class="input-value input-text" placeholder="Nhập tên thẻ"
+                            [(ngModel)]="ingestData.Name" (keyup)="changName()">
+                        <div>
+                            <span class="required--text" [hidden]="!isNameTag" >Tên thẻ không được để trống</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="input-box">
-                    <label class="title" for="CardholderName">Tên chủ thẻ(<span class="required">*</span>)</label>
-                    <mat-select class="input-value" title="Tên chủ thẻ" [(ngModel)]="employeeSelect.EmployeeId"
-                        name="CardholderName" placeholder="Tên chủ thẻ">
-                        <mat-option *ngFor="let empoyee of employeeSrc" [value]="empoyee.EmployeeId">
-                            {{empoyee.Name}}
-                        </mat-option>
-                    </mat-select>
+                    <div class="left">
+                        <label class="title" for="CardholderName">Tên chủ thẻ(<span class="required">*</span>)</label>
+                    </div>
+                    <div class="right">
+                        <!-- <mat-select class="input-value" title="Tên chủ thẻ" [(ngModel)]="employeeSelect.EmployeeId"
+                            name="CardholderName" placeholder="Tên chủ thẻ">
+                            <mat-option *ngFor="let empoyee of employeeSrc" [value]="empoyee.EmployeeId">
+                                {{empoyee.Name}}
+                            </mat-option>
+                        </mat-select> -->
+
+                        <select class="input-value" title="Tên chủ thẻ" [(ngModel)]="employeeSelect.EmployeeId"
+                            name="CardholderName" placeholder="Tên chủ thẻ" (change)="changeCardholder()">
+                            <option *ngFor="let empoyee of employeeSrc" [value]="empoyee.EmployeeId">
+                                {{empoyee.Name}}
+                            </option>
+                        </select>
+                        <div>
+                            <span class="required--text" [hidden]="!isCardholder">Cần phải chọn chủ thẻ</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="input-box">
-                    <label class="title" for="category">Thể loại ingest(<span class="required">*</span>)</label>
-                    <mat-select class="input-value" title="Thể loại ingest" [(ngModel)]="ingestData.CategoryId"
+                    <div class="left">
+                        <label class="title" for="category">Thể loại ingest(<span class="required">*</span>)</label>
+                    </div>
+                    <div class="right">
+                        <!-- <mat-select class="input-value" title="Thể loại ingest" [(ngModel)]="ingestData.CategoryId"
                         name="category" placeholder="Thể loại ingest">
                         <mat-option *ngFor="let item of categorySrc" [value]="item.CategoryId">{{item.Name}}
                         </mat-option>
-                    </mat-select>
+                    </mat-select> -->
+                        <select class="input-value" title="Thể loại ingest" [(ngModel)]="ingestData.CategoryId"
+                            name="category" placeholder="Thể loại ingest" (change)="changeCategory()">
+                            <option *ngFor="let item of categorySrc" [value]="item.CategoryId">{{item.Name}}</option>
+                        </select>
+                        <div>
+                            <span class="required--text" [hidden]="!isCategory">Cần phải chọn tên chủ thẻ</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="input-box">
-                    <label class="title" for="Note">Ghi chú</label>
-                    <input class="input-value input-text" type="text" placeholder="Nhập ghi chú" name="Note"
-                        [(ngModel)]="ingestData.Note">
+                    <div class="left">
+                        <label class="title" for="Note">Ghi chú</label>
+                    </div>
+                    <div class="right">
+                        <input class="input-value input-text" type="text" placeholder="Nhập ghi chú" name="Note"
+                            [(ngModel)]="ingestData.Note">
+                    </div>
                 </div>
                 <div class="input-box">
-                    <label class="title" for="Status">Hoạt động</label>
-                    <mat-checkbox class="input-value input-checkbox" type="checkbox" title="Hoạt động" name="Status"
-                        [(ngModel)]="ingestData.Status"></mat-checkbox>
+                    <div class="left">
+                        <label class="title" for="Status">Hoạt động</label>
+                    </div>
+                    <div class="right">
+                        <!-- <mat-checkbox class="input-value input-checkbox" type="checkbox" title="Hoạt động" name="Status"
+                            [(ngModel)]="ingestData.Status"></mat-checkbox> -->
+                        <input type="checkbox" class="input-value input-checkbox" type="checkbox" title="Hoạt động"
+                            name="Status" [(ngModel)]="ingestData.Status">
+                    </div>
                 </div>
                 <div class="action">
                     <i class="btn btn-primary btn-action" (click)="Save()" *ngIf=isAdd>Lưu</i>

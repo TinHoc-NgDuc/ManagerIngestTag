@@ -22,6 +22,10 @@ export class IngestDetailComponent implements OnInit {
   employeeSrc: Employee[] = [];
   categorySrc: Category[] = [];
 
+  //show hide requerd
+  isNameTag = false;
+  isCardholder = false;
+  isCategory = false;
   constructor
     (
       private employeeService: EmployeeService,
@@ -43,8 +47,8 @@ export class IngestDetailComponent implements OnInit {
     this.categoryService.GetAllCategories().subscribe(s => {
       s.forEach((element: any) => {
         this.categorySrc.push({
-          CategoryId : element.categoryId,
-          Name : element.name
+          CategoryId: element.categoryId,
+          Name: element.name
         });
       });
     });
@@ -59,6 +63,26 @@ export class IngestDetailComponent implements OnInit {
     this.ingestData.EmployeeId = this.employeeSelect.EmployeeId;
     this.ingestData.CardholderId = this.employeeSelect.EmployeeId;
     
+    //check validate
+    var isError = false;
+    if (this.ingestData.CardholderName == undefined ||
+      this.ingestData.CardholderName.length <= 0) {
+      this.isCardholder = true;
+      isError = true;
+    }
+    if (this.ingestData.CategoryId.length <= 0) {
+      this.isCategory = true;
+      isError = true;
+    }
+    if (this.ingestData.Name.length <= 0) {
+      this.isNameTag = true;
+      isError = true;
+    }
+
+    if (isError) {
+      //messger error
+      return;
+    }    
     this.ingestService.PostIngest(this.ingestData).subscribe(s => {
       this.ClearData();
       this.Close();
@@ -71,6 +95,15 @@ export class IngestDetailComponent implements OnInit {
     this.employeeSelect.ProductionUnitId = "";
     //this.employeeSelect = new Employee();
     this.ingestData = new Ingest();
+  }
+  changName() {
+    this.isNameTag = false;
+  }
+  changeCardholder() {
+    this.isCardholder = false;
+  }
+  changeCategory() {
+    this.isCategory = false;
   }
   Edit() {
     this.ingestData.CardholderName = this.employeeSrc.find(element => element.EmployeeId == this.employeeSelect.EmployeeId)?.Name;

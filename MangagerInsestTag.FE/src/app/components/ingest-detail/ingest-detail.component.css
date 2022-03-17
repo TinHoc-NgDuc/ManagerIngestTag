@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .ingestDetail .content {
     border: 1px solid black;
     width: 600px;
@@ -45,7 +49,6 @@
 }
 
 .ingestDetail .form-input {
-    text-align: center;
     font-family: serif;
     font-size: 16px;
 }
@@ -62,24 +65,24 @@
     cursor: pointer;
 }
 
-.ingestDetail .form-input .input-box .title {
+.ingestDetail .input-box {
+    padding-bottom: 5px;
+}
+
+.ingestDetail .input-box .left {
+    vertical-align: top;
+    width: 200px;
     display: inline-block;
-    width: 150px;
-    padding-right: 20px;
-    text-align: left;
-    margin-bottom: 20px;
 }
 
-.ingestDetail .form-input .input-box .input-value {
-    width: 250px;
-    margin-bottom: 20px;
+.ingestDetail .input-box .right {
+    vertical-align: top;
+    width: 300px;
+    display: inline-block;
 }
 
-.ingestDetail .form-input .input-box mat-select {
-    height: 30px;
-    line-height: 30px;
-    cursor: pointer;
-    border: #333 solid 1px;
+.ingestDetail .input-box .input-value {
+    width: 100%;
 }
 
 .ingestDetail .action {
@@ -95,4 +98,10 @@
 
 .ingestDetail .required {
     color: red;
+}
+
+.required--text {
+    color: red;
+    font-size: 12px;
+    font-family: sans-serif;
 }

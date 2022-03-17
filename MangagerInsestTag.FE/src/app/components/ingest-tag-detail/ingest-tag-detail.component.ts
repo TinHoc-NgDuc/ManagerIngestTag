@@ -401,6 +401,7 @@ export class IngestTagDetailComponent implements OnInit {
   }
   TopicSelect(event: Topic) {
     this.clearShow();
+    this.clearRequired();
     this.summaryIngest.ticketIngest.TopicName = event.Name;
     this.summaryIngest.ticketIngest.CreateName = event.CreateName;
     this.summaryIngest.ticketIngest.ProgramName = event.ProgramName;

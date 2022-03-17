@@ -181,6 +181,9 @@
 }
 .center{
     text-align: center;
+    
+}
+.full-width{
     display: inline-block;
     width: 100%;
 }
