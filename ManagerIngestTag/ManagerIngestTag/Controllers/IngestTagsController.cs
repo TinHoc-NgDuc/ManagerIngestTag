@@ -44,7 +44,28 @@ namespace ManagerIngestTag.Controllers
                          };
             return await result.ToListAsync();
         }
+        // GET: api/IngestTags
+        [HttpGet("activate")]
+        public async Task<ActionResult<IEnumerable<IngestTagReturnModel>>> GetIngestTagsActivate()
+        {
+            var result = from i in _context.IngestTags
+                         where i.Status == true
+                         select new IngestTagReturnModel
+                         {
+                             IngestTagId = i.IngestTagId,
+                             IngestCode = i.IngestCode,
+                             Name = i.Name,
+                             Note = i.Note,
+                             CategoryId = i.category.CategoryId,
+                             CategoryName = i.category.Name,
+                             Status = i.Status,
+                             cardholderId = i.cardholderId,
+                             CardholderName = i.Employee.Name,
+                             EmployeeId = i.Employee.EmployeeId
 
+                         };
+            return await result.ToListAsync();
+        }
         [HttpPost("getfilter")]
         public async Task<ActionResult<IEnumerable<IngestTagReturnModel>>> GetFilter(Filter filter)
         {

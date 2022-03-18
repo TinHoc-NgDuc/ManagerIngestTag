@@ -17,33 +17,30 @@ export class EmployeeService {
       'Content-Type': 'application/json'
     }),
   }
-
+  private url = this.REST_API_SERVER + '/api/Employees/';
   public GetAllEmployee(): Observable<any> {
-    let url = this.REST_API_SERVER + '/api/Employees';
-    return this.httpCilent.get<any>(url, this.httpOptions);
+    return this.httpCilent.get<any>(this.url, this.httpOptions);
   }
 
   public GetAllEmployeeInRoomIngest(): Observable<any> {
-    let url = this.REST_API_SERVER + '/api/Employees/InRoomIngest';
-    return this.httpCilent.get<any>(url, this.httpOptions);
+    return this.httpCilent.get<any>(this.url + 'InRoomIngest', this.httpOptions);
   }
   public GetAllEmployeeReporter(): Observable<any> {
-    let url = this.REST_API_SERVER + '/api/Employees/reporter';
-    return this.httpCilent.get<any>(url, this.httpOptions);
+    return this.httpCilent.get<any>(this.url + 'reporter', this.httpOptions);
   }
 
   public GetAllEmployeeCameraman(): Observable<any> {
-    let url = this.REST_API_SERVER + '/api/Employees/cameraman';
-    return this.httpCilent.get<any>(url, this.httpOptions);
+    return this.httpCilent.get<any>(this.url + 'cameraman', this.httpOptions);
   }
   public GetEmployeeById(id: number): Observable<any> {
-    let url = this.REST_API_SERVER + '/api/Employees/' + id;
-    return this.httpCilent.get<any>(url, this.httpOptions);
+    return this.httpCilent.get<any>(this.url + id, this.httpOptions);
   }
   //reporterOrEditor
   public GetAllReporterOrEditor(): Observable<any> {
-    let url = this.REST_API_SERVER + '/api/Employees/reporterOrEditor';
-    return this.httpCilent.get<any>(url, this.httpOptions);
+    return this.httpCilent.get<any>(this.url+'reporterOrEditor', this.httpOptions);
   }
-
+  //checkuser
+  public PostCheckUser(employee: any): Observable<any> {
+    return this.httpCilent.post<any>(this.url + 'checkuser', employee, this.httpOptions);
+  }
 }

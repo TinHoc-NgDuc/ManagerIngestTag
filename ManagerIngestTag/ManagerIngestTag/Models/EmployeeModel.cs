@@ -9,6 +9,8 @@ namespace ManagerIngest.Models
     {
         public Guid EmployeeId { get; set; }
         public string Name { get; set; }
+        public string UserLogin { get; set; }
+        public string Password { get; set; }
         public Guid ProductionUnitId { get; set; }
         public Guid PositionId { get; set; }
     }

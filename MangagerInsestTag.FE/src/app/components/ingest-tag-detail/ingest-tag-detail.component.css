@@ -1,11 +1,13 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: inherit;
 }
-.input-checkbox input{
+
+.input-checkbox input {
     cursor: pointer;
 }
+
 .content {
     position: absolute;
     top: 10%;
@@ -66,11 +68,13 @@
 .filter {
     cursor: pointer;
 }
+
 .filter:hover {
     background-color: #ccc;
     display: inline-block;
 }
-.filter span{
+
+.filter span {
     width: 100%;
     display: inline-block;
     font-size: 13px;
@@ -78,7 +82,8 @@
     margin: 8px;
     padding-left: 10px;
 }
-.filter span:hover{
+
+.filter span:hover {
     font-size: 14px;
 }
 
@@ -137,13 +142,13 @@
     margin-right: 1%;
 }
 
-.gTable table input{
+.gTable table input {
     border: none;
     width: 100%;
     outline: none;
 }
 
-.gTable table select{
+.gTable table select {
     width: 100%;
     border: none;
     outline: none;
@@ -155,17 +160,21 @@
     width: auto;
     background-color: #a4c2f4fe;
 }
-.checkAction{
+
+.checkAction {
     height: 18px;
     cursor: pointer;
 }
+
 .gTable table tbody tr {
     font-family: 'Times New Roman', Times, serif;
     font-size: 18px;
 }
+
 .gTable table td {
     padding: 5px
 }
+
 /* .gTable table tbody tr:hover {
     cursor: pointer;
     background-color: rgb(134, 255, 175);
@@ -179,15 +188,18 @@
 .gTable table td, th {
     border: 1px solid #333;
 }
-.center{
+
+.center {
     text-align: center;
-    
+
 }
-.full-width{
+
+.full-width {
     display: inline-block;
     width: 100%;
 }
-td .delete{
+
+td .delete {
     background-color: #ff000f;
     display: inline-block;
     padding: 8px;
@@ -200,12 +212,31 @@ td .delete{
     padding-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
-    
+    position: relative;
 }
 
-.histroy span {
+.histroy .left, .histroy .right {
+    display: block;
+    width: 100%;
+}
+.histroy .left{
+    padding-left: 10px;
+    text-align: left;
+}
+.histroy .right{
+    padding-right: 10px;
+    text-align: right;
+    
+}
+.histroy div span {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+    cursor: context-menu;
+    font-style: italic;
     font-weight: bold;
-    cursor:context-menu;
+    display: inline-block;
+    text-align: left;
+    min-width: 300px;
 }
 
 .histroy .text {
@@ -213,6 +244,8 @@ td .delete{
     cursor: auto;
     border: #333 solid 1px;
     min-height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .action {
@@ -229,12 +262,14 @@ td .delete{
     margin-left: 15px;
 
 }
-.disabled{
+
+.disabled {
     background-color: #333;
     color: #fff;
     border: none;
 }
-.required{
+
+.required {
     color: red;
     font-size: 12px;
     font-family: sans-serif;

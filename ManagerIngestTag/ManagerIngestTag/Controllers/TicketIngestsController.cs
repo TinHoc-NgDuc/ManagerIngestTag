@@ -101,36 +101,38 @@ namespace ManagerIngestTag.Controllers
                     var checkStatus = true;
                     foreach (var item in ticketIngest.IngestDetailFull)
                     {
-                        if(item.Status != ticketIngest.IngestDetailFull[0].Status)
+                        if (item.Status != ticketIngest.IngestDetailFull[0].Status)
                         {
                             checkStatus = false;
                         }
                         var ingestDetail = _context.IngestDetails.Find(item.IngestDeltailId);
                         ingestDetail.Status = item.Status;
-                        HistoryIngest historyIngest = new HistoryIngest();
+                        HistoryIngest historyIngest = new();
                         historyIngest.HistoryIngestId = Guid.NewGuid();
                         historyIngest.ActionCode = item.Status;
-                        if(item.Status.ToLower() == Pending.ToLower())
+                        if (item.Status.ToLower() == Pending.ToLower())
                         {
                             historyIngest.NameAction = PendingName;
+                            historyIngest.Performer = ticketIngest.CreateName;
                         }
                         else if (item.Status.ToLower() == SentFile.ToLower())
                         {
                             historyIngest.NameAction = SentFileName;
+                            historyIngest.Performer = item.RecipientName;
                         }
                         else if (item.Status.ToLower() == Approved.ToLower())
                         {
                             historyIngest.NameAction = ApprovedName;
+                            historyIngest.Performer = item.RecipientName;
                         }
                         else if (item.Status.ToLower() == ReturnTag.ToLower())
                         {
                             historyIngest.NameAction = ReturnTagName;
+                            historyIngest.Performer = item.TakerName;
                         }
-
-                        historyIngest.Performer = "";
-                        historyIngest.TimeAction = DateTime.Now.ToString("dd/mm/yyyy");
+                        historyIngest.TimeAction = DateTime.Now.ToString("dd/MM/yyyy");
                         historyIngest.IngestDetail = _context.IngestDetails.Find(item.IngestDeltailId);
-
+                        historyIngest.TicketIngest = _context.TicketIngests.Find(ticketIngest.TicketIngestId);
                         _context.HistoryIngests.Add(historyIngest);
                     }
                     if (checkStatus)
@@ -146,7 +148,6 @@ namespace ManagerIngestTag.Controllers
                 return NoContent();
             }
         }
-
         // POST: api/TicketIngests
         [HttpPost]
         public async Task<ActionResult<TicketIngest>> PostTicketIngest(TicketIngestFull ticketIngest)
@@ -199,12 +200,12 @@ namespace ManagerIngestTag.Controllers
                         //}
                     };
                     _context.IngestDetails.Add(ingestDetail);
-                    HistoryIngest historyIngest = new HistoryIngest();
+                    HistoryIngest historyIngest = new();
                     historyIngest.HistoryIngestId = Guid.NewGuid();
                     historyIngest.ActionCode = Darft;
                     historyIngest.NameAction = DarftName;
-                    historyIngest.Performer = "";
-                    historyIngest.TimeAction = DateTime.Now.ToString("dd/mm/yyyy");
+                    historyIngest.Performer = ticketIngest.CreateName;
+                    historyIngest.TimeAction = DateTime.Now.ToString("dd/MM/yyyy");
                     historyIngest.TicketIngest = _context.TicketIngests.Find(tickketIngest.TicketIngestId);
                     historyIngest.IngestDetail = _context.IngestDetails.Find(ingestDetail.IngestDeltailId);
 
@@ -237,9 +238,9 @@ namespace ManagerIngestTag.Controllers
             return NoContent();
         }
 
-        private bool TicketIngestExists(Guid id)
-        {
-            return _context.TicketIngests.Any(e => e.TicketIngestId == id);
-        }
+        //private bool TicketIngestExists(Guid id)
+        //{
+        //    return _context.TicketIngests.Any(e => e.TicketIngestId == id);
+        //}
     }
 }

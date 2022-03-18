@@ -28,11 +28,17 @@ namespace ManagerIngestTag.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("PositionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("ProductionUnitId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserLogin")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EmployeeId");
 
@@ -301,33 +307,6 @@ namespace ManagerIngestTag.Migrations
                     b.ToTable("Topics");
                 });
 
-            modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.UserLogin", b =>
-                {
-                    b.Property<Guid>("UserLoginId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("PositionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserLoginId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("PositionId");
-
-                    b.ToTable("UserLogins");
-                });
-
             modelBuilder.Entity("ManagerIngestTag.Infrastructure.Datatable.Category", b =>
                 {
                     b.Property<Guid>("CategoryId")
@@ -402,21 +381,6 @@ namespace ManagerIngestTag.Migrations
                     b.Navigation("category");
 
                     b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("ManagerIngest.Infrastructure.Datatable.UserLogin", b =>
-                {
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
-
-                    b.HasOne("ManagerIngest.Infrastructure.Datatable.Position", "position")
-                        .WithMany()
-                        .HasForeignKey("PositionId");
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("position");
                 });
 #pragma warning restore 612, 618
         }

@@ -21,6 +21,5 @@ namespace ManagerIngest.Infrastructure
         public DbSet<StatusIngest> StatusIngests { get; set; }
         public DbSet<TicketIngest> TicketIngests { get; set; }
         public DbSet<Topic> Topics { get; set; }
-        public DbSet<UserLogin> UserLogins { get; set; }
     }
 }

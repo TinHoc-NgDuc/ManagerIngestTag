@@ -1,13 +1,8 @@
 import { EventEmitter, Component, Input, OnInit, Output } from '@angular/core';
 import { Employee } from 'src/app/shared/Employee/employee.model';
 import { EmployeeService } from 'src/app/shared/Employee/employee.service';
-import { IngestService } from 'src/app/shared/Ingest/ingest.service';
-import { IngestDetailService } from 'src/app/shared/IngestDetail/ingest-detail.service';
-import { PositionService } from 'src/app/shared/Position/position.service';
 import { TicketIngestFull } from 'src/app/shared/TicketIngest/ticket-ingest.model';
 import { TicketIngestService } from 'src/app/shared/TicketIngest/ticket-ingest.service';
-import { UserLogin } from 'src/app/shared/UserLogin/user-login.model';
-import { UserLoginService } from 'src/app/shared/UserLogin/user-login.service';
 
 @Component({
   selector: 'app-submit-return-tag',
@@ -19,16 +14,10 @@ export class SubmitReturnTagComponent implements OnInit {
   @Input() ticketIngest: TicketIngestFull = new TicketIngestFull();
   @Input() employeeTaker: Employee = new Employee();
   @Output() changeShowSubmit = new EventEmitter();
-
-  userLogin: UserLogin = new UserLogin();
   forgetPassword: boolean = false;
   constructor(
     private employeeService: EmployeeService,
-    private positionService: PositionService,
-    private ingestService: IngestService,
-    private ticketIngestService: TicketIngestService,
-    private ingestDetailService: IngestDetailService,
-    public userLoginService: UserLoginService
+    private ticketIngestService:TicketIngestService
   ) { }
 
   ngOnInit(): void { }
@@ -36,6 +25,14 @@ export class SubmitReturnTagComponent implements OnInit {
     this.changeShowSubmit.emit();
   }
   Login() {
-
+    this.employeeService.PostCheckUser(this.employeeTaker).subscribe(s => {
+      if (s) {
+        if (!this.isShowSubmit) {
+          this.ticketIngestService.PutIngest(this.ticketIngest).subscribe(s => {
+            debugger
+          });
+        }
+      }
+    });
   }
 }

@@ -9,6 +9,8 @@ namespace ManagerIngest.Infrastructure.Datatable
     {
         public Guid EmployeeId { get; set; }
         public string Name { get; set; }
+        public string UserLogin { get; set; }
+        public string Password { get; set; }
         public ProductionUnit ProductionUnit { get; set; }
         public Position Position { get; set; }
     }

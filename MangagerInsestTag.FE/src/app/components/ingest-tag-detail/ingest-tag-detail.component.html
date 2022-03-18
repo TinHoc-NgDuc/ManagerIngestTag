@@ -20,7 +20,8 @@
                                 <span>{{item.Name}}</span>
                             </div>
                             <div>
-                                <span class="required" [hidden]="!isShowTopicRequired">Tên đề tài không được để trống</span>
+                                <span class="required" [hidden]="!isShowTopicRequired">Tên đề tài không được để
+                                    trống</span>
                             </div>
                         </div>
                     </div>
@@ -37,7 +38,8 @@
                                 <span>{{item.Name}}</span>
                             </div>
                             <div>
-                                <span class="required" [hidden]="!isShowReporterRequired">Tên phóng viên không được để trống</span>
+                                <span class="required" [hidden]="!isShowReporterRequired">Tên phóng viên không được để
+                                    trống</span>
                             </div>
                         </div>
                     </div>
@@ -50,7 +52,8 @@
                                 [value]="summaryIngest.ticketIngest.CreateName" (keyup)="eplCreate()"
                                 [(ngModel)]="summaryIngest.ticketIngest.CreateName">
                             <div>
-                                <span class="required" [hidden]="!isShowCreateRequired">Tên người đăng ký không được để trống</span>
+                                <span class="required" [hidden]="!isShowCreateRequired">Tên người đăng ký không được để
+                                    trống</span>
                             </div>
                         </div>
                     </div>
@@ -70,7 +73,8 @@
                                 <span>{{item.Name}}</span>
                             </div>
                             <div>
-                                <span class="required" [hidden]="!isShowProductionRequired">Tên đơn vị sx không được để trống</span>
+                                <span class="required" [hidden]="!isShowProductionRequired">Tên đơn vị sx không được để
+                                    trống</span>
                             </div>
                         </div>
                     </div>
@@ -89,7 +93,8 @@
                                     <span>{{item.Name}}</span>
                                 </div>
                                 <div>
-                                    <span class="required" [hidden]="!isShowCameramanRequired">Tên quay phim không được để trống</span>
+                                    <span class="required" [hidden]="!isShowCameramanRequired">Tên quay phim không được
+                                        để trống</span>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +112,8 @@
                                 <span>{{item.Name}}</span>
                             </div>
                             <div>
-                                <span class="required" [hidden]="!isShowProgramRequired" >Tên chương trình phát sóng không được để trống</span>
+                                <span class="required" [hidden]="!isShowProgramRequired">Tên chương trình phát sóng
+                                    không được để trống</span>
                             </div>
                         </div>
                     </div>
@@ -117,13 +123,14 @@
             <div class="input-checkbox">
                 <div class="item">
                     <label>Bản tin: </label>
-                    <input class="input-value" type="checkbox" name="" id="" [disabled]="!isAdd" (change)="checkTypeProgram()"
-                        [checked]="summaryIngest.ticketIngest.IsNew" [(ngModel)]="summaryIngest.ticketIngest.IsNew">
+                    <input class="input-value" type="checkbox" name="" id="" [disabled]="!isAdd"
+                        (change)="checkTypeProgram()" [checked]="summaryIngest.ticketIngest.IsNew"
+                        [(ngModel)]="summaryIngest.ticketIngest.IsNew">
                 </div>
                 <div class="item">
                     <label>Chuyên mục: </label>
-                    <input class="input-value" type="checkbox" name="" id="" [disabled]="!isAdd" (change)="checkTypeProgram()"
-                        [checked]="summaryIngest.ticketIngest.IsCategory"
+                    <input class="input-value" type="checkbox" name="" id="" [disabled]="!isAdd"
+                        (change)="checkTypeProgram()" [checked]="summaryIngest.ticketIngest.IsCategory"
                         [(ngModel)]="summaryIngest.ticketIngest.IsCategory">
                 </div>
                 <div class="item">
@@ -140,7 +147,8 @@
                 </div>
             </div>
             <div>
-                <span class="required center full-width" [hidden]="!isTypeProgramRequired">Phải chọn 1 loại chương trình</span>
+                <span class="required center full-width" [hidden]="!isTypeProgramRequired">Phải chọn 1 loại chương
+                    trình</span>
             </div>
             <div class="input-select">
                 <div class="item">
@@ -197,7 +205,7 @@
                 </tbody>
             </table>
             <div>
-                <span class="required center full-width">Bạn cần phải chọn người nhận thẻ</span>
+                <span class="required center full-width" [hidden]="!isEmployeeRequired">Bạn cần phải chọn người nhận thẻ</span>
             </div>
             <!-- Chờ duyệt -->
             <table *ngIf="isPending">
@@ -219,15 +227,16 @@
                         <td>{{item.IngestTag.Name}}</td>
                         <td>{{item.IngestTag.CategoryName}}</td>
                         <td><input name="" id="" [value]=item.DateSend></td>
-                        <td class="center">
+                        <!-- <td class="center">
                             <select name="" id="" (change)="changeEmployee(item)" [(ngModel)]="temptEplInRoomIngest">
                                 <option *ngFor="let epl of employeeInRoomIngest" [value]=epl.EmployeeId>{{epl.Name}}
                                 </option>
                             </select>
-                        </td>
+                        </td> -->
+                        <td class="center"><span>{{item.RecipientName}}</span></td>
                         <td>
                             <div class="act center">
-                                <input type="checkbox" class="checkAction"
+                                <input type="checkbox" class="checkAction" [disabled]="item.Status=='Approved'"
                                     (change)="SelectIngesAcitionDeltail(item, $event)" name="" id="">
                             </div>
                         </td>
@@ -254,7 +263,7 @@
                         <td>1</td>
                         <td>{{item.IngestTag.IngestCode}}</td>
                         <td>{{item.IngestTag.Name}}</td>
-                        <td><input type="checkbox" class="checkAction" name=""
+                        <td><input type="checkbox" class="checkAction" name=""  [disabled]="item.Status=='ReturnTag'"
                                 (change)="SelectIngestReturnDeltail(item, $event)" id=""></td>
                         <td>{{item.IngestTag.CategoryName}}</td>
                         <td><input name="" id="" [value]=item.DateSend></td>
@@ -266,7 +275,7 @@
                         </td>
                         <td>
                             <div class="act center">
-                                <input type="checkbox" class="checkAction" name="" id=""
+                                <input type="checkbox" class="checkAction" name="" id="" [disabled]="item.Status=='Senfile' || item.Status=='ReturnTag'"
                                     (change)="SelectIngesAcitionDeltail(item, $event)">
                             </div>
                         </td>
@@ -274,14 +283,28 @@
                     </tr>
                 </tbody>
             </table>
+            <div>
+                <span class="required center full-width" [hidden]="!isTakerRequired">Thông tin người nhận thẻ không được bỏ trống</span>
+            </div>
+
         </div>
         <div class="histroy">
             <span>*Lịch sử xử lý</span>
             <div class="text">
-                <div *ngFor="let item of this.summaryIngest.HistoryIngest">
-                    {{item.TimeAction}} -- {{item.NameAction}}
+                <div *ngFor="let item of this.summaryIngest.HistoryIngest; let indexValue=index;">
+                    <div [ngClass]="indexValue == 0 ? 'left': 'right'">
+                        <span> {{indexValue+1}}. {{item.Performer}} - {{item.NameAction}} ({{item.TimeAction}})</span>
+                    </div>
                 </div>
             </div>
+            <!-- <div class="text">
+                <div class="left">
+                    <span>1. Trần anh - Tạo thẻ (10/3/2022)</span>
+                </div>
+                <div class="right">
+                    <span>2. Trần anh - Đã duyệt (10/3/2022)</span>
+                </div>
+            </div> -->
         </div>
         <div class="action">
             <i class="btn btn-primary" [ngClass]="{disabled: IngestDetailReturnSelect.length <= 0}"

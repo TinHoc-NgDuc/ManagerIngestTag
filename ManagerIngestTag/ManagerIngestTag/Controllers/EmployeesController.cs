@@ -34,11 +34,41 @@ namespace ManagerIngestTag.Controllers
                             EmployeeId = e.EmployeeId,
                             Name = e.Name,
                             PositionId = e.Position.PositionId,
-                            ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                            ProductionUnitId = e.ProductionUnit.ProductionUnitId,
+                            UserLogin = e.UserLogin
                         };
             return await query.ToListAsync();
         }
+        //checkusser
+        [HttpPost("checkuser")]
+        public async Task<ActionResult<bool>> CheckEmployee(EmployeeModel epl)
+        {
+            bool result = true;
+            var query = await (from e in _context.Employees
+                        where e.EmployeeId == epl.EmployeeId
+                        select new EmployeeModel
+                        {
+                            EmployeeId = e.EmployeeId,
+                            Name = e.Name,
+                            PositionId = e.Position.PositionId,
+                            ProductionUnitId = e.ProductionUnit.ProductionUnitId,
+                            UserLogin = e.UserLogin
+                        }).FirstOrDefaultAsync();
 
+            if(query == null)
+            {
+                result = false;
+            }
+            if (epl.UserLogin != query.UserLogin)
+            {
+                result = false;
+            }
+            if(epl.Password != query.Password)
+            {
+                result = false;
+            }
+            return result;
+        }
         // GET: api/Employees/reporter
         [HttpGet("reporter")]
         public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployeesReporter()
@@ -51,7 +81,8 @@ namespace ManagerIngestTag.Controllers
                             EmployeeId = e.EmployeeId,
                             Name = e.Name,
                             PositionId = e.Position.PositionId,
-                            ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                            ProductionUnitId = e.ProductionUnit.ProductionUnitId,
+                            UserLogin = e.UserLogin
                         };
             return await query.ToListAsync();
         }
@@ -68,7 +99,8 @@ namespace ManagerIngestTag.Controllers
                             EmployeeId = e.EmployeeId,
                             Name = e.Name,
                             PositionId = e.Position.PositionId,
-                            ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                            ProductionUnitId = e.ProductionUnit.ProductionUnitId,
+                            UserLogin = e.UserLogin
                         };
             return await query.ToListAsync();
         }
@@ -85,7 +117,8 @@ namespace ManagerIngestTag.Controllers
                             EmployeeId = e.EmployeeId,
                             Name = e.Name,
                             PositionId = e.Position.PositionId,
-                            ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                            ProductionUnitId = e.ProductionUnit.ProductionUnitId,
+                            UserLogin = e.UserLogin
                         };
             return await query.ToListAsync();
         }
@@ -107,7 +140,8 @@ namespace ManagerIngestTag.Controllers
                             EmployeeId = e.EmployeeId,
                             Name = e.Name,
                             PositionId = e.Position.PositionId,
-                            ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                            ProductionUnitId = e.ProductionUnit.ProductionUnitId,
+                            UserLogin = e.UserLogin
                         };
             return await query.ToListAsync();
         }
@@ -115,14 +149,14 @@ namespace ManagerIngestTag.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeModel>> GetEmployee(Guid id)
         {
-
             var employee = from e in _context.Employees
                            select new EmployeeModel
                            {
                                EmployeeId = e.EmployeeId,
                                Name = e.Name,
                                PositionId = e.Position.PositionId,
-                               ProductionUnitId = e.ProductionUnit.ProductionUnitId
+                               ProductionUnitId = e.ProductionUnit.ProductionUnitId,
+                               UserLogin = e.UserLogin
                            };
             var result = await employee.Where(e => e.EmployeeId == id).FirstOrDefaultAsync();
             if (result == null)
@@ -133,61 +167,63 @@ namespace ManagerIngestTag.Controllers
             return result;
         }
 
-        // PUT: api/Employees/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(Guid id, EmployeeModel eple)
-        {
-            var employees = new Employee
-            {
-                EmployeeId = eple.EmployeeId,
-                Name = eple.Name,
-                Position = _context.Positions.Find(eple.PositionId),
-                ProductionUnit = _context.ProductionUnits.Find(eple.ProductionUnitId)
-            };
-            if (id != employees.EmployeeId)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/Employees/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutEmployee(Guid id, EmployeeModel eple)
+        //{
+        //    var employees = new Employee
+        //    {
+        //        EmployeeId = eple.EmployeeId,
+        //        Name = eple.Name,
+        //        UserLogin = eple.UserLogin,
+        //        Password = eple.Password,
+        //        Position = _context.Positions.Find(eple.PositionId),
+        //        ProductionUnit = _context.ProductionUnits.Find(eple.ProductionUnitId)
+        //    };
+        //    if (id != employees.EmployeeId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(employees).State = EntityState.Modified;
+        //    _context.Entry(employees).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployeeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!EmployeeExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/Employees
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<EmployeeModel>> PostEmployee(EmployeeModel eple)
-        {
-            var employees = new Employee
-            {
-                EmployeeId = eple.EmployeeId,
-                Name = eple.Name,
-                Position = _context.Positions.Find(eple.PositionId),
-                ProductionUnit = _context.ProductionUnits.Find(eple.ProductionUnitId)
-            };
-            _context.Employees.Add(employees);
-            await _context.SaveChangesAsync();
+        //// POST: api/Employees
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<EmployeeModel>> PostEmployee(EmployeeModel eple)
+        //{
+        //    var employees = new Employee
+        //    {
+        //        EmployeeId = eple.EmployeeId,
+        //        Name = eple.Name,
+        //        Position = _context.Positions.Find(eple.PositionId),
+        //        ProductionUnit = _context.ProductionUnits.Find(eple.ProductionUnitId)
+        //    };
+        //    _context.Employees.Add(employees);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEmployee", new { id = employees.EmployeeId }, employees);
-        }
+        //    return CreatedAtAction("GetEmployee", new { id = employees.EmployeeId }, employees);
+        //}
 
         // DELETE: api/Employees/5
         [HttpDelete("{id}")]

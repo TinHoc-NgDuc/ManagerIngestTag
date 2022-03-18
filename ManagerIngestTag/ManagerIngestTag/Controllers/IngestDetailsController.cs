@@ -81,7 +81,7 @@ namespace ManagerIngestTag.Controllers
         {
             foreach (var item in ingestDetail)
             {
-                IngestDetail ingest = new IngestDetail()
+                IngestDetail ingest = new()
                 {
                     IngestDeltailId = Guid.NewGuid(),
                     DateReturn = item.DateReturn,

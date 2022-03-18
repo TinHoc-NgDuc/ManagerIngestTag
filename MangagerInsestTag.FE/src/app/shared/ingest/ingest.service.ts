@@ -20,6 +20,9 @@ export class IngestService {
   public GetAllIngest(): Observable<any> {
     return this.httpCilent.get<any>(this.url, this.httpOptions);
   }
+  public GetIngestTagsActivate(): Observable<any> {
+    return this.httpCilent.get<any>(this.url+'/activate', this.httpOptions);
+  }
 
   public PostIngest(ingest: any): Observable<any> {
     return this.httpCilent.post<any>(this.url, ingest, this.httpOptions);

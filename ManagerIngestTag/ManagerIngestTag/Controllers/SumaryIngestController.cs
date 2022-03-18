@@ -24,7 +24,7 @@ namespace ManagerIngestTag.Controllers
         [HttpGet]
         public IEnumerable<SummaryIngest> Get()
         {
-            List<SummaryIngest> result = new List<SummaryIngest>();
+            List<SummaryIngest> result = new();
             //select all ticket
             var query = from tk in _context.TicketIngests
                         select new TicketIngestModel
@@ -48,7 +48,7 @@ namespace ManagerIngestTag.Controllers
             //get all ticket 
             foreach (var item in data)
             {
-                SummaryIngest summary = new SummaryIngest();
+                SummaryIngest summary = new();
                 summary.ticketIngest = new TicketIngestFull
                 {
                     TicketIngestId = item.TicketIngestId,
@@ -86,6 +86,7 @@ namespace ManagerIngestTag.Controllers
                                  RecipientName = id.RecipientName,
                                  TakerName = id.TakerName,
                                  TakerId = id.TakerId,
+                                 Status = id.Status,
                                  ticketIngestId= id.ticketIngest.TicketIngestId,
                                  RecipientId = id.RecipientId,
                                  IngestTag = new IngestTagReturnModel

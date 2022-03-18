@@ -63,6 +63,8 @@ export class SummaryTableIngestComponent implements OnInit {
           Name: element.name,
           PositionId: element.positionId,
           ProductionUnitId: element.productionUnitId,
+          UserName: element.userName,
+          Password:''
         });
       });
     });
@@ -73,6 +75,8 @@ export class SummaryTableIngestComponent implements OnInit {
           Name: element.name,
           PositionId: element.positionId,
           ProductionUnitId: element.productionUnitId,
+          UserName: element.userName,
+          Password:''
         });
       });
     });
@@ -128,7 +132,7 @@ export class SummaryTableIngestComponent implements OnInit {
             RecipientName: obj.recipientName,
             TakerId: obj.takerId,
             TakerName: obj.takerName,
-            Status: obj.Status,
+            Status: obj.status,
             IngestTag: {
               CardholderId: obj.ingestTag.cardholderId,
               CardholderName: obj.ingestTag.cardholderName,
@@ -148,7 +152,7 @@ export class SummaryTableIngestComponent implements OnInit {
           this.summaryingest.HistoryIngest.push({
             TicketIngestId: item.ticketIngestId,
             ActionCode: item.actionCode,
-            HistoryIngestId: item.HistoryIngestId,
+            HistoryIngestId: item.historyIngestId,
             NameAction: item.nameAction,
             Performer: item.performer,
             TicketIngest: item.ticketIngest,
@@ -178,11 +182,9 @@ export class SummaryTableIngestComponent implements OnInit {
     this.changeStatusShow();
   }
   onClick(item: SummaryIngest) {
-    // console.log('Click '+ JSON.stringify(item));
-    // console.log(item.ticketIngest.StatusIngestCode + "\n"+environment.Darft);
     this.summaryingest = item;
     console.log(this.summaryingest);
-
+    
     if (item.ticketIngest.StatusIngestCode.toLocaleLowerCase() == environment.Pending.toLocaleLowerCase()) {
       this.isShow = false;
       this.isAdd = false;

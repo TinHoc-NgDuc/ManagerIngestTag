@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { elementAt } from 'rxjs';
 import { Category } from 'src/app/shared/Category/category.model';
 import { CategoryService } from 'src/app/shared/Category/category.service';
 import { Employee, EmployeeFilte } from 'src/app/shared/Employee/employee.model';
@@ -62,7 +63,8 @@ export class IngestTagDetailComponent implements OnInit {
   isShowCameramanRequired = false;
   isShowProgramRequired = false;
   isTypeProgramRequired = false;
-
+  isEmployeeRequired = false;
+  isTakerRequired = false;
   constructor(
     private statusIngestService: StatusIngestService,
     private employeeService: EmployeeService,
@@ -110,7 +112,9 @@ export class IngestTagDetailComponent implements OnInit {
           Name: element.name,
           PositionId: element.positionId,
           ProductionUnitId: element.productionUnitId,
-          IsShow: false
+          IsShow: false,
+          UserName: element.userName,
+          Password:''
         });
       });
     });
@@ -121,7 +125,9 @@ export class IngestTagDetailComponent implements OnInit {
           Name: element.name,
           PositionId: element.positionId,
           ProductionUnitId: element.productionUnitId,
-          IsShow: false
+          IsShow: false,
+          UserName: element.userName,
+          Password:''
         });
       });
     });
@@ -151,7 +157,8 @@ export class IngestTagDetailComponent implements OnInit {
         });
       });
     });
-    this.ingestService.GetAllIngest().subscribe(s => {
+    this.ingestService.GetIngestTagsActivate().subscribe(s => {
+      console.log(s);
       s.forEach((element: any) => {
         this.ingestSrc.push({
           IngestTagId: element.ingestTagId,
@@ -181,41 +188,23 @@ export class IngestTagDetailComponent implements OnInit {
           EmployeeId: element.employeeId,
           Name: element.name,
           PositionId: element.positionId,
-          ProductionUnitId: element.productionUnitId
+          ProductionUnitId: element.productionUnitId,
+          UserName: element.userName,
+          Password:''
         });
       });
     });
-
     this.employeeService.GetAllReporterOrEditor().subscribe(s => {
       s.forEach((element: any) => {
         this.employeeReporterOrEditor.push({
           EmployeeId: element.employeeId,
           Name: element.name,
           PositionId: element.positionId,
-          ProductionUnitId: element.productionUnitId
+          ProductionUnitId: element.productionUnitId,
+          UserName: element.userName,
+          Password:''
         });
       });
-    });
-
-
-
-    this.summaryIngest.HistoryIngest.push({
-      HistoryIngestId: '',
-      ActionCode: '',
-      NameAction: 'Thêm mới',
-      Performer: '',
-      TimeAction: '',
-      TicketIngest: '',
-      TicketIngestId: '',
-    });
-    this.summaryIngest.HistoryIngest.push({
-      HistoryIngestId: '',
-      ActionCode: '',
-      NameAction: 'Thêm mới',
-      Performer: '',
-      TimeAction: '',
-      TicketIngest: '',
-      TicketIngestId: '',
     });
   }
 
@@ -236,7 +225,7 @@ export class IngestTagDetailComponent implements OnInit {
       //   element.Status = environment.Darft;
       // });
       // this.ticketIngestService.PostIngest(this.summaryIngest.ticketIngest).subscribe(s => {
-      //   console.log(s);
+      //   
       // });
     }
     //trinh
@@ -258,7 +247,10 @@ export class IngestTagDetailComponent implements OnInit {
     }
     //duyet
     else if (action == 2) {
-      debugger
+      if (this.SelectIngesAcitionDeltail.length <= 0) {
+        this.isTypeProgramRequired = true;
+        return;
+      }
       this.IngestDetailActionSelect.forEach(element => {
         var item = this.summaryIngest.ingestDetail.find(f => f.IngestDeltailId == element.IngestDeltailId);
         if (item != undefined) {
@@ -272,6 +264,13 @@ export class IngestTagDetailComponent implements OnInit {
     }
     //gui file
     else if (action == 3) {
+      debugger
+      // if (this.IngestDetailActionSelect.length <= 0) {
+      //   // this.IngestDetailActionSelect.forEach(element => {
+      //   //   // this.isTypeProgramRequired = true;
+      //   // });
+      //   return;
+      // }
       this.IngestDetailActionSelect.forEach(element => {
         var item = this.summaryIngest.ingestDetail.find(f => f.IngestDeltailId == element.IngestDeltailId);
         if (item != undefined) {
@@ -286,6 +285,19 @@ export class IngestTagDetailComponent implements OnInit {
     }
     //tra the
     else if (action == 4) {
+      this.IngestDetailReturnSelect.forEach(element => {
+        var item = this.summaryIngest.ingestDetail.find(f => f.IngestDeltailId == element.IngestDeltailId);
+
+        if (item != undefined && item.TakerName != undefined && item.TakerName.length > 0) {
+          item.Status = environment.SentFile;
+        }
+        else {
+          this.isTakerRequired = true;
+        }
+      });
+      if (this.isTakerRequired == true) {
+        return;
+      }
       this.changeShowSubmit();
       // if (!this.isShowSubmit) {
       //   this.IngestDetailReturnSelect.forEach(element => {
@@ -337,14 +349,19 @@ export class IngestTagDetailComponent implements OnInit {
       this.isTypeProgramRequired = true;
       isError = true;
     }
-
+    this.summaryIngest.ticketIngest.IngestDetailFull.forEach(element => {
+      if (element.RecipientId == '00000000-0000-0000-0000-000000000000') {
+        this.isEmployeeRequired = true;
+        isError = true;
+      }
+    });
     return isError;
   }
   eplCreate() {
-    this.isShowCreateRequired= false;
+    this.isShowCreateRequired = false;
   }
   eplChangePvValue(event: any) {
-    this.isShowReporterRequired= false;
+    this.isShowReporterRequired = false;
     var strInput = event.target.value;
     this.clearShow();
     if (strInput.length > 0) {
@@ -360,7 +377,7 @@ export class IngestTagDetailComponent implements OnInit {
     this.summaryIngest.ticketIngest.ReporterName = event.Name;
   }
   eplChangeQPValue(event: any) {
-    this.isShowCameramanRequired= false;
+    this.isShowCameramanRequired = false;
     var strInput = event.target.value;
     this.clearShow();
     if (strInput.length > 0) {
@@ -389,7 +406,7 @@ export class IngestTagDetailComponent implements OnInit {
   }
   TopicChangePvValue(event: any) {
     var strInput = event.target.value;
-    this.isShowTopicRequired= false;
+    this.isShowTopicRequired = false;
     this.clearShow();
     if (strInput.length > 0) {
       this.topicSrc.forEach(element => {
@@ -438,11 +455,8 @@ export class IngestTagDetailComponent implements OnInit {
     this.summaryIngest.ticketIngest.ProgramName = event.Name;
   }
   SelectIngest(event: any) {
-    //console.log(event.target);
     if (event.target.value.length > 0) {
-      //console.log(event.target.value);
       var item = this.ingestSrc.find(e => e.IngestCode == event.target.value);
-      debugger
       if (item != undefined) {
         this.summaryIngest.ticketIngest.IngestDetailFull.push({
           IngestDeltailId: "00000000-0000-0000-0000-000000000000",
@@ -507,11 +521,13 @@ export class IngestTagDetailComponent implements OnInit {
     item.RecipientId = this.temptEplInRoomIngest;
     item.RecipientName = this.employeeInRoomIngest.find(f => f.EmployeeId == item.RecipientId)?.Name;
     this.temptEplInRoomIngest = '';
+    this.isEmployeeRequired = false;
   }
   changeEmployeeReturn(item: IngestDetail) {
     item.TakerId = this.temptEplTakerTag;
-    item.TakerName = this.employeeReporterOrEditor.find(f => f.EmployeeId == item.RecipientId)?.Name;
+    item.TakerName = this.employeeReporterOrEditor.find(f => f.EmployeeId == this.temptEplTakerTag)?.Name;
     this.temptEplTakerTag = '';
+    this.isTakerRequired = false;
   }
   SelectIngesAcitionDeltail(item: IngestDetail, event: any) {
     if (event.srcElement.checked) {
