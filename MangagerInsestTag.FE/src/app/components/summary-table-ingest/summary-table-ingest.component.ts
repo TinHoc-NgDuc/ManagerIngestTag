@@ -37,6 +37,7 @@ export class SummaryTableIngestComponent implements OnInit {
   isPending = false;
   isApproved = false;
   isDarft = false;
+  filter: Filter=new Filter();
   constructor(
     private statusIngestService: StatusIngestService,
     private employeeService: EmployeeService,
@@ -183,8 +184,8 @@ export class SummaryTableIngestComponent implements OnInit {
     this.isDarft = false;
     this.changeStatusShow();
   }
-  ExportExcel(){
-    let urlExporl = environment.baseUrl+"/api/SumaryIngest/exportExcel";
+  ExportExcel() {
+    let urlExporl = environment.baseUrl + "/api/SumaryIngest/exportExcel";
     window.open(urlExporl);
   }
   onClick(item: SummaryIngest) {
@@ -220,4 +221,13 @@ export class SummaryTableIngestComponent implements OnInit {
     }
 
   }
+}
+
+class Filter {
+  private timeStart: Date = new Date();
+  private timeEnd: Date = new Date();
+  private reporter: Employee = new Employee();
+  private cameramen: Employee = new Employee();
+  private productionUnit: ProductionUnit = new ProductionUnit();
+  private strFilter: string = '';
 }

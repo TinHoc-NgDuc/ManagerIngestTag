@@ -12,7 +12,7 @@
                 </div>
                 <div>
                     <span>Tên phóng viên</span>
-                    <select class="item-input" name="" id="" title="Tên phóng viên">
+                    <select class="item-input" name="" id="" title="Tên phóng viên" [(ngModel)]="filter.reporter">
                         <option *ngFor="let item of employeeReportSrc" value="item.EmployeeId">{{item.Name}}</option>
                     </select>
                 </div>
@@ -20,14 +20,14 @@
             <div class="item">
                 <div class="item-1">
                     <span>Đơn vị sản xuất</span>
-                    <select class="item-input" name="" id="" title="Đơn vị sản xuất">
+                    <select class="item-input" name="" id="" title="Đơn vị sản xuất" [(ngModel)]="filter.productionUnit">
                         <option *ngFor="let item of productionUnitSrc" value="item.ProductionUnitId">{{item.Name}}
                         </option>
                     </select>
                 </div>
                 <div>
                     <span>Tên Quay phim</span>
-                    <select class="item-input" name="" id="" title="Tên Quay Phim">
+                    <select class="item-input" name="" id="" title="Tên Quay Phim" [(ngModel)]="filter.cameramen">
                         <option *ngFor="let item of employeeCameramanSrc" value="item.EmployeeId">{{item.Name}}</option>
                     </select>
                 </div>
@@ -42,7 +42,7 @@
                 </div>
                 <div>
                     <span>Tìm kiếm</span>
-                    <input type="text" class="item-input" placeholder="Nhập từ khoá">
+                    <input type="text" class="item-input" placeholder="Nhập từ khoá" [(ngModel)]="filter.strFilter">
                 </div>
             </div>
             <div class="item">

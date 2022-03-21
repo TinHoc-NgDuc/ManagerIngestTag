@@ -301,7 +301,7 @@
                 <div *ngFor="let item of this.summaryIngest.HistoryIngest; let indexValue=index;">
                     <div [ngClass]="indexValue == 0 ? 'left': 'right'">
                         <span> {{indexValue+1}}. {{item.Performer}} - {{item.NameAction}} ({{item.TimeAction|date:
-                            'mm:hh dd/MM/yyyy'}})</span>
+                            'h:mm a dd/MM/yyyy'}})</span>
                     </div>
                 </div>
             </div>
