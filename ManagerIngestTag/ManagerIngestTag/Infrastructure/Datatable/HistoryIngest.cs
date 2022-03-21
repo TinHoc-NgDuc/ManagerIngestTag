@@ -13,7 +13,7 @@ namespace ManagerIngest.Infrastructure.Datatable
         public string ActionCode { get; set; }
         public string NameAction { get; set; }
         public string Performer { get; set; }
-        public string TimeAction { get; set; }
+        public DateTime TimeAction { get; set; }
         public IngestDetail IngestDetail { get; set; }
         public TicketIngest TicketIngest { get; set; }
     }

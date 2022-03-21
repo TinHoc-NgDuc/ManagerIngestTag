@@ -52,7 +52,8 @@ namespace ManagerIngestTag.Controllers
                             Name = e.Name,
                             PositionId = e.Position.PositionId,
                             ProductionUnitId = e.ProductionUnit.ProductionUnitId,
-                            UserLogin = e.UserLogin
+                            UserLogin = e.UserLogin,
+                            Password = e.Password
                         }).FirstOrDefaultAsync();
 
             if(query == null)

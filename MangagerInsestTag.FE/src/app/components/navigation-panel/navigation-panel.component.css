@@ -4,9 +4,16 @@
     background-color: #102c46fe;
     color: #fff;
 }
-a{
+button:focus{
+    outline: none;
+    box-shadow: none;
+}
+button{
     color: #fff;
     text-decoration: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
 }
 .hearder {
     text-align: center; 

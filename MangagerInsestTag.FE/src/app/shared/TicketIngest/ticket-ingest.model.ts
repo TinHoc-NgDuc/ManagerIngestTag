@@ -9,13 +9,14 @@ export class TicketIngest {
     CameramanName: string = '';
     ProductionName: string = '';
     ReporterName: string = '';
-    SaveDocument: Date = new Date();
+    SaveDocument: string = '';
     IsReporting: boolean = false;
     IsNew: boolean = false;
     IsCategory: boolean = false;
     IsOtherProgram: boolean = false;
     StatusIngestCode: string = '';
     StatusIngest: string = '';
+    DateCreate: Date = new Date();
 }
 export class TicketIngestFull extends TicketIngest{
     IngestDetailFull: IngestDetail[] = [];

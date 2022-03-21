@@ -1,4 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Employee } from 'src/app/shared/Employee/employee.model';
 import { EmployeeService } from 'src/app/shared/Employee/employee.service';
 import { HistoryIngestService } from 'src/app/shared/HistoryIngest/history-ingest.service';
@@ -39,10 +41,9 @@ export class SummaryTableIngestComponent implements OnInit {
     private statusIngestService: StatusIngestService,
     private employeeService: EmployeeService,
     private positionService: PositionService,
-    private ingestService: IngestService,
     private productionUnitService: ProductionUnitService,
     private summaryIngestService: SummaryIngestService,
-    private historyIngestService: HistoryIngestService
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -63,8 +64,8 @@ export class SummaryTableIngestComponent implements OnInit {
           Name: element.name,
           PositionId: element.positionId,
           ProductionUnitId: element.productionUnitId,
-          UserName: element.userName,
-          Password:''
+          UserLogin: element.userLogin,
+          Password: ''
         });
       });
     });
@@ -75,8 +76,8 @@ export class SummaryTableIngestComponent implements OnInit {
           Name: element.name,
           PositionId: element.positionId,
           ProductionUnitId: element.productionUnitId,
-          UserName: element.userName,
-          Password:''
+          UserLogin: element.userLogin,
+          Password: ''
         });
       });
     });
@@ -119,6 +120,7 @@ export class SummaryTableIngestComponent implements OnInit {
           StatusIngestCode: element.ticketIngest.statusIngest,
           TicketIngestId: element.ticketIngest.ticketIngestId,
           TopicName: element.ticketIngest.topicName,
+          DateCreate: new Date(),
           IngestDetailFull: []
         }
         element.ingestDetail.forEach((obj: any) => {
@@ -181,10 +183,17 @@ export class SummaryTableIngestComponent implements OnInit {
     this.isDarft = false;
     this.changeStatusShow();
   }
+  ExportExcel(){
+    let urlExporl = environment.baseUrl+"/api/SumaryIngest/exportExcel";
+    window.open(urlExporl);
+  }
   onClick(item: SummaryIngest) {
     this.summaryingest = item;
-    console.log(this.summaryingest);
-    
+    // var date = new Date();
+    // let latest_date = this.datepipe.transform(date, 'dd/MM/yyyy');
+    // console.log(latest_date);
+
+
     if (item.ticketIngest.StatusIngestCode.toLocaleLowerCase() == environment.Pending.toLocaleLowerCase()) {
       this.isShow = false;
       this.isAdd = false;

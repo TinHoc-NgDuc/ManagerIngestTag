@@ -1,3 +1,25 @@
+:root {
+    --color-primary: #007bff;
+    --color-secondary: #6c757d;
+    --color-success: #28a745;
+    --color-danger: #ff0f07;
+    --color-warning: #17a2b8;
+    --color-info: #007bff;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.block {
+    display: block;
+}
+
+.center{
+    text-align: center;
+}

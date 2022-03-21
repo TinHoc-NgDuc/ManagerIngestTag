@@ -1,5 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { elementAt } from 'rxjs';
+import { delay } from 'rxjs';
 import { Category } from 'src/app/shared/Category/category.model';
 import { CategoryService } from 'src/app/shared/Category/category.service';
 import { Employee, EmployeeFilte } from 'src/app/shared/Employee/employee.model';
@@ -55,6 +56,14 @@ export class IngestTagDetailComponent implements OnInit {
   IngestDetailActionSelect: IngestDetail[] = [];
   IngestDetailReturnSelect: IngestDetail[] = [];
 
+
+  dsnguoinhankhacnhau: Employee[] = [];
+  employeeTaker: Employee = new Employee();
+
+  // login
+  isLoginSuccec = true;
+  passLogin = false;
+
   // show hide required
   isShowTopicRequired = false;
   isShowReporterRequired = false;
@@ -62,6 +71,7 @@ export class IngestTagDetailComponent implements OnInit {
   isShowProductionRequired = false;
   isShowCameramanRequired = false;
   isShowProgramRequired = false;
+  isSaveDocumentRequired = false;
   isTypeProgramRequired = false;
   isEmployeeRequired = false;
   isTakerRequired = false;
@@ -75,6 +85,7 @@ export class IngestTagDetailComponent implements OnInit {
     private topicService: TopicService,
     private categoryService: CategoryService,
     private ticketIngestService: TicketIngestService,
+    private datepipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -113,8 +124,8 @@ export class IngestTagDetailComponent implements OnInit {
           PositionId: element.positionId,
           ProductionUnitId: element.productionUnitId,
           IsShow: false,
-          UserName: element.userName,
-          Password:''
+          UserLogin: element.userLogin,
+          Password: ''
         });
       });
     });
@@ -126,8 +137,8 @@ export class IngestTagDetailComponent implements OnInit {
           PositionId: element.positionId,
           ProductionUnitId: element.productionUnitId,
           IsShow: false,
-          UserName: element.userName,
-          Password:''
+          UserLogin: element.userLogin,
+          Password: ''
         });
       });
     });
@@ -158,7 +169,6 @@ export class IngestTagDetailComponent implements OnInit {
       });
     });
     this.ingestService.GetIngestTagsActivate().subscribe(s => {
-      console.log(s);
       s.forEach((element: any) => {
         this.ingestSrc.push({
           IngestTagId: element.ingestTagId,
@@ -189,8 +199,8 @@ export class IngestTagDetailComponent implements OnInit {
           Name: element.name,
           PositionId: element.positionId,
           ProductionUnitId: element.productionUnitId,
-          UserName: element.userName,
-          Password:''
+          UserLogin: element.userLogin,
+          Password: ''
         });
       });
     });
@@ -201,8 +211,8 @@ export class IngestTagDetailComponent implements OnInit {
           Name: element.name,
           PositionId: element.positionId,
           ProductionUnitId: element.productionUnitId,
-          UserName: element.userName,
-          Password:''
+          UserLogin: element.userLogin,
+          Password: ''
         });
       });
     });
@@ -211,9 +221,9 @@ export class IngestTagDetailComponent implements OnInit {
   changeShow() {
     this.changeStatusShow.emit();
   }
-  changeShowSubmit() {
-    this.isShowSubmit = !this.isShowSubmit;
-  }
+  // changeShowSubmit() {
+  //   this.isShowSubmit = !this.isShowSubmit;
+  // }
   Close() {
     this.changeShow();
   }
@@ -264,7 +274,6 @@ export class IngestTagDetailComponent implements OnInit {
     }
     //gui file
     else if (action == 3) {
-      debugger
       // if (this.IngestDetailActionSelect.length <= 0) {
       //   // this.IngestDetailActionSelect.forEach(element => {
       //   //   // this.isTypeProgramRequired = true;
@@ -285,11 +294,18 @@ export class IngestTagDetailComponent implements OnInit {
     }
     //tra the
     else if (action == 4) {
+      this.dsnguoinhankhacnhau = [];
       this.IngestDetailReturnSelect.forEach(element => {
         var item = this.summaryIngest.ingestDetail.find(f => f.IngestDeltailId == element.IngestDeltailId);
-
-        if (item != undefined && item.TakerName != undefined && item.TakerName.length > 0) {
-          item.Status = environment.SentFile;
+        if (item != undefined && (item.TakerName != undefined && item.TakerName.length > 0)) {
+          //item.Status = environment.SentFile;
+          let checkExist = this.dsnguoinhankhacnhau.find(f => f.EmployeeId == element.TakerId);
+          if (checkExist == undefined) {
+            let eple = this.employeeReporterOrEditor.find(f => f.EmployeeId == element.TakerId);
+            if (eple != undefined) {
+              this.dsnguoinhankhacnhau.push(eple);
+            }
+          }
         }
         else {
           this.isTakerRequired = true;
@@ -298,19 +314,51 @@ export class IngestTagDetailComponent implements OnInit {
       if (this.isTakerRequired == true) {
         return;
       }
-      this.changeShowSubmit();
-      // if (!this.isShowSubmit) {
-      //   this.IngestDetailReturnSelect.forEach(element => {
-      //     var item = this.summaryIngest.ingestDetail.find(f => f.IngestDeltailId == element.IngestDeltailId);
-      //     if (item != undefined) {
-      //       item.Status = environment.ReturnTag;
-      //     }
-      //   });
-      //   this.ticketIngestService.PutIngest(this.summaryIngest.ticketIngest).subscribe(s => {
-      //     this.ClearData();
-      //     this.changeShow();
-      //   });
-      // }
+      this.changeStateLogin(this.passLogin);
+    }
+  }
+  changeStateLogin(passLogin: boolean) {
+    this.isShowSubmit = false;
+    if (passLogin) {
+      //Messger login thanh cong
+
+
+      //update status ticket, write log
+      this.IngestDetailReturnSelect.forEach(element => {
+        var ingestDeltail = this.summaryIngest.ingestDetail.find(f => (f.IngestDeltailId == element.IngestDeltailId && f.TakerId == this.employeeTaker.EmployeeId));
+        if (ingestDeltail != undefined) {
+          //cập nhật thông tin
+          if (ingestDeltail != undefined) {
+            ingestDeltail.Status = environment.ReturnTag;
+            ingestDeltail.TakerId = this.employeeTaker.EmployeeId;
+            ingestDeltail.TakerName = this.employeeTaker.Name;
+
+            var date=new Date();
+            let latest_date =this.datepipe.transform(date, 'dd/MM/yyyy');
+            if(latest_date!= null){
+              ingestDeltail.DateReturn =latest_date;
+            }
+          }
+          this.ticketIngestService.PutIngest(this.summaryIngest.ticketIngest).subscribe(s => {
+          });
+        }
+      });
+    }
+    else {
+      //alert("login thất bại");
+    }
+    //this.isLoginSuccec =! this.isLoginSuccec;
+    var item = this.dsnguoinhankhacnhau.shift();
+    if (item != undefined) {
+      this.employeeTaker = item;
+      this.isShowSubmit = true;
+    }
+    else{
+      this.employeeTaker = new Employee();
+      this.ClearData();
+      delay(500);
+      
+      this.changeShow();
     }
   }
   checkValidate() {
@@ -494,7 +542,7 @@ export class IngestTagDetailComponent implements OnInit {
     }
   }
   Remove(element: any) {
-    console.log(element);
+    //console.log(element);
     if (element != undefined) {
       this.ingestSrc.push(element.IngestTag);
       this.removeElement(this.summaryIngest.ticketIngest.IngestDetailFull, element);

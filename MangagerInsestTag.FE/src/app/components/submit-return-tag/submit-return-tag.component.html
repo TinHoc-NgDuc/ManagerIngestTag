@@ -16,7 +16,7 @@
             </div>
             <div class="item">
                 <label class="title">Tài khoản(<span class="required">*</span>)</label>
-                <input type="text" class="input-value" [(ngModel)]="employeeTaker.UserName" placeholder=""
+                <input type="text" class="input-value" [(ngModel)]="employeeTaker.UserLogin" placeholder=""
                     title="Nhập tên người nhận thẻ">
             </div>
             <div class="item">
@@ -32,6 +32,5 @@
         <div class="action">
             <div href="#" class="btn btn-primary submit" (click)=Login()>Xác nhận</div>
         </div>
-        <p>{{employeeTaker|json}}</p>
     </div>
 </div>

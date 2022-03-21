@@ -11,13 +11,15 @@ import { TicketIngestService } from 'src/app/shared/TicketIngest/ticket-ingest.s
 })
 export class SubmitReturnTagComponent implements OnInit {
   @Input() isShowSubmit: boolean = true;
+  @Input() passLogin: boolean = false;
   @Input() ticketIngest: TicketIngestFull = new TicketIngestFull();
   @Input() employeeTaker: Employee = new Employee();
   @Output() changeShowSubmit = new EventEmitter();
+  @Output() changeStateShow = new EventEmitter();
   forgetPassword: boolean = false;
   constructor(
     private employeeService: EmployeeService,
-    private ticketIngestService:TicketIngestService
+    private ticketIngestService: TicketIngestService
   ) { }
 
   ngOnInit(): void { }
@@ -25,13 +27,16 @@ export class SubmitReturnTagComponent implements OnInit {
     this.changeShowSubmit.emit();
   }
   Login() {
+    // this.passLogin = true;
+    // this.changeStateShow.emit(this.passLogin);
     this.employeeService.PostCheckUser(this.employeeTaker).subscribe(s => {
       if (s) {
-        if (!this.isShowSubmit) {
-          this.ticketIngestService.PutIngest(this.ticketIngest).subscribe(s => {
-            debugger
-          });
-        }
+        this.passLogin = true;
+        this.changeStateShow.emit(this.passLogin);
+      }
+      else{
+        this.passLogin = false;
+        this.changeStateShow.emit(this.passLogin);
       }
     });
   }

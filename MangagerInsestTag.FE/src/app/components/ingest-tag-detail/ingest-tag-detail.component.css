@@ -107,8 +107,24 @@
     width: 50%;
     display: inline-block;
 }
+.content .input-select{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.input-select label {
+    width: 100px;
+    height: 50px;
+    
+}
 
-.content .input-select {
+.input-select .input-value {
+    width: 130px;
+    height: 30px;
+} 
+/* .content .input-select {
     display: block;
     margin-top: 20px;
 }
@@ -128,7 +144,7 @@
 .input-select .input-value {
     width: 130px;
     height: 30px;
-}
+} */
 
 .gTable table {
     width: 96%;

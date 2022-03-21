@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="item">
-                <i class="btn btn-success">Xuất Execl</i>
+                <i class="btn btn-success" (click)="ExportExcel()">Xuất Execl</i>
                 <i class="btn btn-primary" (click)="Add()">Thêm mới</i>
             </div>
         </div>
@@ -62,7 +62,7 @@
                     <th rowspan="3">Phóng viên</th>
                     <th rowspan="3">Quay phim</th>
                     <th rowspan="3">Thể loại ingest</th>
-                    <th rowspan="3">Loại tư liệu</th>
+                    <th rowspan="3">Lưu tư liệu</th>
                     <th rowspan="3">Thể loại</th>
                     <th colspan="8">Thông tin chi tiết</th>
                     <th rowspan="3">Người nhận thẻ</th>
@@ -83,50 +83,51 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of summaryingests" (click)="onClick(item)">
-                    <td>2</td>
-                    <td>{{item.ticketIngest.StatusIngest}}</td>
-                    <td>{{item.ticketIngest.SaveDocument}}</td>
-                    <td>{{item.ticketIngest.Name}}</td>
-                    <td>{{item.ticketIngest.ReporterName}}</td>
-                    <td>{{item.ticketIngest.CameramanName}}</td>
-                    <td>{{item.ingestDetail[0].IngestTag.CategoryName}}</td>
-                    <td>{{item.ticketIngest.SaveDocument}}</td>
-                    <td [hidden]="!item.ticketIngest.IsNew">Tin</td>
-                    <td [hidden]="!item.ticketIngest.IsCategory">Chuyên Mục</td>
-                    <td [hidden]="!item.ticketIngest.IsReporting">Phóng sự</td>
-                    <td [hidden]="!item.ticketIngest.IsOtherProgram">Chương trình khác</td>
-                    <td>{{item.ingestDetail[0].DateSend}}</td>
-                    <td>{{item.ticketIngest.CreateName}}</td>
-                    <td>{{item.ingestDetail[0].IngestTag.IngestCode}}</td>
-                    <td>{{item.ingestDetail[0].IngestTag.Name}}</td>
-                    <td
-                        [hidden]="item.ingestDetail[0].TakerName != undefined && item.ingestDetail[0].TakerName.length <= 0">
-                        {{item.ingestDetail[0].DateReturn}}</td>
-                    <td
-                        [hidden]="item.ingestDetail[0].TakerName != undefined &&item.ingestDetail[0].TakerName.length <= 0">
-                        {{item.ingestDetail[0].TakerName}}</td>
-                    <td
-                        [hidden]="item.ingestDetail[0].TakerName != undefined &&item.ingestDetail[0].TakerName.length <= 0">
-                        {{item.ingestDetail[0].IngestTag.IngestCode}}</td>
-                    <td
-                        [hidden]="item.ingestDetail[0].TakerName != undefined &&item.ingestDetail[0].TakerName.length <= 0">
-                        {{item.ingestDetail[0].IngestTag.Name}}
-                    </td>
-                    <td
-                        [hidden]="!(item.ingestDetail[0].TakerName == undefined || item.ingestDetail[0].TakerName.length <= 0)">
-                    </td>
-                    <td
-                        [hidden]="!(item.ingestDetail[0].TakerName == undefined ||item.ingestDetail[0].TakerName.length <= 0)">
-                    </td>
-                    <td
-                        [hidden]="!(item.ingestDetail[0].TakerName == undefined ||item.ingestDetail[0].TakerName.length <= 0)">
-                    </td>
-                    <td
-                        [hidden]="!(item.ingestDetail[0].TakerName == undefined ||item.ingestDetail[0].TakerName.length <= 0)">
-                    </td>
-                    <td>{{item.ingestDetail[0].RecipientName}}</td>
-                </tr>
+                <ng-container *ngFor="let item of summaryingests; let indexVale = index;">
+                    <tr (click)="onClick(item)">
+                        <td [attr.rowspan]="item.ingestDetail.length +1" class="center">{{indexVale+1}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.StatusIngest}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.DateCreate | date: 'dd/MM/yyyy'}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.Name}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.ReporterName}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.CameramanName}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ingestDetail[0].IngestTag.CategoryName}}
+                        </td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.SaveDocument}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" [hidden]="!item.ticketIngest.IsNew">Tin</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" [hidden]="!item.ticketIngest.IsCategory">Chuyên
+                            Mục</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" [hidden]="!item.ticketIngest.IsReporting">Phóng
+                            sự
+                        </td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" [hidden]="!item.ticketIngest.IsOtherProgram">
+                            Chương trình khác</td>
+                    </tr>
+                    <tr *ngFor="let obj of item.ingestDetail">
+                        <td>{{obj.DateSend}}</td>
+                        <td>{{item.ticketIngest.CreateName}}</td>
+                        <td>{{obj.IngestTag.IngestCode}}</td>
+                        <td>{{obj.IngestTag.Name}}</td>
+                        <td [hidden]="obj.TakerName != undefined && obj.TakerName.length <= 0">
+                            {{obj.DateReturn}}</td>
+                        <td [hidden]="obj.TakerName != undefined &&obj.TakerName.length <= 0">
+                            {{obj.TakerName}}</td>
+                        <td [hidden]="obj.TakerName != undefined &&obj.TakerName.length <= 0">
+                            {{obj.IngestTag.IngestCode}}</td>
+                        <td [hidden]="obj.TakerName != undefined &&obj.TakerName.length <= 0">
+                            {{obj.IngestTag.Name}}
+                        </td>
+                        <td [hidden]="!(obj.TakerName == undefined || obj.TakerName.length <= 0)">
+                        </td>
+                        <td [hidden]="!(obj.TakerName == undefined ||obj.TakerName.length <= 0)">
+                        </td>
+                        <td [hidden]="!(obj.TakerName == undefined ||obj.TakerName.length <= 0)">
+                        </td>
+                        <td [hidden]="!(obj.TakerName == undefined ||obj.TakerName.length <= 0)">
+                        </td>
+                        <td>{{obj.RecipientName}}</td>
+                    </tr>
+                </ng-container>
 
             </tbody>
         </table>

@@ -23,6 +23,7 @@ import { TopicService } from './shared/Topics/topic.service';
 import { CategoryService } from './shared/Category/category.service';
 import { HistoryIngestService } from './shared/HistoryIngest/history-ingest.service';
 import { SummaryIngestService } from './shared/SummaryIngest/summary-ingest.service';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { SummaryIngestService } from './shared/SummaryIngest/summary-ingest.serv
     ProgramShowService,
     HistoryIngestService, 
     TopicService,
-    SummaryIngestService
+    SummaryIngestService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

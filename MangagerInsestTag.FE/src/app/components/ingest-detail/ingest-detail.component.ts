@@ -41,7 +41,7 @@ export class IngestDetailComponent implements OnInit {
           Name: element.name,
           PositionId: element.positionId,
           ProductionUnitId: element.productionUnitId,
-          UserName:element.UserName,
+          UserLogin:element.userLogin,
           Password:''
         });
       });

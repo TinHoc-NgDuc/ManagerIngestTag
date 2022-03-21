@@ -10,12 +10,13 @@ namespace ManagerIngest.Models
         public Guid TicketIngestId { get; set; }
         public string Name { get; set; }
         public string CreateName { get; set; }
+        public DateTime DateCreate { get; set; }
         public string TopicName { get; set; }
         public string ProgramName { get; set; }
         public string CameramanName { get; set; }
         public string ProductionName { get; set; }
         public string ReporterName { get; set; }
-        public DateTime SaveDocument { get; set; }
+        public string SaveDocument { get; set; }
         public bool IsReporting { get; set; }
         public bool IsNew { get; set; }
         public bool IsCategory { get; set; }

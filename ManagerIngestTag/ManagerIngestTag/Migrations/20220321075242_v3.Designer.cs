@@ -4,14 +4,16 @@ using ManagerIngest.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ManagerIngestTag.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220321075242_v3")]
+    partial class v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,8 +72,8 @@ namespace ManagerIngestTag.Migrations
                     b.Property<Guid?>("TicketIngestId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("TimeAction")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("TimeAction")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("HistoryIngestId");
 

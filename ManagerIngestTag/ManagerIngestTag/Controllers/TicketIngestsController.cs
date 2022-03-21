@@ -107,6 +107,9 @@ namespace ManagerIngestTag.Controllers
                         }
                         var ingestDetail = _context.IngestDetails.Find(item.IngestDeltailId);
                         ingestDetail.Status = item.Status;
+                        ingestDetail.TakerName = item.TakerName;
+                        ingestDetail.TakerId = item.TakerId;
+                        ingestDetail.DateReturn = item.DateReturn;
                         HistoryIngest historyIngest = new();
                         historyIngest.HistoryIngestId = Guid.NewGuid();
                         historyIngest.ActionCode = item.Status;
@@ -130,7 +133,7 @@ namespace ManagerIngestTag.Controllers
                             historyIngest.NameAction = ReturnTagName;
                             historyIngest.Performer = item.TakerName;
                         }
-                        historyIngest.TimeAction = DateTime.Now.ToString("dd/MM/yyyy");
+                        historyIngest.TimeAction = DateTime.Now;
                         historyIngest.IngestDetail = _context.IngestDetails.Find(item.IngestDeltailId);
                         historyIngest.TicketIngest = _context.TicketIngests.Find(ticketIngest.TicketIngestId);
                         _context.HistoryIngests.Add(historyIngest);
@@ -202,10 +205,10 @@ namespace ManagerIngestTag.Controllers
                     _context.IngestDetails.Add(ingestDetail);
                     HistoryIngest historyIngest = new();
                     historyIngest.HistoryIngestId = Guid.NewGuid();
-                    historyIngest.ActionCode = Darft;
-                    historyIngest.NameAction = DarftName;
+                    historyIngest.ActionCode = Pending;
+                    historyIngest.NameAction = PendingName;
                     historyIngest.Performer = ticketIngest.CreateName;
-                    historyIngest.TimeAction = DateTime.Now.ToString("dd/MM/yyyy");
+                    historyIngest.TimeAction = DateTime.Now;
                     historyIngest.TicketIngest = _context.TicketIngests.Find(tickketIngest.TicketIngestId);
                     historyIngest.IngestDetail = _context.IngestDetails.Find(ingestDetail.IngestDeltailId);
 

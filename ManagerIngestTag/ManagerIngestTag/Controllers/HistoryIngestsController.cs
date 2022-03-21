@@ -84,7 +84,7 @@ namespace ManagerIngestTag.Controllers
             history.ActionCode = historyIngest.ActionCode;
             history.NameAction = historyIngest.NameAction;
             history.Performer = historyIngest.Performer;
-            history.TimeAction = DateTime.Now.ToString("h:m")+" " + DateTime.Now.ToString("dd/M/yyyy");
+            history.TimeAction = DateTime.Now;
             history.IngestDetail = _context.IngestDetails.Find(historyIngest.IngestDetailId);
 
             _context.HistoryIngests.Add(history);
