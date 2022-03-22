@@ -12,37 +12,37 @@
                 </div>
                 <div>
                     <span>Tên phóng viên</span>
-                    <select class="item-input" name="" id="" title="Tên phóng viên" [(ngModel)]="filter.reporter">
-                        <option *ngFor="let item of employeeReportSrc" value="item.EmployeeId">{{item.Name}}</option>
+                    <select class="item-input" name="" id="" title="Tên phóng viên" (change)="reporterChange()" [(ngModel)]="filter.reporter.EmployeeId">
+                        <option *ngFor="let obj of employeeReportSrc" value="{{obj.EmployeeId}}">{{obj.Name}}</option>
                     </select>
                 </div>
             </div>
             <div class="item">
                 <div class="item-1">
                     <span>Đơn vị sản xuất</span>
-                    <select class="item-input" name="" id="" title="Đơn vị sản xuất" [(ngModel)]="filter.productionUnit">
-                        <option *ngFor="let item of productionUnitSrc" value="item.ProductionUnitId">{{item.Name}}
+                    <select class="item-input" name="" id="" title="Đơn vị sản xuất" (change)="productionUnitChange()" [(ngModel)]="filter.productionUnit.ProductionUnitId">
+                        <option *ngFor="let obj of productionUnitSrc" value="{{obj.ProductionUnitId}}">{{obj.Name}}
                         </option>
                     </select>
                 </div>
                 <div>
                     <span>Tên Quay phim</span>
-                    <select class="item-input" name="" id="" title="Tên Quay Phim" [(ngModel)]="filter.cameramen">
-                        <option *ngFor="let item of employeeCameramanSrc" value="item.EmployeeId">{{item.Name}}</option>
+                    <select class="item-input" name="" id="" title="Tên Quay Phim" (change)="cameramenChange()" [(ngModel)]="filter.cameramen.EmployeeId">
+                        <option *ngFor="let obj of employeeCameramanSrc" value="{{obj.EmployeeId}}">{{obj.Name}}</option>
                     </select>
                 </div>
             </div>
             <div class="item">
                 <div class="item-1">
                     <span>Trang thái</span>
-                    <select class="item-input" name="" id="" title="Trạng thái">
-                        <option *ngFor="let item of statusIngests" value="item.StatusIngestId">{{item.Name}}</option>
+                    <select class="item-input" name="" id="" title="Trạng thái"  (change)="statusIngestChange()" [(ngModel)]="filter.statusIngest.StatusIngestId">
+                        <option *ngFor="let obj of statusIngests" value="{{obj.StatusIngestId}}">{{obj.Name}}</option>
                     </select>
 
                 </div>
                 <div>
                     <span>Tìm kiếm</span>
-                    <input type="text" class="item-input" placeholder="Nhập từ khoá" [(ngModel)]="filter.strFilter">
+                    <input type="text" class="item-input" placeholder="Nhập từ khoá" [(ngModel)]="filter.strFilter" >
                 </div>
             </div>
             <div class="item">
@@ -83,7 +83,7 @@
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngFor="let item of summaryingests; let indexVale = index;">
+                <ng-container  *ngFor="let item of summaryingestsFilter; let indexVale = index;">
                     <tr (click)="onClick(item)">
                         <td [attr.rowspan]="item.ingestDetail.length +1" class="center">{{indexVale+1}}</td>
                         <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.StatusIngest}}</td>
@@ -128,8 +128,8 @@
                         <td>{{obj.RecipientName}}</td>
                     </tr>
                 </ng-container>
-
             </tbody>
+ 
         </table>
         <!-- <p>{{summaryingests[0]|json}}</p> -->
     </div>

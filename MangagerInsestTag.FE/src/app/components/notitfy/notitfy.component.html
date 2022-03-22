@@ -1,0 +1,26 @@
+<div class="notify" [ngClass]="{
+    'notify-success': messeger.status==Success,
+    'notify-error': messeger.status==Error,
+    'notify-warring': messeger.status==Warring
+}">
+    <div class="notify__header">
+        <div class="notify__header__title" [ngClass]="{
+            'notify__header__title-success': messeger.status==Success,
+            'notify__header__title-error': messeger.status==Error,
+            'notify__header__title-warring': messeger.status==Warring
+        }">
+            <span>{{messeger.title}}</span>
+        </div>
+        <div class="notify__header__close"
+        [ngClass]="{
+            'notify__header__close-success': messeger.status==Success,
+            'notify__header__close-error': messeger.status==Error,
+            'notify__header__close-warring': messeger.status==Warring
+        }">
+            <i class="fas fa-times"></i>
+        </div>
+    </div>
+    <div class="notify__content">
+        <p>{{messeger.messeger}}</p>
+    </div>
+</div>

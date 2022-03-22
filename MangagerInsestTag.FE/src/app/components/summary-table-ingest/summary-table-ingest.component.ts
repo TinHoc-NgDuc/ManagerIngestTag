@@ -28,6 +28,7 @@ export class SummaryTableIngestComponent implements OnInit {
   employeeReportSrc: Employee[] = [];
   employeeCameramanSrc: Employee[] = [];
   summaryingests: SummaryIngest[] = [];
+  summaryingestsFilter: SummaryIngest[] = [];
   summaryingest: SummaryIngest = new SummaryIngest();
   positionSrc: Position[] = [];
   productionUnitSrc: ProductionUnit[] = [];
@@ -37,7 +38,7 @@ export class SummaryTableIngestComponent implements OnInit {
   isPending = false;
   isApproved = false;
   isDarft = false;
-  filter: Filter=new Filter();
+  filter: Filter = new Filter();
   constructor(
     private statusIngestService: StatusIngestService,
     private employeeService: EmployeeService,
@@ -166,6 +167,7 @@ export class SummaryTableIngestComponent implements OnInit {
         this.summaryingests.push(this.summaryingest);
       });
       this.summaryingest = new SummaryIngest();
+      this.summaryingestsFilter = this.summaryingests;
     });
 
   }
@@ -185,16 +187,17 @@ export class SummaryTableIngestComponent implements OnInit {
     this.changeStatusShow();
   }
   ExportExcel() {
-    let urlExporl = environment.baseUrl + "/api/SumaryIngest/exportExcel";
-    window.open(urlExporl);
+    // let urlExporl = environment.baseUrl + "/api/SumaryIngest/exportExcel";
+    // window.open(urlExporl);
+
+    console.log(this.filter);
+
   }
   onClick(item: SummaryIngest) {
     this.summaryingest = item;
     // var date = new Date();
     // let latest_date = this.datepipe.transform(date, 'dd/MM/yyyy');
     // console.log(latest_date);
-
-
     if (item.ticketIngest.StatusIngestCode.toLocaleLowerCase() == environment.Pending.toLocaleLowerCase()) {
       this.isShow = false;
       this.isAdd = false;
@@ -221,13 +224,97 @@ export class SummaryTableIngestComponent implements OnInit {
     }
 
   }
+
+  //filter
+  reporterChange() {
+    var item = this.employeeReportSrc.find(f => f.EmployeeId == this.filter.reporter.EmployeeId);
+    if (item != undefined) {
+      this.filter.reporter = {
+        EmployeeId: item.EmployeeId,
+        Password: item.Password,
+        PositionId: item.PositionId,
+        ProductionUnitId: item.ProductionUnitId,
+        UserLogin: item.UserLogin,
+        Name: item.Name
+      };
+      this.filteTicket();
+    }
+  }
+  productionUnitChange() {
+    var item = this.productionUnitSrc.find(f => f.ProductionUnitId == this.filter.productionUnit.ProductionUnitId);
+    if (item != undefined) {
+      this.filter.productionUnit = {
+        Name: item.Name,
+        ProductionUnitId: item.ProductionUnitId
+      };
+      this.filteTicket();
+    }
+  }
+  cameramenChange() {
+    var item = this.employeeCameramanSrc.find(f => f.EmployeeId == this.filter.cameramen.EmployeeId);
+    if (item != undefined) {
+      this.filter.cameramen = {
+        EmployeeId:item.EmployeeId,
+        Password:item.Password,
+        PositionId:item.PositionId,
+        ProductionUnitId:item.ProductionUnitId,
+        UserLogin:item.UserLogin,
+        Name:item.Name
+      };
+      this.filteTicket();
+    }
+  }
+  statusIngestChange() {
+    var item = this.statusIngests.find(f => f.StatusIngestId == this.filter.statusIngest.StatusIngestId);
+    if (item != undefined) {
+      this.filter.statusIngest = {
+        StatusIngestId:item.StatusIngestId,
+        StatusCode:item.StatusCode,
+        Name:item.Name
+      };
+      this.filteTicket();
+    }
+  }
+  filteTicket() {
+    this.summaryingestsFilter = [];
+    this.summaryingests.forEach(element => {
+      let flagt = true;
+      if (this.filter.cameramen.Name != undefined && this.filter.cameramen.Name?.length > 0) {
+        if (!element.ticketIngest.CameramanName.toLocaleLowerCase().includes(this.filter.cameramen.Name.toLocaleLowerCase())) {
+          flagt = false;
+        }
+      }
+      if (this.filter.reporter.Name != undefined && this.filter.reporter.Name?.length > 0) {
+        if (!element.ticketIngest.ReporterName.toLocaleLowerCase().includes(this.filter.reporter.Name.toLocaleLowerCase())) {
+          flagt = false;
+        }
+      }
+      if (this.filter.productionUnit.Name.length > 0) {
+        if (!element.ticketIngest.ProductionName.toLocaleLowerCase().includes(this.filter.productionUnit.Name.toLocaleLowerCase())) {
+          flagt = false;
+        }
+      }
+      if (this.filter.statusIngest.Name.length > 0) {
+        if (!element.ticketIngest.StatusIngestCode.toLocaleLowerCase().includes(this.filter.statusIngest.StatusCode.toLocaleLowerCase())) {
+          flagt = false;
+        }
+      }
+      if (flagt) {
+        this.summaryingestsFilter.push(element);
+      }
+    });
+
+    console.log(this.summaryingestsFilter);
+
+  }
 }
 
 class Filter {
-  private timeStart: Date = new Date();
-  private timeEnd: Date = new Date();
-  private reporter: Employee = new Employee();
-  private cameramen: Employee = new Employee();
-  private productionUnit: ProductionUnit = new ProductionUnit();
-  private strFilter: string = '';
+  public timeStart: Date = new Date();
+  public timeEnd: Date = new Date();
+  public reporter: Employee = new Employee();
+  public cameramen: Employee = new Employee();
+  public productionUnit: ProductionUnit = new ProductionUnit();
+  public strFilter: string = '';
+  public statusIngest: StatusIngest = new StatusIngest();
 }

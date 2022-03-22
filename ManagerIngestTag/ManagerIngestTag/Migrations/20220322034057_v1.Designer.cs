@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ManagerIngestTag.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220321041352_v2")]
-    partial class v2
+    [Migration("20220322034057_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,8 +72,8 @@ namespace ManagerIngestTag.Migrations
                     b.Property<Guid?>("TicketIngestId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("TimeAction")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("TimeAction")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("HistoryIngestId");
 
@@ -229,6 +229,9 @@ namespace ManagerIngestTag.Migrations
 
                     b.Property<string>("CreateName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsCategory")
                         .HasColumnType("bit");

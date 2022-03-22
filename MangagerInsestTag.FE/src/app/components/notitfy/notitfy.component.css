@@ -1,0 +1,104 @@
+/* backgroud and possition */
+.notify {
+    box-sizing: border-box;
+    width: 450px;
+    height: 85px;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 10px;
+    animation: showRightToLeft ease .5s, hiden linear 1s 2.5s forwards;
+
+}
+
+.notify-success {
+    background-color: var(--color-success-shadow);
+    border: 1px solid var(--color-success-border);
+    box-shadow: 10px 10px 100px var(--color-success-title);
+}
+
+.notify-error {
+    background-color: var(--color-error);
+    border: 1px solid var(--color-error-border);
+    box-shadow: 10px 10px 100px var(--color-error-shadow);
+}
+
+.notify-warring {
+    background-color: var(--color-warring);
+    border: 1px solid var(--color-warring-shadow);
+    box-shadow: 10px 10px 100px var(--color-warring-shadow);
+
+}
+
+/* hearder, title */
+.notify__header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notify__header .notify__header__title {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: large;
+    padding-left: 10px;
+}
+
+.notify__header__title-success {
+    color: var(--color-success-title);
+}
+
+.notify__header__title-error {
+    color: var(--color-error-title);
+}
+
+.notify__header__title-warring {
+    color: var(--color-warring-title);
+}
+
+.notify__header__close {
+    color: var(--color-red);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* border */
+.notify__header__close-success {
+    border: var(--color-success-title) 1px solid;
+}
+
+.notify__header__close-error {
+    border: var(--color-error-title) 1px solid;
+}
+
+.notify__header__close-warring {
+    border: var(--color-warring-title) 1px solid;
+}
+
+.notify__header__close i {
+    margin: auto;
+}
+
+.notify__header__close i:hover {
+    font-size: 20px;
+}
+
+/* content */
+.notify__content {
+    display: inline-block;
+    height: calc(100% - 50px);
+    width: 100%;
+    font-size: 16.5px;
+    font-weight: 620;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.notify__content p {
+    margin-left: 15px
+}

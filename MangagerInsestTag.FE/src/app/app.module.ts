@@ -24,6 +24,7 @@ import { CategoryService } from './shared/Category/category.service';
 import { HistoryIngestService } from './shared/HistoryIngest/history-ingest.service';
 import { SummaryIngestService } from './shared/SummaryIngest/summary-ingest.service';
 import { DatePipe } from '@angular/common';
+import { NotitfyComponent } from './components/notitfy/notitfy.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { DatePipe } from '@angular/common';
     SummaryTableIngestComponent,
     IngestTagDetailComponent,
     SubmitReturnTagComponent,
-    NavigationPanelComponent
+    NavigationPanelComponent,
+    NotitfyComponent
   ],
   imports: [
     BrowserModule,
