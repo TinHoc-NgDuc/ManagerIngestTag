@@ -25,7 +25,8 @@ import { HistoryIngestService } from './shared/HistoryIngest/history-ingest.serv
 import { SummaryIngestService } from './shared/SummaryIngest/summary-ingest.service';
 import { DatePipe } from '@angular/common';
 import { NotitfyComponent } from './components/notitfy/notitfy.component';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,9 @@ import { NotitfyComponent } from './components/notitfy/notitfy.component';
     FormsModule,
     BrowserAnimationsModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers:
   [

@@ -6,8 +6,15 @@
         <div class="filter">
             <div class="item">
                 <div class="childer-item">
-                    <label for="date">Thời gian</label>
-                    <input type="date" class="item-input" name="date" id="">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Thời gian</mat-label>
+                        <mat-date-range-input [rangePicker]="picker">
+                            <input matStartDate placeholder="Start date">
+                            <input matEndDate placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
                     <div class="closeFilter">
                         <i class="fas fa-times"></i>
                     </div>
@@ -18,7 +25,8 @@
                         [(ngModel)]="filter.reporter.EmployeeId">
                         <option *ngFor="let obj of employeeReportSrc" value="{{obj.EmployeeId}}">{{obj.Name}}</option>
                     </select>
-                    <div class="closeFilter" *ngIf="filter.reporter.EmployeeId.length>0" (click)="clearFilterReporter()">
+                    <div class="closeFilter" *ngIf="filter.reporter.EmployeeId.length>0"
+                        (click)="clearFilterReporter()">
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
@@ -31,7 +39,8 @@
                         <option *ngFor="let obj of productionUnitSrc" value="{{obj.ProductionUnitId}}">{{obj.Name}}
                         </option>
                     </select>
-                    <div class="closeFilter" *ngIf="filter.productionUnit.ProductionUnitId.length>0" (click)="clearFilterProductionUnit()">
+                    <div class="closeFilter" *ngIf="filter.productionUnit.ProductionUnitId.length>0"
+                        (click)="clearFilterProductionUnit()">
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
@@ -42,7 +51,8 @@
                         <option *ngFor="let obj of employeeCameramanSrc" value="{{obj.EmployeeId}}">{{obj.Name}}
                         </option>
                     </select>
-                    <div class="closeFilter" *ngIf="filter.cameramen.EmployeeId.length>0" (click)="clearFilterCameramen()">
+                    <div class="closeFilter" *ngIf="filter.cameramen.EmployeeId.length>0"
+                        (click)="clearFilterCameramen()">
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
@@ -54,7 +64,8 @@
                         (change)="statusIngestChange()" [(ngModel)]="filter.statusIngest.StatusIngestId">
                         <option *ngFor="let obj of statusIngests" value="{{obj.StatusIngestId}}">{{obj.Name}}</option>
                     </select>
-                    <div class="closeFilter" *ngIf="filter.statusIngest.StatusIngestId.length>0" (click)="clearFilterStatusIngest()">
+                    <div class="closeFilter" *ngIf="filter.statusIngest.StatusIngestId.length>0"
+                        (click)="clearFilterStatusIngest()">
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
@@ -109,16 +120,22 @@
                     <tr (click)="onClick(item)">
                         <td [attr.rowspan]="item.ingestDetail.length+1" class="center">{{indexVale+1}}</td>
                         <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.StatusIngest}}</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.DateCreate | date:'dd/MM/yyyy'}}</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1" style="max-width: 300px;">{{item.ticketIngest.Name}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.DateCreate |
+                            date:'dd/MM/yyyy'}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" style="max-width: 300px;">
+                            {{item.ticketIngest.Name}}</td>
                         <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.ReporterName}}</td>
                         <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.CameramanName}}</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ingestDetail[0].IngestTag.CategoryName}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ingestDetail[0].IngestTag.CategoryName}}
+                        </td>
                         <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.SaveDocument}}</td>
                         <td [attr.rowspan]="item.ingestDetail.length+1" *ngIf="(item.ticketIngest.IsNew)">Tin</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1" *ngIf="(item.ticketIngest.IsCategory)">Chuyên Mục</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1"  *ngIf="(item.ticketIngest.IsReporting)">Phóng sự</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1"  *ngIf="(item.ticketIngest.IsOtherProgram)">Chương trình khác</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" *ngIf="(item.ticketIngest.IsCategory)">Chuyên
+                            Mục</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" *ngIf="(item.ticketIngest.IsReporting)">Phóng sự
+                        </td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" *ngIf="(item.ticketIngest.IsOtherProgram)">
+                            Chương trình khác</td>
                     </tr>
                     <tr *ngFor="let obj of item.ingestDetail">
                         <td>{{obj.DateSend}}</td>
