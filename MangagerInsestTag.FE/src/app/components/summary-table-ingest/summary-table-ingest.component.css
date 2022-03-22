@@ -1,6 +1,8 @@
-.summary-table-ingest{
+.summary-table-ingest {
     margin-top: 20px;
+
 }
+
 .hearder {
     height: 100px;
 }
@@ -15,21 +17,37 @@
     margin-left: 5%;
     margin-right: 5%;
     margin-bottom: 20px;
-}
-
-.action-filter .item {
-    width: 25%;
     font-family: 'Times New Roman', Times, serif;
-    text-align: left;
+}
+
+.filter {
+    display: flex;
+    justify-content: space-between;
+}
+.filter .childer-item{
+ padding-top: 15px;
+}
+.action-filter .closeFilter {
+    color: var(--color-red);
     display: inline-block;
-    vertical-align: middle;
+    border: rgba(51, 51, 51, 0.281) 1px solid;
+    width: 26px;
+    height: 26px;
+    text-align: center; 
+    margin-left: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.action-filter .closeFilter i{
+    width: 26px;
+    height: 26px; 
+    line-height: 26px;
+}
+.action-filter .closeFilter i:hover{
+    font-size: 16px;
 }
 
-.action-filter .item .item-1 {
-    margin-bottom: 25px;
-}
-
-.action-filter .item span {
+.action-filter .item label {
     display: block;
     font-size: 18px;
 }
@@ -37,6 +55,7 @@
 .action-filter .item .btn {
     padding-right: 10px;
     margin-left: 15px;
+    color: #fff;
 }
 
 .action-filter .item .item-input {
@@ -46,9 +65,9 @@
 }
 
 table {
-    width: 98%; 
     margin-left: 1%;
     margin-right: 1%;
+    width: 98%;
 }
 
 table th {
@@ -69,13 +88,16 @@ table tbody tr:hover {
     background-color: rgb(134, 255, 175);
     box-shadow: 10px 10px 50px gray;
 }
-td{
+
+td {
     padding: 5px;
 }
-table tbody tr td::first-letter{
+
+table tbody tr td::first-letter {
     text-transform: uppercase;
 }
 
-table td, th {
-    border: 1px solid #333;
-}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }

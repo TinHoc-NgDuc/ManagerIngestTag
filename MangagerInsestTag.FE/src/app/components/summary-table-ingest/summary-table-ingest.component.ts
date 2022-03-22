@@ -1,11 +1,7 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Employee } from 'src/app/shared/Employee/employee.model';
 import { EmployeeService } from 'src/app/shared/Employee/employee.service';
-import { HistoryIngestService } from 'src/app/shared/HistoryIngest/history-ingest.service';
-import { IngestService } from 'src/app/shared/Ingest/ingest.service';
-import { IngestDetail } from 'src/app/shared/IngestDetail/ingest-detail.model';
 import { Position } from 'src/app/shared/Position/position.model';
 import { PositionService } from 'src/app/shared/Position/position.service';
 import { ProductionUnit } from 'src/app/shared/ProductionUnit/production-unit.model';
@@ -15,8 +11,6 @@ import { StatusIngestService } from 'src/app/shared/StatusInges/status-ingest.se
 import { SummaryIngest } from 'src/app/shared/SummaryIngest/summary-ingest.model';
 import { SummaryIngestService } from 'src/app/shared/SummaryIngest/summary-ingest.service';
 import { environment } from 'src/environments/environment';
-
-
 @Component({
   selector: 'app-summary-table-ingest',
   templateUrl: './summary-table-ingest.component.html',
@@ -177,7 +171,6 @@ export class SummaryTableIngestComponent implements OnInit {
       this.getSummary();
     }
   }
-
   Add() {
     this.isShow = false;
     this.isAdd = true;
@@ -189,9 +182,39 @@ export class SummaryTableIngestComponent implements OnInit {
   ExportExcel() {
     // let urlExporl = environment.baseUrl + "/api/SumaryIngest/exportExcel";
     // window.open(urlExporl);
+    this.exportTableToExcel('tableData', 'data');
+  }
+  exportTableToExcel(tableID: string, filename = '') {
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    //console.log(tableSelect);
 
-    console.log(this.filter);
+    if (tableSelect != null) {
 
+      //var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+      var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20').replace(/#/g, '%23');
+
+      // Specify file name
+      filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+      // Create download link element
+      downloadLink = document.createElement("a");
+
+      document.body.appendChild(downloadLink);
+
+
+
+      // Create a link to the file
+      downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+      // Setting the file name
+      downloadLink.download = filename;
+
+      //triggering the function
+      downloadLink.click();
+
+    }
   }
   onClick(item: SummaryIngest) {
     this.summaryingest = item;
@@ -224,6 +247,7 @@ export class SummaryTableIngestComponent implements OnInit {
     }
 
   }
+  //export Data to file excel
 
   //filter
   reporterChange() {
@@ -254,12 +278,12 @@ export class SummaryTableIngestComponent implements OnInit {
     var item = this.employeeCameramanSrc.find(f => f.EmployeeId == this.filter.cameramen.EmployeeId);
     if (item != undefined) {
       this.filter.cameramen = {
-        EmployeeId:item.EmployeeId,
-        Password:item.Password,
-        PositionId:item.PositionId,
-        ProductionUnitId:item.ProductionUnitId,
-        UserLogin:item.UserLogin,
-        Name:item.Name
+        EmployeeId: item.EmployeeId,
+        Password: item.Password,
+        PositionId: item.PositionId,
+        ProductionUnitId: item.ProductionUnitId,
+        UserLogin: item.UserLogin,
+        Name: item.Name
       };
       this.filteTicket();
     }
@@ -268,9 +292,9 @@ export class SummaryTableIngestComponent implements OnInit {
     var item = this.statusIngests.find(f => f.StatusIngestId == this.filter.statusIngest.StatusIngestId);
     if (item != undefined) {
       this.filter.statusIngest = {
-        StatusIngestId:item.StatusIngestId,
-        StatusCode:item.StatusCode,
-        Name:item.Name
+        StatusIngestId: item.StatusIngestId,
+        StatusCode: item.StatusCode,
+        Name: item.Name
       };
       this.filteTicket();
     }
@@ -306,6 +330,37 @@ export class SummaryTableIngestComponent implements OnInit {
 
     console.log(this.summaryingestsFilter);
 
+  }
+
+  //clear
+  clearFilterReporter() {
+    this.filter.reporter.EmployeeId = '';
+    this.filter.reporter.Name = '';
+    this.filter.reporter.Password = '';
+    this.filter.reporter.PositionId = '';
+    this.filter.reporter.ProductionUnitId = '';
+    this.filter.reporter.UserLogin = '';
+    this.filteTicket();
+  }
+  clearFilterProductionUnit() {
+    this.filter.productionUnit.Name = '';
+    this.filter.productionUnit.ProductionUnitId = '';
+    this.filteTicket();
+  }
+  clearFilterCameramen() {
+    this.filter.cameramen.EmployeeId = '';
+    this.filter.cameramen.Name = '';
+    this.filter.cameramen.Password = '';
+    this.filter.cameramen.PositionId = '';
+    this.filter.cameramen.ProductionUnitId = '';
+    this.filter.cameramen.UserLogin = '';
+    this.filteTicket();
+  }
+  clearFilterStatusIngest() {
+    this.filter.statusIngest.StatusIngestId = '';
+    this.filter.statusIngest.Name = '';
+    this.filter.statusIngest.StatusCode = '';
+    this.filteTicket();
   }
 }
 

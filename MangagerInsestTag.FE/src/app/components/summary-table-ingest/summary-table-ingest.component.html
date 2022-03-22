@@ -5,54 +5,76 @@
     <div class="action-filter">
         <div class="filter">
             <div class="item">
-                <div class="item-1">
-                    <span>Thời gian</span>
-                    <input type="date" name="" id="">
-
+                <div class="childer-item">
+                    <label for="date">Thời gian</label>
+                    <input type="date" class="item-input" name="date" id="">
+                    <div class="closeFilter">
+                        <i class="fas fa-times"></i>
+                    </div>
                 </div>
-                <div>
-                    <span>Tên phóng viên</span>
-                    <select class="item-input" name="" id="" title="Tên phóng viên" (change)="reporterChange()" [(ngModel)]="filter.reporter.EmployeeId">
+                <div class="childer-item">
+                    <label for="reporter">Tên phóng viên</label>
+                    <select class="item-input" name="reporter" id="" title="Tên phóng viên" (change)="reporterChange()"
+                        [(ngModel)]="filter.reporter.EmployeeId">
                         <option *ngFor="let obj of employeeReportSrc" value="{{obj.EmployeeId}}">{{obj.Name}}</option>
                     </select>
+                    <div class="closeFilter" *ngIf="filter.reporter.EmployeeId.length>0" (click)="clearFilterReporter()">
+                        <i class="fas fa-times"></i>
+                    </div>
                 </div>
             </div>
             <div class="item">
-                <div class="item-1">
-                    <span>Đơn vị sản xuất</span>
-                    <select class="item-input" name="" id="" title="Đơn vị sản xuất" (change)="productionUnitChange()" [(ngModel)]="filter.productionUnit.ProductionUnitId">
+                <div class="childer-item">
+                    <label for="productionUnit">Đơn vị sản xuất</label>
+                    <select class="item-input" name="productionUnit" id="" title="Đơn vị sản xuất"
+                        (change)="productionUnitChange()" [(ngModel)]="filter.productionUnit.ProductionUnitId">
                         <option *ngFor="let obj of productionUnitSrc" value="{{obj.ProductionUnitId}}">{{obj.Name}}
                         </option>
                     </select>
+                    <div class="closeFilter" *ngIf="filter.productionUnit.ProductionUnitId.length>0" (click)="clearFilterProductionUnit()">
+                        <i class="fas fa-times"></i>
+                    </div>
                 </div>
-                <div>
-                    <span>Tên Quay phim</span>
-                    <select class="item-input" name="" id="" title="Tên Quay Phim" (change)="cameramenChange()" [(ngModel)]="filter.cameramen.EmployeeId">
-                        <option *ngFor="let obj of employeeCameramanSrc" value="{{obj.EmployeeId}}">{{obj.Name}}</option>
+                <div class="childer-item">
+                    <label for="cameramen">Tên Quay phim</label>
+                    <select class="item-input" name="cameramen" id="" title="Tên Quay Phim" (change)="cameramenChange()"
+                        [(ngModel)]="filter.cameramen.EmployeeId">
+                        <option *ngFor="let obj of employeeCameramanSrc" value="{{obj.EmployeeId}}">{{obj.Name}}
+                        </option>
                     </select>
+                    <div class="closeFilter" *ngIf="filter.cameramen.EmployeeId.length>0" (click)="clearFilterCameramen()">
+                        <i class="fas fa-times"></i>
+                    </div>
                 </div>
             </div>
             <div class="item">
-                <div class="item-1">
-                    <span>Trang thái</span>
-                    <select class="item-input" name="" id="" title="Trạng thái"  (change)="statusIngestChange()" [(ngModel)]="filter.statusIngest.StatusIngestId">
+                <div class="childer-item">
+                    <label for="statusIngest">Trang thái</label>
+                    <select class="item-input" name="statusIngest" id="" title="Trạng thái"
+                        (change)="statusIngestChange()" [(ngModel)]="filter.statusIngest.StatusIngestId">
                         <option *ngFor="let obj of statusIngests" value="{{obj.StatusIngestId}}">{{obj.Name}}</option>
                     </select>
-
+                    <div class="closeFilter" *ngIf="filter.statusIngest.StatusIngestId.length>0" (click)="clearFilterStatusIngest()">
+                        <i class="fas fa-times"></i>
+                    </div>
                 </div>
-                <div>
-                    <span>Tìm kiếm</span>
-                    <input type="text" class="item-input" placeholder="Nhập từ khoá" [(ngModel)]="filter.strFilter" >
+                <div class="childer-item">
+                    <label for="search">Tìm kiếm</label>
+                    <input type="text" name="search" class="item-input" placeholder="Nhập từ khoá"
+                        [(ngModel)]="filter.strFilter">
+                    <div class="closeFilter" *ngIf="filter.strFilter.length>0">
+                        <i class="fas fa-times"></i>
+                    </div>
                 </div>
             </div>
             <div class="item">
-                <i class="btn btn-success" (click)="ExportExcel()">Xuất Execl</i>
-                <i class="btn btn-primary" (click)="Add()">Thêm mới</i>
+                <a class="btn btn-success" (click)="ExportExcel()">Xuất Execl</a>
+                <a class="btn btn-primary" (click)="Add()">Thêm mới</a>
             </div>
         </div>
     </div>
     <div class="gTable">
-        <table>
+        <table id="tableData" border="1">
             <thead>
                 <tr>
                     <th rowspan="3">STT</th>
@@ -83,53 +105,48 @@
                 </tr>
             </thead>
             <tbody>
-                <ng-container  *ngFor="let item of summaryingestsFilter; let indexVale = index;">
+                <ng-container *ngFor="let item of summaryingestsFilter; let indexVale = index;">
                     <tr (click)="onClick(item)">
-                        <td [attr.rowspan]="item.ingestDetail.length +1" class="center">{{indexVale+1}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" class="center">{{indexVale+1}}</td>
                         <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.StatusIngest}}</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.DateCreate | date: 'dd/MM/yyyy'}}</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.Name}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.DateCreate | date:'dd/MM/yyyy'}}</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" style="max-width: 300px;">{{item.ticketIngest.Name}}</td>
                         <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.ReporterName}}</td>
                         <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.CameramanName}}</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ingestDetail[0].IngestTag.CategoryName}}
-                        </td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ingestDetail[0].IngestTag.CategoryName}}</td>
                         <td [attr.rowspan]="item.ingestDetail.length+1">{{item.ticketIngest.SaveDocument}}</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1" [hidden]="!item.ticketIngest.IsNew">Tin</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1" [hidden]="!item.ticketIngest.IsCategory">Chuyên
-                            Mục</td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1" [hidden]="!item.ticketIngest.IsReporting">Phóng
-                            sự
-                        </td>
-                        <td [attr.rowspan]="item.ingestDetail.length+1" [hidden]="!item.ticketIngest.IsOtherProgram">
-                            Chương trình khác</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" *ngIf="(item.ticketIngest.IsNew)">Tin</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1" *ngIf="(item.ticketIngest.IsCategory)">Chuyên Mục</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1"  *ngIf="(item.ticketIngest.IsReporting)">Phóng sự</td>
+                        <td [attr.rowspan]="item.ingestDetail.length+1"  *ngIf="(item.ticketIngest.IsOtherProgram)">Chương trình khác</td>
                     </tr>
                     <tr *ngFor="let obj of item.ingestDetail">
                         <td>{{obj.DateSend}}</td>
                         <td>{{item.ticketIngest.CreateName}}</td>
                         <td>{{obj.IngestTag.IngestCode}}</td>
                         <td>{{obj.IngestTag.Name}}</td>
-                        <td [hidden]="obj.TakerName != undefined && obj.TakerName.length <= 0">
+                        <td *ngIf="!(obj.TakerName != undefined && obj.TakerName.length <= 0)">
                             {{obj.DateReturn}}</td>
-                        <td [hidden]="obj.TakerName != undefined &&obj.TakerName.length <= 0">
+                        <td *ngIf="!(obj.TakerName != undefined &&obj.TakerName.length <= 0)">
                             {{obj.TakerName}}</td>
-                        <td [hidden]="obj.TakerName != undefined &&obj.TakerName.length <= 0">
+                        <td *ngIf="!(obj.TakerName != undefined &&obj.TakerName.length <= 0)">
                             {{obj.IngestTag.IngestCode}}</td>
-                        <td [hidden]="obj.TakerName != undefined &&obj.TakerName.length <= 0">
+                        <td *ngIf="!(obj.TakerName != undefined &&obj.TakerName.length <= 0)">
                             {{obj.IngestTag.Name}}
                         </td>
-                        <td [hidden]="!(obj.TakerName == undefined || obj.TakerName.length <= 0)">
+                        <td *ngIf="(obj.TakerName == undefined || obj.TakerName.length <= 0)">
                         </td>
-                        <td [hidden]="!(obj.TakerName == undefined ||obj.TakerName.length <= 0)">
+                        <td *ngIf="(obj.TakerName == undefined ||obj.TakerName.length <= 0)">
                         </td>
-                        <td [hidden]="!(obj.TakerName == undefined ||obj.TakerName.length <= 0)">
+                        <td *ngIf="(obj.TakerName == undefined ||obj.TakerName.length <= 0)">
                         </td>
-                        <td [hidden]="!(obj.TakerName == undefined ||obj.TakerName.length <= 0)">
+                        <td *ngIf="(obj.TakerName == undefined ||obj.TakerName.length <= 0)">
                         </td>
                         <td>{{obj.RecipientName}}</td>
                     </tr>
                 </ng-container>
             </tbody>
- 
+
         </table>
         <!-- <p>{{summaryingests[0]|json}}</p> -->
     </div>
