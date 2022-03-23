@@ -226,9 +226,6 @@ export class SummaryTableIngestComponent implements OnInit {
   }
   onClick(item: SummaryIngest) {
     this.summaryingest = item;
-    // var date = new Date();
-    // let latest_date = this.datepipe.transform(date, 'dd/MM/yyyy');
-    // console.log(latest_date);
     if (item.ticketIngest.StatusIngestCode.toLocaleLowerCase() == environment.Pending.toLocaleLowerCase()) {
       this.isShow = false;
       this.isAdd = false;
@@ -311,6 +308,7 @@ export class SummaryTableIngestComponent implements OnInit {
     this.summaryingestsFilter = [];
     this.summaryingests.forEach(element => {
       let flagt = true;
+      debugger
       if (this.filter.cameramen.Name != undefined && this.filter.cameramen.Name?.length > 0) {
         if (!element.ticketIngest.CameramanName.toLocaleLowerCase().includes(this.filter.cameramen.Name.toLocaleLowerCase())) {
           flagt = false;
@@ -332,14 +330,35 @@ export class SummaryTableIngestComponent implements OnInit {
         }
       }
       if (!(this.filter.timeStart <= element.ticketIngest.DateCreate && this.filter.timeEnd >= element.ticketIngest.DateCreate)) {
+        console.log(this.filter.timeStart);
+        
         flagt = false;
+      }
+      if (this.filter.strFilter.length > 0) {
+        var str = this.filter.strFilter.toLocaleLowerCase();
+        if (!(
+          element.ticketIngest.CameramanName.toLocaleLowerCase().includes(str) ||
+          element.ticketIngest.ReporterName.toLocaleLowerCase().includes(str) ||
+          element.ticketIngest.ProductionName.toLocaleLowerCase().includes(str) ||
+          element.ticketIngest.Name.toLocaleLowerCase().includes(str) ||
+          element.ticketIngest.CreateName.toLocaleLowerCase().includes(str)
+        )) {
+          flagt = false;
+        }
+
+        element.ingestDetail.forEach(obj => {
+          if (!(
+            obj.RecipientName?.toLocaleLowerCase().includes(str) ||
+            obj.TakerName?.toLocaleLowerCase().includes(str)
+          )) {
+            flagt = false;
+          }
+        });
       }
       if (flagt) {
         this.summaryingestsFilter.push(element);
       }
     });
-
-    console.log(this.summaryingestsFilter);
 
   }
   //
@@ -390,17 +409,22 @@ export class SummaryTableIngestComponent implements OnInit {
       start: new FormControl(),
       end: new FormControl(),
     });
-    this.filter.timeEnd = new Date();
-    this.filter.timeStart = new Date();
+    this.filter.timeEnd = new Date("9999-05-27");
+    this.filter.timeStart = new Date("0001-05-27");
+    this.filteTicket();
   }
   changStrFilter() {
-
+    this.filteTicket();
+  }
+  clearStrFilter(){
+    this.filter.strFilter ='';
+    this.filteTicket();
   }
 }
 
 class Filter {
-  public timeStart: Date = new Date();
-  public timeEnd: Date = new Date();
+  public timeStart: Date = new Date("0001-05-27");
+  public timeEnd: Date = new Date("9999-05-27");
   public reporter: Employee = new Employee();
   public cameramen: Employee = new Employee();
   public productionUnit: ProductionUnit = new ProductionUnit();

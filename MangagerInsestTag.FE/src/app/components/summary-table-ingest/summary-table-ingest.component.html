@@ -74,7 +74,7 @@
                     <label for="search">Tìm kiếm</label>
                     <input type="text" name="search" class="item-input" placeholder="Nhập từ khoá"
                         [(ngModel)]="filter.strFilter" (keyup)="changStrFilter()"/>
-                    <div class="closeFilter" *ngIf="filter.strFilter.length>0">
+                    <div class="closeFilter" *ngIf="filter.strFilter.length>0" (click)="clearStrFilter()">
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
