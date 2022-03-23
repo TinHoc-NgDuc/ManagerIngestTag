@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,7 +25,7 @@ import { HistoryIngestService } from './shared/HistoryIngest/history-ingest.serv
 import { SummaryIngestService } from './shared/SummaryIngest/summary-ingest.service';
 import { DatePipe } from '@angular/common';
 import { NotitfyComponent } from './components/notitfy/notitfy.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
@@ -48,22 +48,23 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatCheckboxModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ReactiveFormsModule
   ],
   providers:
-  [
-    CategoryService,
-    EmployeeService, 
-    PositionService, 
-    IngestService, 
-    StatusIngestService, 
-    ProductionUnit, 
-    ProgramShowService,
-    HistoryIngestService, 
-    TopicService,
-    SummaryIngestService,
-    DatePipe
-  ],
+    [
+      CategoryService,
+      EmployeeService,
+      PositionService,
+      IngestService,
+      StatusIngestService,
+      ProductionUnit,
+      ProgramShowService,
+      HistoryIngestService,
+      TopicService,
+      SummaryIngestService,
+      DatePipe
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

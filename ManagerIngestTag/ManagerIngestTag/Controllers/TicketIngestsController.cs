@@ -172,7 +172,8 @@ namespace ManagerIngestTag.Controllers
                     IsNew = ticketIngest.IsNew,
                     IsCategory = ticketIngest.IsCategory,
                     IsOtherProgram = ticketIngest.IsOtherProgram,
-                    StatusIngest = ticketIngest.StatusIngest
+                    StatusIngest = ticketIngest.StatusIngest,
+                    DateCreate = DateTime.Now
                 };
                 _context.TicketIngests.Add(tickketIngest);
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Employee } from 'src/app/shared/Employee/employee.model';
 import { EmployeeService } from 'src/app/shared/Employee/employee.service';
@@ -32,7 +33,13 @@ export class SummaryTableIngestComponent implements OnInit {
   isPending = false;
   isApproved = false;
   isDarft = false;
+  //filter
   filter: Filter = new Filter();
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
+
   constructor(
     private statusIngestService: StatusIngestService,
     private employeeService: EmployeeService,
@@ -323,6 +330,9 @@ export class SummaryTableIngestComponent implements OnInit {
           flagt = false;
         }
       }
+      if (!(this.filter.timeStart <= element.ticketIngest.DateCreate && this.filter.timeEnd >= element.ticketIngest.DateCreate)) {
+        flagt = false;
+      }
       if (flagt) {
         this.summaryingestsFilter.push(element);
       }
@@ -330,6 +340,17 @@ export class SummaryTableIngestComponent implements OnInit {
 
     console.log(this.summaryingestsFilter);
 
+  }
+  //
+  StartDate(event: any) {
+    //console.log(event.value);
+    this.filter.timeStart = event.value;
+    this.filteTicket();
+  }
+  EndDate(event: any) {
+    //console.log(event.value);
+    this.filter.timeEnd = event.value;
+    this.filteTicket();
   }
 
   //clear
