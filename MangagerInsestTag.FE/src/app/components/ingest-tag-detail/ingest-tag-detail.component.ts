@@ -542,7 +542,6 @@ export class IngestTagDetailComponent implements OnInit {
     }
   }
   Remove(element: any) {
-    //console.log(element);
     if (element != undefined) {
       this.ingestSrc.push(element.IngestTag);
       this.removeElement(this.summaryIngest.ticketIngest.IngestDetailFull, element);

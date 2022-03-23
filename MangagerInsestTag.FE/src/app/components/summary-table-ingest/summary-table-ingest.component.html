@@ -8,7 +8,7 @@
                 <div class="childer-item">
                     <mat-form-field class="item-input" appearance="fill">
                         <mat-label>Nhập vào thời gian</mat-label>
-                        <mat-date-range-input [formGroup]="range" [rangePicker]="picker"  >
+                        <mat-date-range-input [formGroup]="range" [rangePicker]="picker"   >
                           <input matStartDate formControlName="start" placeholder="Ngày bắt đầu" (dateChange)="StartDate($event)">
                           <input matEndDate formControlName="end" placeholder="Ngày kết thúc" (dateChange)="EndDate($event)">
                         </mat-date-range-input>
@@ -16,7 +16,7 @@
                         <mat-date-range-picker #picker></mat-date-range-picker>
                       </mat-form-field>
                       
-                    <div class="closeFilter">
+                    <div class="closeFilter" (click)="clearFilterDate()" *ngIf="isFilterDate">
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 <div class="childer-item">
                     <label for="search">Tìm kiếm</label>
                     <input type="text" name="search" class="item-input" placeholder="Nhập từ khoá"
-                        [(ngModel)]="filter.strFilter">
+                        [(ngModel)]="filter.strFilter" (keyup)="changStrFilter()"/>
                     <div class="closeFilter" *ngIf="filter.strFilter.length>0">
                         <i class="fas fa-times"></i>
                     </div>

@@ -39,6 +39,7 @@ export class SummaryTableIngestComponent implements OnInit {
     start: new FormControl(),
     end: new FormControl(),
   });
+  isFilterDate = false;
 
   constructor(
     private statusIngestService: StatusIngestService,
@@ -343,12 +344,12 @@ export class SummaryTableIngestComponent implements OnInit {
   }
   //
   StartDate(event: any) {
-    //console.log(event.value);
+    this.isFilterDate = true;
     this.filter.timeStart = event.value;
     this.filteTicket();
   }
   EndDate(event: any) {
-    //console.log(event.value);
+    this.isFilterDate = true;
     this.filter.timeEnd = event.value;
     this.filteTicket();
   }
@@ -382,6 +383,18 @@ export class SummaryTableIngestComponent implements OnInit {
     this.filter.statusIngest.Name = '';
     this.filter.statusIngest.StatusCode = '';
     this.filteTicket();
+  }
+  clearFilterDate() {
+    this.isFilterDate = false;
+    this.range = new FormGroup({
+      start: new FormControl(),
+      end: new FormControl(),
+    });
+    this.filter.timeEnd = new Date();
+    this.filter.timeStart = new Date();
+  }
+  changStrFilter() {
+
   }
 }
 
